@@ -1,4 +1,4 @@
-##date to be changed 2016-01-05
+##date to be changed 2016-01-06
 ##file to be saved as DayLevelSummary.csv
 
 ##################################################### REPORT DATA ######################################################
@@ -81,7 +81,7 @@ cal.calendar_date as SummaryDate,
 count(distinct PlayerId) as FirstTimeDepositors
 from romaniamain.dim_calendar as cal
 left outer join romaniamain.dim_player as p on cal.calendar_date = date(p.GlobalFirstDepositDate)
-where cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-01-05'
+where cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-01-06'
 group by 1
 ) as FTD on cal.calendar_date = FTD.SummaryDate
 left outer join 
@@ -90,7 +90,7 @@ cal.calendar_date as SummaryDate,
 count(distinct PlayerId) as UniqueSignUps
 from romaniamain.dim_calendar as cal
 left outer join romaniamain.dim_player as p on cal.calendar_date = date(p.SignupDate)
-where cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-01-05'
+where cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-01-06'
 group by 1
 ) as SignUp on cal.calendar_date = SignUp.SummaryDate
 left outer join 
@@ -178,7 +178,7 @@ SELECT
 ,COUNT(distinct case when (dps.EGBet) > 0 then dps.PlayerId end) as CumulativeEGamingUAP
 FROM 
 romaniamain.dim_calendar as cal
-left outer join romaniamain.sd_gv_daily_player_summary as dps on dps.SummaryDate <= cal.calendar_date and cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-01-05' and dps.SummaryDate >= '2015-11-26'
+left outer join romaniamain.sd_gv_daily_player_summary as dps on dps.SummaryDate <= cal.calendar_date and cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-01-06' and dps.SummaryDate >= '2015-11-26'
 left outer join romaniamain.dim_player as p on dps.PlayerId = p.PlayerId
 where p.SignupDate >= '2015-11-26'
 group by cal.calendar_date
@@ -195,4 +195,4 @@ where SignupDate >= '2015-11-26'
 group by SummaryDate
 ) as Balance on cal.calendar_date = Balance.SummaryDate
 where 
-cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-01-05';
+cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-01-06';

@@ -1,4 +1,4 @@
-##dates to be changed 2016-01-04
+##dates to be changed 2016-01-06
 
 use romaniamain;
 
@@ -28,7 +28,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from fd_placed_bets
-where BetType <> 'SGL' and BetDate = '2016-01-04'
+where BetType <> 'SGL' and BetDate = '2016-01-06'
 group by 
 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16;
 
@@ -58,7 +58,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from fd_placed_bets
-where BetType = 'SGL' and BetDate = '2016-01-04';
+where BetType = 'SGL' and BetDate = '2016-01-06';
 
 select 
 PlayerId as PlayerId,
@@ -94,7 +94,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from fd_settled_bets
-where BetType <> 'SGL' and SettledDate = '2016-01-04'
+where BetType <> 'SGL' and SettledDate = '2016-01-06'
 group by 
 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16;
 
@@ -132,7 +132,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from fd_settled_bets
-where BetType = 'SGL' and SettledDate = '2016-01-04'
+where BetType = 'SGL' and SettledDate = '2016-01-06'
 group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16;
 
 

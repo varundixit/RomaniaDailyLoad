@@ -1,4 +1,4 @@
-## date change 2016-01-05
+## date change 2016-01-06
 use romaniastg;
 drop table stg_open_bets_csv;
 CREATE TABLE `stg_open_bets_csv` (
@@ -217,7 +217,7 @@ OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from stg_open_bets as stg 
 join romaniamain.DIM_PLAYER as p on stg.PlayerId = p.PlayerSPId
-where BetDate <= '2016-01-05';
+where BetDate <= '2016-01-06';
 
 
 use romaniamain;

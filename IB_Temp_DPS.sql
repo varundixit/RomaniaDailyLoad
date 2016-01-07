@@ -1,4 +1,4 @@
-#change dates 2016-01-05
+#change dates 2016-01-06
 
 use romaniamain;
 
@@ -37,7 +37,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from fd_placed_bets
-where BetType = 'SGL' and BetDate = '2016-01-05'
+where BetType = 'SGL' and BetDate = '2016-01-06'
 group by 
 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21;
 
@@ -77,7 +77,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from fd_placed_bets
-where BetType <> 'SGL' and BetDate = '2016-01-05'
+where BetType <> 'SGL' and BetDate = '2016-01-06'
 group by 
 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21;
 
@@ -117,20 +117,20 @@ create table `fd_gv_placed_bets_simple` (
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\PlacedBets\\fd_gv_placed_bets_simple_combi.csv'
-INTO TABLE romaniamain.fd_gv_placed_bets_simple
-FIELDS TERMINATED BY ',' 
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n';
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\PlacedBets\\fd_gv_placed_bets_simple_single.csv'
 INTO TABLE romaniamain.fd_gv_placed_bets_simple
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\PlacedBets\\fd_gv_placed_bets_simple_combi.csv'
+INTO TABLE romaniamain.fd_gv_placed_bets_simple
+FIELDS TERMINATED BY ',' 
+OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n';
+
 
 
 select SummaryDate, count(distinct PlayerId) from romaniamain.fd_gv_placed_bets_simple group by 1 order by 1 desc;
-
 
 select 
 PlayerId as PlayerId,
@@ -185,10 +185,9 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from fd_settled_bets
-where BetType = 'SGL' and SettledDate = '2016-01-05'
+where BetType = 'SGL' and SettledDate = '2016-01-06'
 group by 
 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21;
-
 
 select 
 PlayerId as PlayerId,
@@ -243,7 +242,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from fd_settled_bets
-where BetType <> 'SGL' and SettledDate = '2016-01-05'
+where BetType <> 'SGL' and SettledDate = '2016-01-06'
 group by 
 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21;
 
@@ -314,7 +313,6 @@ LINES TERMINATED BY '\r\n';
 
 select SummaryDate, count(distinct PlayerId) from fd_cv_settled_bets_simple group by 1 order by 1 desc;
 
-
 select 
 PlayerId,
 Username,
@@ -350,7 +348,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from romaniamain.fd_cv_settled_bets_simple
-where SummaryDate = '2016-01-05'
+where SummaryDate = '2016-01-06'
 group by 
 PlayerId,
 Username,
@@ -446,7 +444,7 @@ from
 from romaniamain.sd_cv_sp_daily_player_summary as spdps
 left outer join romaniamain.sd_eg_daily_player_summary as egdps
 on spdps.PlayerId = egdps.PlayerId and spdps.SummaryDate = egdps.SummaryDate
-where spdps.SummaryDate = '2016-01-05' 
+where spdps.SummaryDate = '2016-01-06' 
 UNION
 select
  egdps.PlayerId
@@ -490,7 +488,7 @@ select
 from romaniamain.sd_cv_sp_daily_player_summary as spdps
 right outer join romaniamain.sd_eg_daily_player_summary as egdps
 on spdps.PlayerId = egdps.PlayerId and spdps.SummaryDate = egdps.SummaryDate
-where egdps.SummaryDate = '2016-01-05' 
+where egdps.SummaryDate = '2016-01-06' 
 ) as temp;
 
 
@@ -560,7 +558,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from romaniamain.fd_gv_placed_bets_simple
-where SummaryDate = '2016-01-05'
+where SummaryDate = '2016-01-06'
 group by PlayerId,Username,SummaryDate;
 
 
@@ -618,7 +616,7 @@ from
 from romaniamain.sd_gv_sp_daily_player_summary as spdps
 left outer join romaniamain.sd_eg_daily_player_summary as egdps
 on spdps.PlayerId = egdps.PlayerId and spdps.SummaryDate = egdps.SummaryDate
-where spdps.SummaryDate = '2016-01-05'
+where spdps.SummaryDate = '2016-01-06'
 UNION
 select
  egdps.PlayerId
@@ -644,7 +642,7 @@ select
 from romaniamain.sd_gv_sp_daily_player_summary as spdps
 right outer join romaniamain.sd_eg_daily_player_summary as egdps
 on spdps.PlayerId = egdps.PlayerId and spdps.SummaryDate = egdps.SummaryDate
-where egdps.SummaryDate = '2016-01-05'
+where egdps.SummaryDate = '2016-01-06'
 ) as temp;
 
 #use romaniamain;

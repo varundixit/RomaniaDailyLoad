@@ -1,4 +1,4 @@
-##date change 2016-01-05
+##date change 2016-01-06
 use romaniastg;
 drop table CSV_TO_STG;
 Create table CSV_TO_STG (
@@ -51,7 +51,7 @@ Create table CSV_TO_STG (
 , ProcessorCurrency varchar(10)
 )  ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\SC_IMS_2016-01-05.csv'  
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\SC_IMS_2016-01-06.csv'  
 INTO TABLE CSV_TO_STG FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 select 
@@ -304,7 +304,7 @@ CREATE TABLE `stg_csv_player_payments` (
   `Zip` varchar(200) COLLATE latin1_bin DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\CURL_Player_Payments2016-01-05.csv'  
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\CURL_Player_Payments2016-01-06.csv'  
 INTO TABLE stg_csv_player_payments FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 
@@ -457,7 +457,7 @@ LINES TERMINATED BY '\r\n'
 
 from 
 stg_player_payments
-where TxnDate = '2016-01-05'
+where TxnDate = '2016-01-06'
 group by 
 PlayerCode,
 TxnDate
