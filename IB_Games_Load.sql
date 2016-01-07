@@ -1,8 +1,8 @@
-##date change 2016-01-04
+##date change 2016-01-05
 use romaniastg;
 
-select count(*) from romaniamain.DIM_CLIENT_PARAMETER;
-select count(*) from romaniamain.dim_game_list;
+select count(*) from romaniamain.DIM_CLIENT_PARAMETER;#165
+select count(*) from romaniamain.dim_game_list;#2030
 
 use romaniamain;
 drop table DIM_CLIENT_PARAMETER;
@@ -178,7 +178,7 @@ CREATE TABLE `STG_GAMES_CSV` (
    `WindowCode` int(11) DEFAULT NULL
  ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
  
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Games\\Curl_Games2016-01-04.csv' 
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Games\\Curl_Games2016-01-05.csv' 
 INTO TABLE STG_GAMES_CSV
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"'
@@ -310,7 +310,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
 
-select count(1) from STG_GAMES where date(GameDate) = '2016-01-04';
+select count(1) from STG_GAMES where date(GameDate) = '2016-01-05';
 
 #use romaniamain;
 #DROP TABLE FD_EXD_EG_PLAYER_PRODUCT_INFO_SUMM;
@@ -452,7 +452,7 @@ join romaniamain.DIM_CLIENT_PARAMETER as cp on stg.ClientParameterCode = cp.Clie
 join romaniamain.dim_game_list as dgt on stg.Type = dgt.Type
 join romaniamain.dim_player as p on stg.PlayerId = p.PlayerID
 #join romaniamain.dd_exchange_rate as ex on p.CurrencyCode = ex.CurrencyCode
-where date(stg.GameDate) <= '2016-01-04';
+where date(stg.GameDate) <= '2016-01-05';
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Games\\FD_EXD_EG_PLAYER_PRODUCT_INFO_SUMM.csv' 
 INTO TABLE romaniamain.FD_EXD_EG_PLAYER_PRODUCT_INFO_SUMM
@@ -515,7 +515,7 @@ from STG_Games as stg
 join romaniamain.DIM_CLIENT_PARAMETER as cp on stg.ClientParameterCode = cp.ClientParameterCode
 join romaniamain.dim_game_list as dgt on stg.Type = dgt.Type
 join romaniamain.dim_player as p on stg.PlayerId = p.PlayerID
-where date(stg.GameDate) <= '2016-01-04';
+where date(stg.GameDate) <= '2016-01-05';
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Games\\FD_CSC_EG_PLAYER_PRODUCT_INFO_SUMM.csv' 
 INTO TABLE romaniamain.FD_CSC_EG_PLAYER_PRODUCT_INFO_SUMM
@@ -542,7 +542,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from romaniamain.FD_CSC_EG_PLAYER_PRODUCT_INFO_SUMM
-where SummaryDate = '2016-01-04'
+where SummaryDate = '2016-01-05'
 group by
 PlayerId,
 SummaryDate,
@@ -598,4 +598,4 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"' 
 LINES TERMINATED BY '\r\n' 
 from  romaniamain.fd_csc_eg_player_product_info_summ 
-where SummaryDate = '2016-01-04';
+where SummaryDate = '2016-01-05';

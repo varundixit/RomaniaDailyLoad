@@ -351,14 +351,3 @@ on duplicate key update
 ;
 
 commit;
-
-select sum(fact.CurrentCashBalance), sum(fact.CurrentBonusBalance) from  romaniamain.player_login_first_last as fact join romaniastage.stg_dim_player as dim
-on fact.PlayerId = dim.PlayerId and dim.SignupDate >= '2015-11-26' 
-
-
-select * from romaniamain.player_login_first_last
-
-select * from romaniamain.player_login_first_last where PlayerId = 10274284;
-select * from romaniamain.fd_daily_logins_completed  where PlayerId = 10274284;
-
-select * from romaniastage.stg_daily_logins where PlayerCode = 10274284;

@@ -918,6 +918,9 @@ lines terminated by '\r\n';
 
 select * from romaniamain.DIM_PLAYER where PlayerID is null;
 
+
+####### Exchange Rate Load
+
 drop table STG_Exchange_Rate;
 CREATE TABLE `STG_Exchange_Rate` (
   `EffectiveTimestamp` datetime DEFAULT NULL,
