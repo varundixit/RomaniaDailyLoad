@@ -1,4 +1,4 @@
-##date change 2016-01-06
+##date change 2016-01-09
 use romaniastg;
 
 select count(*) from romaniamain.DIM_CLIENT_PARAMETER;#165
@@ -178,7 +178,7 @@ CREATE TABLE `STG_GAMES_CSV` (
    `WindowCode` int(11) DEFAULT NULL
  ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
  
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Games\\Curl_Games2016-01-06.csv' 
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Games\\Curl_Games2016-01-09.csv' 
 INTO TABLE STG_GAMES_CSV
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"'
@@ -310,76 +310,9 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
 
-select count(1) from STG_GAMES where date(GameDate) = '2016-01-06';
+#select count(1) from STG_GAMES where date(GameDate) = '2016-01-09';
 
-#use romaniamain;
-#DROP TABLE FD_EXD_EG_PLAYER_PRODUCT_INFO_SUMM;
-CREATE TABLE `FD_EXD_EG_PLAYER_PRODUCT_INFO_SUMM` (
-   `AccumulatedBetRefund` decimal(18,4) DEFAULT NULL,
-   `Autoplay` decimal(18,4) DEFAULT NULL,
-   `Balance` decimal(18,4) DEFAULT NULL,
-   `Bet` decimal(18,4) DEFAULT NULL,
-   `CashBet` decimal(18,4) DEFAULT NULL,
-   `BetExcludingTie` decimal(18,4) DEFAULT NULL,
-   `BetRefund` decimal(18,4) DEFAULT NULL,
-   `BGType` varchar(200) DEFAULT NULL,
-   `BonusBalance` decimal(18,4) DEFAULT NULL,
-   `BonusBet` decimal(18,4) DEFAULT NULL,
-   `BonusCode` int(11) DEFAULT NULL,
-   `BonusFG` varchar(200) DEFAULT NULL,
-   `BonusJackpotWin` decimal(18,4) DEFAULT NULL,
-   `BonusType` varchar(200) DEFAULT NULL,
-   `BonusWageringAmount` decimal(18,4) DEFAULT NULL,
-   `BonusWin` decimal(18,4) DEFAULT NULL,
-   `ChannelCode` int(11) DEFAULT NULL,
-   `ClientParameterCode` int(11) DEFAULT NULL,
-   `Code` int(11) DEFAULT NULL,
-   `CoinSize` varchar(200) DEFAULT NULL,
-   `CompPointsBalance` decimal(18,4) DEFAULT NULL,
-   `CompsAmount` decimal(18,4) DEFAULT NULL,
-   `CurrentBet` decimal(18,4) DEFAULT NULL,
-   `CurrentBonusBet` decimal(18,4) DEFAULT NULL,
-   `DealerCode` int(11) DEFAULT NULL,
-   `DEVICEContextCode` int(11) DEFAULT NULL,
-   `FGWinAmount` decimal(18,4) DEFAULT NULL,
-   `SummaryDate` date default null,
-   `GameDate` datetime DEFAULT NULL,
-   `GameID` varchar(200) DEFAULT NULL,
-   `Info` varchar(2000) DEFAULT NULL,
-   `InitialBet` decimal(18,4) DEFAULT NULL,
-   `JackpotBet` decimal(18,4) DEFAULT NULL,
-   `JackpotWin` decimal(18,4) DEFAULT NULL,
-   `LiveGameTableCode` int(11) DEFAULT NULL,
-   `LiveNetworkCode` int(11) DEFAULT NULL,
-   `LPWin` decimal(18,4) DEFAULT NULL,
-   `MPGameCode` int(11) DEFAULT NULL,
-   `ParentGameCode` int(11) DEFAULT NULL,
-   `ParentGameDate` varchar(200) DEFAULT NULL,
-   `PendingBonusCode` int(11) DEFAULT NULL,
-   `PlayerId` int(11) DEFAULT NULL,
-   `CurrencyCode` varchar(50) DEFAULT NULL,
-   `RecordID` varchar(200) DEFAULT NULL,
-   `RemoteIP` varchar(200) DEFAULT NULL,
-   `SessionID` varchar(200) DEFAULT NULL,
-   `SlotLines` varchar(200) DEFAULT NULL,
-   `SPWin` varchar(200) DEFAULT NULL,
-   `TurnoverCommissionAllocation` decimal(18,4) DEFAULT NULL,
-   `TurnoverCommissionType` varchar(200) DEFAULT NULL,
-   `Type` varchar(200) DEFAULT NULL,
-   `WageringBonusCode` int(11) DEFAULT NULL,
-   `WageringPendingBonusCode` int(11) DEFAULT NULL,
-   `Win` decimal(18,4) DEFAULT NULL,
-   `CashWin` decimal(18,4) DEFAULT NULL,
-   `WindowCode` int(11) DEFAULT NULL,
-   `ClientPlatform` varchar(100) default null,
-   `ClientType` varchar(100) default null,
-   `CasinoType` varchar(100) default null,
-   `GameType` varchar(100) default null,
-   `GameName` varchar(100) default null,
-   `RomDummy` int
- ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
- 
- use romaniastg;
+use romaniastg;
  select 
   stg.AccumulatedBetRefund
 , stg.Autoplay
@@ -452,8 +385,75 @@ join romaniamain.DIM_CLIENT_PARAMETER as cp on stg.ClientParameterCode = cp.Clie
 join romaniamain.dim_game_list as dgt on stg.Type = dgt.Type
 join romaniamain.dim_player as p on stg.PlayerId = p.PlayerID
 #join romaniamain.dd_exchange_rate as ex on p.CurrencyCode = ex.CurrencyCode
-where date(stg.GameDate) <= '2016-01-06';
+where date(stg.GameDate) <= '2016-01-09';
 
+#use romaniamain;
+#DROP TABLE FD_EXD_EG_PLAYER_PRODUCT_INFO_SUMM;
+CREATE TABLE `FD_EXD_EG_PLAYER_PRODUCT_INFO_SUMM` (
+   `AccumulatedBetRefund` decimal(18,4) DEFAULT NULL,
+   `Autoplay` decimal(18,4) DEFAULT NULL,
+   `Balance` decimal(18,4) DEFAULT NULL,
+   `Bet` decimal(18,4) DEFAULT NULL,
+   `CashBet` decimal(18,4) DEFAULT NULL,
+   `BetExcludingTie` decimal(18,4) DEFAULT NULL,
+   `BetRefund` decimal(18,4) DEFAULT NULL,
+   `BGType` varchar(200) DEFAULT NULL,
+   `BonusBalance` decimal(18,4) DEFAULT NULL,
+   `BonusBet` decimal(18,4) DEFAULT NULL,
+   `BonusCode` int(11) DEFAULT NULL,
+   `BonusFG` varchar(200) DEFAULT NULL,
+   `BonusJackpotWin` decimal(18,4) DEFAULT NULL,
+   `BonusType` varchar(200) DEFAULT NULL,
+   `BonusWageringAmount` decimal(18,4) DEFAULT NULL,
+   `BonusWin` decimal(18,4) DEFAULT NULL,
+   `ChannelCode` int(11) DEFAULT NULL,
+   `ClientParameterCode` int(11) DEFAULT NULL,
+   `Code` int(11) DEFAULT NULL,
+   `CoinSize` varchar(200) DEFAULT NULL,
+   `CompPointsBalance` decimal(18,4) DEFAULT NULL,
+   `CompsAmount` decimal(18,4) DEFAULT NULL,
+   `CurrentBet` decimal(18,4) DEFAULT NULL,
+   `CurrentBonusBet` decimal(18,4) DEFAULT NULL,
+   `DealerCode` int(11) DEFAULT NULL,
+   `DEVICEContextCode` int(11) DEFAULT NULL,
+   `FGWinAmount` decimal(18,4) DEFAULT NULL,
+   `SummaryDate` date default null,
+   `GameDate` datetime DEFAULT NULL,
+   `GameID` varchar(200) DEFAULT NULL,
+   `Info` varchar(2000) DEFAULT NULL,
+   `InitialBet` decimal(18,4) DEFAULT NULL,
+   `JackpotBet` decimal(18,4) DEFAULT NULL,
+   `JackpotWin` decimal(18,4) DEFAULT NULL,
+   `LiveGameTableCode` int(11) DEFAULT NULL,
+   `LiveNetworkCode` int(11) DEFAULT NULL,
+   `LPWin` decimal(18,4) DEFAULT NULL,
+   `MPGameCode` int(11) DEFAULT NULL,
+   `ParentGameCode` int(11) DEFAULT NULL,
+   `ParentGameDate` varchar(200) DEFAULT NULL,
+   `PendingBonusCode` int(11) DEFAULT NULL,
+   `PlayerId` int(11) DEFAULT NULL,
+   `CurrencyCode` varchar(50) DEFAULT NULL,
+   `RecordID` varchar(200) DEFAULT NULL,
+   `RemoteIP` varchar(200) DEFAULT NULL,
+   `SessionID` varchar(200) DEFAULT NULL,
+   `SlotLines` varchar(200) DEFAULT NULL,
+   `SPWin` varchar(200) DEFAULT NULL,
+   `TurnoverCommissionAllocation` decimal(18,4) DEFAULT NULL,
+   `TurnoverCommissionType` varchar(200) DEFAULT NULL,
+   `Type` varchar(200) DEFAULT NULL,
+   `WageringBonusCode` int(11) DEFAULT NULL,
+   `WageringPendingBonusCode` int(11) DEFAULT NULL,
+   `Win` decimal(18,4) DEFAULT NULL,
+   `CashWin` decimal(18,4) DEFAULT NULL,
+   `WindowCode` int(11) DEFAULT NULL,
+   `ClientPlatform` varchar(100) default null,
+   `ClientType` varchar(100) default null,
+   `CasinoType` varchar(100) default null,
+   `GameType` varchar(100) default null,
+   `GameName` varchar(100) default null,
+   `RomDummy` int
+ ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+ 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Games\\FD_EXD_EG_PLAYER_PRODUCT_INFO_SUMM.csv' 
 INTO TABLE romaniamain.FD_EXD_EG_PLAYER_PRODUCT_INFO_SUMM
 FIELDS TERMINATED BY ',' 
@@ -515,7 +515,7 @@ from STG_Games as stg
 join romaniamain.DIM_CLIENT_PARAMETER as cp on stg.ClientParameterCode = cp.ClientParameterCode
 join romaniamain.dim_game_list as dgt on stg.Type = dgt.Type
 join romaniamain.dim_player as p on stg.PlayerId = p.PlayerID
-where date(stg.GameDate) <= '2016-01-06';
+where date(stg.GameDate) <= '2016-01-09';
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Games\\FD_CSC_EG_PLAYER_PRODUCT_INFO_SUMM.csv' 
 INTO TABLE romaniamain.FD_CSC_EG_PLAYER_PRODUCT_INFO_SUMM
@@ -542,12 +542,8 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from romaniamain.FD_CSC_EG_PLAYER_PRODUCT_INFO_SUMM
-where SummaryDate = '2016-01-06'
-group by
-PlayerId,
-SummaryDate,
-CurrencyCode;
-
+where SummaryDate = '2016-01-09'
+group by PlayerId,SummaryDate,CurrencyCode;
 
 #use romaniamain;
 #drop table sd_eg_daily_player_summary;
@@ -598,4 +594,4 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"' 
 LINES TERMINATED BY '\r\n' 
 from  romaniamain.fd_csc_eg_player_product_info_summ 
-where SummaryDate = '2016-01-06';
+where SummaryDate = '2016-01-09';

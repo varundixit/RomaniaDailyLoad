@@ -15,32 +15,11 @@ MarketPref  varchar(500),
 BetAmt decimal(18,6)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*drop table romaniastage.stg_sports_channel_pref;
-create table romaniastage.stg_sports_channel_pref(
-PlayerId integer default null,
-Channel varchar(500),
-BetCount integer
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-drop table romaniastage.stg_egaming_channel_pref;
-create table romaniastage.stg_egaming_channel_pref(
-PlayerId integer default null,
-Channel varchar(500),
-TotalStake decimal(18,6)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;*/
-
-
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\PlayerPrefSports.csv'
 INTO TABLE romaniastage.stg_sports_prod_pref FIELDS TERMINATED BY ';'  ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\PlayerPrefCasino.csv'
 INTO TABLE romaniastage.stg_egaming_prod_pref FIELDS TERMINATED BY ';'  ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-
-/*LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\ChannelPreferenceSports.csv'
-INTO TABLE romaniastage.stg_sports_channel_pref FIELDS TERMINATED BY ';'  ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\ChannelPreferenceGaming.csv'
-INTO TABLE romaniastage.stg_egaming_channel_pref FIELDS TERMINATED BY ';'  ENCLOSED BY '"' LINES TERMINATED BY '\r\n';*/
 
 commit;
 
@@ -134,10 +113,33 @@ commit;
 
 #####file to be saved as Sports Preferences
 select PlayerId,
-PreferredSport1,PreferredLeague1,PreferredTeam1,BetCount1,(BetCount1/OverallBet)*100 betPer,
-PreferredSport2,PreferredLeague2,PreferredTeam2,BetCount2,(BetCount2/OverallBet)*100 betPer,
-PreferredSport3,PreferredLeague3,PreferredTeam3,BetCount3,(BetCount3/OverallBet)*100 betPer,
-PreferredSport4,PreferredLeague4,PreferredTeam4,BetCount4,(BetCount4/OverallBet)*100 betPer,OverallBet from 
+case 
+	when round(betper1) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper1 > 25 then PreferredSport1 
+    when round(betper2) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper2 > 25 then PreferredSport2
+    when round(betper3) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper3 > 25 then PreferredSport3 
+    when round(betper4) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper4 > 25 then PreferredSport4     
+    else 'Hybrid'
+    end PreferredSport,
+case 
+	when round(betper1) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper1 > 25 then PreferredLeague1 
+	when round(betper2) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper2 > 25 then PreferredLeague2     
+	when round(betper3) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper3 > 25 then PreferredLeague3
+  	when round(betper4) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper4 > 25 then PreferredLeague4
+    else 'Hybrid'
+    end PreferredLeague,
+case 
+	when round(betper1) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper1 > 25 then PreferredTeam1 
+	when round(betper2) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper2 > 25 then PreferredTeam2 
+	when round(betper3) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper3 > 25 then PreferredTeam3     
+	when round(betper4) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper4 > 25 then PreferredTeam4         
+    else 'Hybrid'
+    end PreferredTeam
+from (
+select PlayerId,
+PreferredSport1,PreferredLeague1,PreferredTeam1,BetCount1,coalesce((BetCount1/OverallBet)*100,0) betPer1,
+PreferredSport2,PreferredLeague2,PreferredTeam2,BetCount2,coalesce((BetCount2/OverallBet)*100,0) betPer2,
+PreferredSport3,PreferredLeague3,PreferredTeam3,BetCount3,coalesce((BetCount3/OverallBet)*100,0) betPer3,
+PreferredSport4,PreferredLeague4,PreferredTeam4,BetCount4,coalesce((BetCount4/OverallBet)*100,0) betPer4,OverallBet from 
 (select PlayerId,
 max(case rank when 1 then PreferredSport end) as PreferredSport1,
 max(case rank when 1 then PreferredLeague end) as PreferredLeague1,
@@ -163,10 +165,44 @@ max(case rank when 0 then BetCount end) OverallBet
 
 from romaniastage.stg_sports_prod_pref_tf
 # where playerid = 10274175
-group by PlayerId) ab;
+group by PlayerId) ab) cd
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\SportsPreferedProduct.csv'
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n';
+
+drop table romaniamain.SportsPreferedProduct;
+create table romaniamain.SportsPreferedProduct(
+PlayerId integer,
+PreferredSport varchar(200),
+PreferredLeague varchar(200),
+PreferredTeam varchar(200)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\SportsPreferedProduct.csv'
+INTO TABLE romaniamain.SportsPreferedProduct
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n';
+
 
 #####file to be saved as Casino Preferences
 select PlayerId,
+case 
+	when round(betper1) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper1 > 25 then CategoryPref1 
+    when round(betper2) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper2 > 25 then CategoryPref2
+    when round(betper3) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper3 > 25 then CategoryPref3
+    when round(betper4) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper4 > 25 then CategoryPref4     
+    else 'Hybrid'
+    end CategoryPref,
+case 
+	when round(betper1) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper1 > 25 then MarketPref1 
+	when round(betper2) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper2 > 25 then MarketPref2
+	when round(betper3) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper3 > 25 then MarketPref3
+  	when round(betper4) = round(GREATEST(betper1,betper2,betper3,betper4)) and betper4 > 25 then MarketPref4
+    else 'Hybrid'
+    end MarketPref
+from (select PlayerId,
 CategoryPref1,MarketPref1,Betamt1,(Betamt1/OverallBet)*100 betPer1,
 CategoryPref2,MarketPref2,Betamt2,(Betamt2/OverallBet)*100 betPer2,
 CategoryPref3,MarketPref3,Betamt3,(Betamt3/OverallBet)*100 betPer3,
@@ -192,29 +228,50 @@ max(case rank when 0 then BetAmt end) OverallBet
 
 from romaniastage.stg_egaming_prod_pref_tf
 # where playerid = 10274175
-group by PlayerId) ab;
+group by PlayerId) ab) cd
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\EGPreferedProduct.csv'
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n';
 
+drop table romaniamain.EGPreferedProduct;
+create table romaniamain.EGPreferedProduct(
+PlayerId integer,
+CategoryPref varchar(200),
+MarketPref varchar(200)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\EGPreferedProduct.csv'
+INTO TABLE romaniamain.EGPreferedProduct
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n';
 
 ############channel prefferences Sports
-drop table romaniastage.stg_sports_channel_pref;
-create table romaniastage.stg_sports_channel_pref(
+drop table romaniamain.stg_sports_channel_pref;
+create table romaniamain.stg_sports_channel_pref(
 PlayerId integer default null,
 Channel varchar(200)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\PlayerChannelPrefSP.csv'
-into table romaniastage.stg_sports_channel_pref FIELDS TERMINATED BY ';' 
+into table romaniamain.stg_sports_channel_pref FIELDS TERMINATED BY ';' 
 ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
 
+
+select * from romaniamain.stg_sports_channel_pref; SportChannlePreferences
+
 ############channel prefferences Casino
-drop table romaniastage.stg_eg_channel_pref;
-create table romaniastage.stg_eg_channel_pref(
+drop table romaniamain.stg_eg_channel_pref;
+create table romaniamain.stg_eg_channel_pref(
 PlayerId integer default null,
 Channel varchar(200)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\PlayerChannelPrefEG.csv'
-into table romaniastage.stg_eg_channel_pref FIELDS TERMINATED BY ';' 
+into table romaniamain.stg_eg_channel_pref FIELDS TERMINATED BY ';' 
 ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
+
+select * from romaniastage.stg_eg_channel_pref;

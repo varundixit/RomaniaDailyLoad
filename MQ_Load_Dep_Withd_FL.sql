@@ -53,9 +53,6 @@ CREATE TABLE `User_Dep_With_First_Last` (
   PRIMARY KEY (`PlayerId`)
 ) ENGINE=innodb DEFAULT CHARSET=utf8;
 
-commit;
-
-
 insert into romaniamain.User_Dep_With_First_Last (
      PlayerId
 	,FirstDepositTime
@@ -209,6 +206,7 @@ on duplicate key update
 ,	LastAttemptWithdrawalTime = IF((src.AcceptTime > LastAttemptWithdrawalTime OR LastAttemptWithdrawalTime is null) AND src.Type = 'withdraw', src.AcceptTime, LastAttemptWithdrawalTime)
 
 ;
+commit;
 
 # to be exported
 select * from romaniamain.User_Dep_With_First_Last;

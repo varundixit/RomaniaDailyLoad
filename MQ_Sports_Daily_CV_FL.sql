@@ -566,7 +566,7 @@ on duplicate key update
 , CmbLastBetTime = IF((src.BetClass = 'Combi' and src.BetTime >= CmbLastBetTime) OR (CmbLastBetTime is null),src.BetTime,CmbLastBetTime)
 
 ;
+commit;
 
 select count(*) from romaniamain.sp_cv_player_first_last_totals;
 
-commit;

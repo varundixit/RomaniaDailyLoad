@@ -1,4 +1,4 @@
-##dates to be changed 2016-01-06
+##dates to be changed 2016-01-09
 
 use romaniamain;
 
@@ -28,7 +28,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from fd_placed_bets
-where BetType <> 'SGL' and BetDate = '2016-01-06'
+where BetType <> 'SGL' and BetDate = '2016-01-09'
 group by 
 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16;
 
@@ -58,7 +58,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from fd_placed_bets
-where BetType = 'SGL' and BetDate = '2016-01-06';
+where BetType = 'SGL' and BetDate = '2016-01-09';
 
 select 
 PlayerId as PlayerId,
@@ -94,7 +94,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from fd_settled_bets
-where BetType <> 'SGL' and SettledDate = '2016-01-06'
+where BetType <> 'SGL' and SettledDate = '2016-01-09'
 group by 
 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16;
 
@@ -132,7 +132,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from fd_settled_bets
-where BetType = 'SGL' and SettledDate = '2016-01-06'
+where BetType = 'SGL' and SettledDate = '2016-01-09'
 group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16;
 
 
@@ -150,3 +150,55 @@ OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 from dim_player
 where PlayerID is not null;
+
+
+SELECT 
+ dps.PlayerID
+,coalesce(COUNT(distinct case when (dps.SPStakeAmt+dps.EGBet) > 0 then dps.SummaryDate end),0) as SystemAPD
+,coalesce(COUNT(distinct case when (dps.SPStakeAmt) > 0 then dps.SummaryDate end),0) as SportsAPD
+,coalesce(COUNT(distinct case when (dps.EGBet) > 0 then dps.SummaryDate end),0) as EGamingAPD
+FROM 
+romaniamain.sd_gv_daily_player_summary as dps
+join romaniamain.dim_player as p on dps.PlayerId = p.PlayerId
+where dps.SummaryDate = '2016-01-09'
+group by dps.PlayerID
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\PlayerAPD_Daily.csv'
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+;
+
+
+select 
+p.PlayerId,
+coalesce(sports.SportsBetCount,0),
+coalesce(eg.EgBetCount,0)
+from 
+romaniamain.dim_player as p
+left outer join
+(select PlayerId, count(BetSlipId) as SportsBetCount from romaniamain.fd_cv_settled_bets_simple where SummaryDate = '2016-01-09' group by 1) as sports
+on p.PlayerId = sports.PlayerId
+left outer join
+(select PlayerId, count(Bet) as EgBetCount from romaniamain.fd_csc_eg_player_product_info_summ where SummaryDate = '2016-01-09' group by 1) as eg
+on p.PlayerId = eg.PlayerId
+where p.PlayerId is not null and (sports.SportsBetCount > 0 OR eg.EgBetCount > 0)
+group by p.PlayerId
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\PlayerBetCounts_Daily.csv'
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n';
+
+
+select
+PlayerId, CAST(coalesce(SUM(egPoints),0.0) as decimal(18,6)) as TotalEgPoints
+from ( select eg.PlayerId,IF((eg.Bet*egm.Margins) > eg.Bet,eg.Bet,(eg.Bet*egm.Margins)) as egPoints
+from romaniamain.fd_csc_eg_player_product_info_summ as eg
+join (select CasinoType, (TotalGrossProfit/TotalBet) as Margins
+from ( select CasinoType,SUM(Bet) as TotalBet,SUM(Win) as TotalWin,SUM(Bet-Win) as TotalGrossProfit
+from romaniamain.fd_csc_eg_player_product_info_summ
+group by 1) as temp) as egm on eg.CasinoType = egm.CasinoType) as EgPoints
+group by 1
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\TotalEGPoints.csv'
+FIELDS TERMINATED BY ';' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n';

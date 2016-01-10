@@ -1,4 +1,4 @@
-##date change 2016-01-06
+##date change 2016-01-09
 use romaniastg;
 drop table stg_placed_bets_csv;
 CREATE TABLE `stg_placed_bets_csv` (
@@ -53,7 +53,7 @@ CREATE TABLE `stg_placed_bets_csv` (
   `Operator` varchar(20) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\PlacedBets\\Placed_Bets2016-01-06.csv' 
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\PlacedBets\\Placed_Bets2016-01-09.csv' 
 INTO TABLE  stg_placed_bets_csv
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
@@ -301,3 +301,5 @@ INTO TABLE  romaniamain.fd_placed_bets
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
+
+

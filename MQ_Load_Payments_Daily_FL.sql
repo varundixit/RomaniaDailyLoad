@@ -412,7 +412,7 @@ on duplicate key update
 ,   FirstDepositDate = src.FirstDepositDate
 
 ;
-
+commit;
 
 select SummaryDate, count(*) from Daily_User_First_Last group by 1 order by 1 desc;
 
@@ -441,4 +441,3 @@ join User_Dep_Curr_Status as lt on dfl.Username = lt.Username;
 
 select * from User_Dep_Curr_Status;
 
-commit;

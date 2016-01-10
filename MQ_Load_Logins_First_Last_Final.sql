@@ -56,10 +56,12 @@ ClientPlatform = nullif(@vClientPlatform, ''),
 LoginDeviceTypeCode = nullif(@vLoginDeviceTypeCode, ''),
 LoginVenueCode = nullif(@vLoginVenueCode, '');
 
+commit;
+
 select count(*) from romaniastage.stg_daily_logins where LogoutDate is null;
 
 
-######################################################### Completed Logins ################################################################
+######################################################### Open Logins ################################################################
 
 #use romaniamain;
 #drop table fd_daily_logins_open;

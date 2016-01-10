@@ -164,6 +164,59 @@ select
 , L.CurrentCashBalance as CurrentCashBalance
 , L.CurrentBonusBalance as CurrentBonusBalance
 
+, ed.ExtremeDeposit
+, dw.LastDepositAmount
+, Case when dw.LastDepositAmount > ed.ExtremeDeposit then 'ExtremeDepositor' else 'NA' end as IMSDepPlayerOutlier
+
+, (LastCashBetAmt+LastBonusBetAmt-LastCashWinAmt-LastBonusWinAmt) as LastGrossProfit
+, eb.ExtremeWin
+, eb.ExtremeLoss
+, Case when LastCashBetAmt+LastBonusBetAmt-LastCashWinAmt-LastBonusWinAmt < eb.ExtremeWin or 
+			LastCashBetAmt+LastBonusBetAmt-LastCashWinAmt-LastBonusWinAmt > eb.ExtremeLoss then 'HighWinLoss' else 'NA' end EGBetPlayerOutlier
+
+, spp.PreferredSport
+, spp.PreferredLeague
+, spp.PreferredTeam
+
+, egpp.CategoryPref
+, egpp.MarketPref
+
+, spch.Channel SportsChannelPreference
+, egch.Channel EGChannelPreference
+
+, pv.playerValue
+
+, '' BonusSB
+, '' BonusEG
+
+, apd.LTSportsAPD
+, apd.LTEGamingAPD
+, apd.LTSystemAPD
+
+#quality variables
+, egp.LTEGPoint
+, LTSpPoint
+, SGLAvgOdds
+, SGLSTDOdds
+, SGLCovOdds
+, CMBAvgOdds
+, CMBSTDOdds
+, CMBCovOdds
+, SGLTotalWinninStake
+, SGLTotalStake
+, SGLTotalReturn
+, SGLTotalWinningBetCount
+, SGLTotalBetCount
+, CMBTotalWinninStake
+, CMBTotalStake
+, CMBTotalReturn
+, CMBTotalWinningBetCount
+, CMBTotalBetCount
+, SGLWinningRatioBetCounts
+, SGLWinningRatioStake
+, CMBWinningRatioBetCounts
+, CMBWinningRatioStake
+
 from
 romaniastage.stg_dim_player as p
 left outer join romaniamain.user_dep_with_first_last as dw on p.PlayerId = dw.PlayerId
@@ -171,4 +224,20 @@ left outer join romaniamain.sp_gv_player_first_last as gv on p.PlayerId = gv.Pla
 left outer join romaniamain.sp_cv_player_first_last_totals as cv on p.PlayerId = cv.PlayerId
 left outer join romaniamain.eg_player_first_last_totals as eg on p.PlayerId = eg.PlayerId
 left outer join romaniamain.player_login_first_last as L on p.PlayerId = L.PlayerId
-;
+left outer join romaniamain.cashier_extreme_deposits as ed on p.PlayerID = ed.PlayerID
+left outer join romaniamain.eg_player_extreme_bets as eb on p.PlayerID = eb.PlayerID
+
+left outer join romaniamain.SportsPreferedProduct as spp on p.PlayerID = spp.PlayerId
+left outer join romaniamain.EGPreferedProduct as egpp on p.PlayerID = egpp.PlayerId
+left outer join romaniamain.stg_sports_channel_pref as spch on p.PlayerID = spch.playerid 
+left outer join romaniamain.stg_eg_channel_pref as egch on p.PlayerID = egch.playerid 
+left outer join romaniamain.PlayerValue as pv on p.PlayerId = pv.PlayerID 
+left outer join romaniamain.f_player_lifetime_apd apd on p.playerId = apd.playerId
+left outer join romaniamain.sp_cv_player_volatility as vo on p.PLayerId = vo.playerId
+left outer join romaniamain.eg_LT_player_points as egp on p.PlayerId = egp.PlayerId
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\CRM_Report.csv'
+FIELDS TERMINATED BY ',' 
+OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n';
+
+#select count(1) from romaniamain.PlayerValue
