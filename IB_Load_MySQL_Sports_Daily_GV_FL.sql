@@ -127,13 +127,14 @@ coalesce(BonusBalanceRefund,0) as BonusBalanceRefund,
 coalesce(TokenRefund,0) as TokenRefund,
 coalesce(CashOutStake,0) as CashOutStake,
 coalesce(CashOutWin,0) as CashOutWin
+from fd_settled_bets
+where BetType = 'SGL' and SettledDate = '2016-01-10'
+group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\mysql_fd_cv_placed_bets_simple_sgl.csv'
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
-from fd_settled_bets
-where BetType = 'SGL' and SettledDate = '2016-01-10'
-group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16;
+;
 
 
 select 
