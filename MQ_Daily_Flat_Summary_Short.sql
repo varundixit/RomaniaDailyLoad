@@ -218,10 +218,8 @@ select
 , CMBWinningRatioBetCounts
 , CMBWinningRatioStake
 
-, ch.AdvChannel
 from
 romaniafl.stg_dim_player as p
-left outer join romaniafl.Dim_Player_Channel ch on p.playerId = ch.playerid
 left outer join romaniafl.user_dep_with_first_last as dw on p.PlayerId = dw.PlayerId
 left outer join romaniafl.sp_gv_player_first_last as gv on p.PlayerId = gv.PlayerId
 left outer join romaniafl.sp_cv_player_first_last_totals as cv on p.PlayerId = cv.PlayerId
