@@ -1,0 +1,37 @@
+InfoBright Load
+
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Dim_Player_Load.sql
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_PlayerAdvertisersLoad.sql
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Logins.sql (date change)
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Balance_Load.sql (date change)
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Payments_Load.sql (date change)
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Games_Load.sql (date change)
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Placed_Bets_Load.sql (date change)
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Settled_Bets_Load.sql (date change)
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Rejected_Bets_Load.sql (date change)
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Voided_Bets_Load.sql (date change)
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Open_Bets_Load.sql (date change)
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Temp_DPS.sql (date change)
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Daily_Sumary_Merged.sql (date change)
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Load_MySQL_Sports_Daily_GV_FL.sql (date change)
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_PlayerPreferences.sql
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_SP_CV_Player_Volatility.sql
+
+
+MySQL
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\MQ_Load_Payments_Daily_FL.sql
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\MQ_Load_Dep_Withd_FL.sql
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\MQ_Load_Games_FL.sql
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\MQ_Sports_Daily_GV_FL.sql
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\MQ_Sports_Daily_CV_FL.sql
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\MQ_PlayerLifeTimeAPD.sql
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\MQ_Load_Logins_First_Last_Final.sql
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\MQ_PlayerPreferences.sql (Player Preferences)
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\MQ_Player_Volatility.sql
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\MQ_PlayerValue.sql
+#C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\MQ_Daily_Flat_Summary_Short.sql(CRM Report)
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\MQ_Load_For_IB.sql
+
+InfoBright Load
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Load_For_CRM_Report.sql
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Daily_Flat_Summary_Short.sql(CRM Report)

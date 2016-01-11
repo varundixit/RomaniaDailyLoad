@@ -99,3 +99,32 @@ into table romaniaStg.Advertisers
 fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\r\n';*/
+
+
+select p.PlayerID,p.username,adv.email advEmail,
+case when lower(adv.email) = 'agentii@efortuna.ro' then 'RETAIL'
+when lower(adv.email) like 'iulian.dumitru@efortuna.ro' or lower(adv.email) like 'superpont1x2@gmail.com' then 'DIGITAL'
+when lower(adv.email) like 'defaulte8' then 'Generic'
+else 'AFFILIATE' end advChannel 
+from romaniastg.stg_ims_player p
+left outer join (select ns.username,coalesce(ad.email,affiliate) email
+from romaniastg.new_signup ns
+left outer join romaniastg.advertisers ad on ns.affiliate = ad.username) adv on (adv.username = p.username)
+INTO OUTFILE 'C:\\Users\\Public\\Downloads\\DimPlayerChannel.csv'
+FIELDS TERMINATED BY ',' 
+OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n';
+
+Drop table romaniafl.Dim_Player_Channel;
+Create table romaniafl.Dim_Player_Channel(
+PlayerId integer,
+Username varchar(50),
+AdvEmail varchar(100),
+AdvChannel varchar(50)
+) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+
+Load data infile 'C:\\Users\\Public\\Downloads\\DimPlayerChannel.csv'
+into table romaniafl.Dim_Player_Channel
+fields terminated by ','
+optionally enclosed by '"'
+lines terminated by '\r\n';

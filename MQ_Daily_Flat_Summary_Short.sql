@@ -1,4 +1,5 @@
 ##output to be saved as CRM_Report
+use romaniafl;
 select
   p.PlayerId
 , p.Gender
@@ -217,29 +218,23 @@ select
 , CMBWinningRatioBetCounts
 , CMBWinningRatioStake
 
+, ch.AdvChannel
 from
-romaniastage.stg_dim_player as p
-left outer join romaniamain.user_dep_with_first_last as dw on p.PlayerId = dw.PlayerId
-left outer join romaniamain.sp_gv_player_first_last as gv on p.PlayerId = gv.PlayerId
-left outer join romaniamain.sp_cv_player_first_last_totals as cv on p.PlayerId = cv.PlayerId
-left outer join romaniamain.eg_player_first_last_totals as eg on p.PlayerId = eg.PlayerId
-left outer join romaniamain.player_login_first_last as L on p.PlayerId = L.PlayerId
-left outer join romaniamain.cashier_extreme_deposits as ed on p.PlayerID = ed.PlayerID
-left outer join romaniamain.eg_player_extreme_bets as eb on p.PlayerID = eb.PlayerID
+romaniafl.stg_dim_player as p
+left outer join romaniafl.Dim_Player_Channel ch on p.playerId = ch.playerid
+left outer join romaniafl.user_dep_with_first_last as dw on p.PlayerId = dw.PlayerId
+left outer join romaniafl.sp_gv_player_first_last as gv on p.PlayerId = gv.PlayerId
+left outer join romaniafl.sp_cv_player_first_last_totals as cv on p.PlayerId = cv.PlayerId
+left outer join romaniafl.eg_player_first_last_totals as eg on p.PlayerId = eg.PlayerId
+left outer join romaniafl.player_login_first_last as L on p.PlayerId = L.PlayerId
+left outer join romaniafl.cashier_extreme_deposits as ed on p.PlayerID = ed.PlayerID
+left outer join romaniafl.eg_player_extreme_bets as eb on p.PlayerID = eb.PlayerID
 
-left outer join romaniamain.SportsPreferedProduct as spp on p.PlayerID = spp.PlayerId
-left outer join romaniamain.EGPreferedProduct as egpp on p.PlayerID = egpp.PlayerId
-left outer join romaniamain.stg_sports_channel_pref as spch on p.PlayerID = spch.playerid 
-left outer join romaniamain.stg_eg_channel_pref as egch on p.PlayerID = egch.playerid 
-left outer join romaniamain.PlayerValue as pv on p.PlayerId = pv.PlayerID 
-left outer join romaniamain.f_player_lifetime_apd apd on p.playerId = apd.playerId
-left outer join romaniamain.sp_cv_player_volatility as vo on p.PLayerId = vo.playerId
-left outer join romaniamain.eg_LT_player_points as egp on p.PlayerId = egp.PlayerId;
-
-
-/*INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\CRM_Report.csv'
-FIELDS TERMINATED BY ',' 
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n';*/
-
-#select count(1) from romaniamain.PlayerValue
+left outer join romaniafl.SportsPreferedProduct as spp on p.PlayerID = spp.PlayerId
+left outer join romaniafl.EGPreferedProduct as egpp on p.PlayerID = egpp.PlayerId
+left outer join romaniafl.stg_sports_channel_pref as spch on p.PlayerID = spch.playerid 
+left outer join romaniafl.stg_eg_channel_pref as egch on p.PlayerID = egch.playerid 
+left outer join romaniafl.PlayerValue as pv on p.PlayerId = pv.PlayerID 
+left outer join romaniafl.f_player_lifetime_apd apd on p.playerId = apd.playerId
+left outer join romaniafl.sp_cv_player_volatility as vo on p.PLayerId = vo.playerId
+left outer join romaniafl.eg_LT_player_points as egp on p.PlayerId = egp.PlayerId;
