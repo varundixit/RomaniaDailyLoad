@@ -1,4 +1,4 @@
-#date change 09-01-2016
+#date change 10-01-2016
 use romaniastg;
 
 Drop Table romaniastg.rw_logins;
@@ -26,7 +26,7 @@ LoginDeviceTypeCode varchar(200) DEFAULT NULL,
 LoginVenueCode varchar(200) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Logins\\CURL_-_Logins_09-01-2016.csv'
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Logins\\CURL_-_Logins_10-01-2016.csv'
 INTO TABLE  romaniastg.rw_logins
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"'

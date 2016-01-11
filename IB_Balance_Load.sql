@@ -1,4 +1,4 @@
-#date change 2016-01-09
+#date change 2016-01-10
 
 use romaniastg;
 drop table `STG_IMS_CSV_PLAYER`;
@@ -226,7 +226,7 @@ lines terminated by '\r\n';
 
 select
   Code as Playerid
-, STR_TO_DATE('2016-01-09', '%Y-%m-%d %H:%i:%s') AS SummaryDate
+, STR_TO_DATE('2016-01-10', '%Y-%m-%d %H:%i:%s') AS SummaryDate
 , AdvertiserCode
 , STR_TO_DATE(GlobalFirstDepositDate, '%Y-%m-%d %H:%i:%s') as FirstDepositDate
 , Balance as Balance

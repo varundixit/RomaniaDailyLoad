@@ -260,8 +260,6 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
 
 
-select * from romaniamain.stg_sports_channel_pref; SportChannlePreferences
-
 ############channel prefferences Casino
 drop table romaniamain.stg_eg_channel_pref;
 create table romaniamain.stg_eg_channel_pref(
@@ -274,4 +272,6 @@ into table romaniamain.stg_eg_channel_pref FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
 
-select * from romaniastage.stg_eg_channel_pref;
+commit;
+
+#select * from romaniastage.stg_eg_channel_pref;

@@ -1,4 +1,4 @@
-##dates to be changed 2016-01-09
+##dates to be changed 2016-01-10
 
 select
 PlayerId,
@@ -30,7 +30,7 @@ AVG(CashOutStake) as CashOutStk,
 AVG(CashOutWin) as CashOutWin,
 EXP(SUM(LOG(Odds))) as BetOdds
 from fd_settled_bets
-where SettledDate < '2016-01-09'
+where SettledDate < '2016-01-10'
 group by 1,2,3,4,5
 ) as temp
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\fd_bet_level_odds_wins.csv'

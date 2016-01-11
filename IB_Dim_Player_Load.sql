@@ -916,7 +916,7 @@ fields terminated by ','
 enclosed by '"'
 lines terminated by '\r\n';
 
-select * from romaniamain.DIM_PLAYER where PlayerID is null;
+select count(1) from romaniamain.DIM_PLAYER where PlayerID is null;
 
 
 ####### Exchange Rate Load
