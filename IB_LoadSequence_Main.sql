@@ -15,3 +15,12 @@ into table romaniamain.DD_Exchange_Rate
 fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\r\n';
+
+#######IB_LoadSequence_Main
+#########New Signups
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\New_signups.csv'
+into table romaniaStg.New_Signup
+fields terminated by ','
+enclosed by '"'
+lines terminated by '\r\n';
+

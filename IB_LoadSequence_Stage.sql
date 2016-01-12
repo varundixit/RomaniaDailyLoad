@@ -1,7 +1,7 @@
 #LoadSequence Stage
 
 #IB_Dim_Player_Load.sql
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\Customer.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\Customer.csv'
 into table romaniastg.STG_GIT_CSV_CUSTOMER
 fields terminated by ','
 enclosed by '"'
@@ -25,19 +25,19 @@ CasinoName,
 TestYN,
 STR_TO_DATE(CreationDate,'%Y-%m-%d %H:%i'),
 1
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\STG_GIT_CSV_CUSTOMER_OUT.csv'
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_GIT_CSV_CUSTOMER_OUT.csv'
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from romaniastg.STG_GIT_CSV_CUSTOMER;
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\STG_GIT_CSV_CUSTOMER_OUT.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_GIT_CSV_CUSTOMER_OUT.csv'
 into table romaniastg.STG_GIT_CUSTOMER
 fields terminated by ','
 enclosed by '"'
 lines terminated by '\r\n';
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\Curl_Player.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\CURL_-_Players.csv'
 into table romaniastg.STG_IMS_CSV_PLAYER
 fields terminated by ','
 optionally enclosed by '"'
@@ -221,20 +221,20 @@ select
 , WorkPhone
 , ZIP
 , 1
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\STG_IMS_CSV_PLAYER_OUT.csv'
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_IMS_CSV_PLAYER_OUT.csv'
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from romaniastg.STG_IMS_CSV_PLAYER;
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\STG_IMS_CSV_PLAYER_OUT.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_IMS_CSV_PLAYER_OUT.csv'
 into table romaniastg.STG_IMS_PLAYER
 fields terminated by ','
 enclosed by '"'
 lines terminated by '\r\n';
 
 select temp.*
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\STG_PLAYER.csv'
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_PLAYER.csv'
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
@@ -278,8 +278,8 @@ RIGHT outer JOIN romaniastg.STG_GIT_CUSTOMER as GIT ON ims.Username = git.Userna
 
 
 ##########Exchange Rates
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\STG_Exchange_Rate.csv'
-into table STG_Exchange_Rate
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_Exchange_Rate.csv'
+into table romaniastg.STG_Exchange_Rate
 fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\r\n';
@@ -291,7 +291,7 @@ EffectiveTimestamp,
 LastUpdTimestamp,
 CurrencyCode,
 XchangeRate
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\DD_Exchange_Rate.csv'
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\DD_Exchange_Rate.csv'
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'

@@ -1,4 +1,5 @@
-/*CREATE TABLE romaniaStg.New_Signup(
+/*drop table romaniaStg.IMS_newSignup;
+CREATE TABLE romaniaStg.IMS_newSignup(
 Registration_DateTime datetime DEFAULT NULL,
 Username varchar(100) DEFAULT NULL,
 Last_Login_Client_Type varchar(50) DEFAULT NULL,
@@ -11,8 +12,8 @@ Coupon varchar(100) DEFAULT NULL,
 ProfileID bigint(20) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;*/
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\New_signups_2016-01-10.csv'
-into table romaniaStg.New_Signup
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\New_signups.csv'
+into table romaniaStg.IMS_newSignup
 fields terminated by ','
 enclosed by '"'
 lines terminated by '\r\n';
@@ -101,14 +102,14 @@ optionally enclosed by '"'
 lines terminated by '\r\n';*/
 
 
-select p.PlayerID,p.username,adv.email advEmail,
+select p.PlayerID,p.username,adv.email advEmail,advUsername,
 case when lower(adv.email) = 'agentii@efortuna.ro' then 'RETAIL'
 when lower(adv.email) like 'iulian.dumitru@efortuna.ro' or lower(adv.email) like 'superpont1x2@gmail.com' then 'DIGITAL'
 when lower(adv.email) like 'defaulte8' then 'Generic'
 else 'AFFILIATE' end advChannel 
 from romaniastg.stg_ims_player p
-left outer join (select ns.username,coalesce(ad.email,affiliate) email
-from romaniastg.new_signup ns
+left outer join (select ns.username,coalesce(ad.email,affiliate) email, ad.username advUsername
+from romaniastg.IMS_newSignup ns
 left outer join romaniastg.advertisers ad on ns.affiliate = ad.username) adv on (adv.username = p.username)
 INTO OUTFILE 'C:\\Users\\Public\\Downloads\\DimPlayerChannel.csv'
 FIELDS TERMINATED BY ',' 
@@ -120,6 +121,7 @@ Create table romaniafl.Dim_Player_Channel(
 PlayerId integer,
 Username varchar(50),
 AdvEmail varchar(100),
+AdvUsername  varchar(200),
 AdvChannel varchar(50)
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
