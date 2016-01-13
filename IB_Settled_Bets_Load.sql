@@ -54,7 +54,7 @@ CREATE TABLE `stg_settled_bets_csv` (
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\SettledBets\\Settled_Bets2016-01-10.csv' 
-INTO TABLE  stg_settled_bets_csv
+INTO TABLE romaniastg.stg_settled_bets_csv
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
@@ -110,11 +110,10 @@ select
 ,ViewId
 ,Channel
 ,Operator
+from romaniastg.stg_settled_bets_csv
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\SettledBets\\stg_settled_bets.csv'
-FIELDS TERMINATED BY ',' 
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-from stg_settled_bets_csv;
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+
 
 drop table `stg_settled_bets`;
 CREATE TABLE `stg_settled_bets` (

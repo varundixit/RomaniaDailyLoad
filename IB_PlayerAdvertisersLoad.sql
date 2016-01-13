@@ -115,18 +115,3 @@ INTO OUTFILE 'C:\\Users\\Public\\Downloads\\DimPlayerChannel.csv'
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
-
-Drop table romaniafl.Dim_Player_Channel;
-Create table romaniafl.Dim_Player_Channel(
-PlayerId integer,
-Username varchar(50),
-AdvEmail varchar(100),
-AdvUsername  varchar(200),
-AdvChannel varchar(50)
-) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
-
-Load data infile 'C:\\Users\\Public\\Downloads\\DimPlayerChannel.csv'
-into table romaniafl.Dim_Player_Channel
-fields terminated by ','
-optionally enclosed by '"'
-lines terminated by '\r\n';

@@ -7,23 +7,23 @@ c. Curl advertiser - check 1188
 Also update the above numbers for later reference.
 
 2. IMS:
-a. Curl players: Complete since 1 Aug 
-b. Pending bonus: Complete since 26-Nov-2015
-c. Curl games: Incr
-d. Curl player payments: Incr
-e. Curl logins: Complete blank date
-f. Transactions information: Incr
-g. UserTransactions: Incr
-h. New Signups: Incr
-i. Currency Conversion: Incr
+a. Curl players: 			filename:"Curl_Player.csv" [filter:Signup start date:"1 Aug", Signup end date:"today-1"]
+b. Pending bonus: 			filename:"CURL_PendingBonuses.csv" [Complete since 26-Nov-2015 date type: "All date types"]
+c. Curl games: 				filename:"Curl_Games.csv" [Incr]
+d. Curl player payments: 	filename:"CURL_Player_Payments.csv" [Incr]
+e. Curl logins: 			filename:"CURL_Logins.csv" [Complete blank date]
+f. Transactions information:filename:"Transactions_information.csv" [Incr]
+g. UserTransactions: 		filename:"usertransactions.csv" [Time period: "Specific Period" Start date:"today-1" End date:"today-1"]
+h. New Signups: 			filename:"New_signups.csv" [Incr]
+i. Currency Conversion: 	filename:"Currency_conversion_rates.csv" [Incr]
 
 3. Geneity:
-a. Customer: Complete 1 Aug
-b. OpenBets: Complete 26th Nov 
-c. Search Bonus: Complete 26th Nov
-d. Customer PnL Summary: Incr
-f. Settled: Incr
-g. Placed: Incr
-h. Rejected: Incr
-i. Voided: Incr
+a. Customer: 				filename:"Customer.csv" [Complete 1 Aug]
+b. Open Bets: 				filename:"Open_Bets.csv" [Complete 26th Nov]
+c. Search Bonus:	 		filename:"Search_Bonuses_Report.csv" [Complete 26th Nov]
+d. Customer PnL Summary:	filename:"Customer_P_L_Viewer" [Incr]
+f. Settled Bets:	 		filename:"Settled_Bets.csv" [Incr]
+g. Placed Bets: 			filename:"Placed_Bets.csv" [Incr]
+h. Rejected Bets: 			filename:"Rejected_Bets.csv" [Incr]
+i. Voided Bets: 			filename:"Voided_Bets.csv" [Incr]
 
