@@ -3,7 +3,7 @@ Validation to be done
 1. If the following reports contain more data than listed here, we need to do a complete drop and create for the holding tables: 
 a. Curl Client parameter - check 165
 b. Curl Game list - check 2030
-c. Curl advertiser - check 1188
+c. Curl advertiser - check 1191
 Also update the above numbers for later reference.
 
 2. IMS:
