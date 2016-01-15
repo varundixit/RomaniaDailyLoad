@@ -10,15 +10,15 @@ CREATE TABLE `stg_player_lifetime_apd` (
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\PlayerAPD_Daily.csv'
 INTO TABLE romaniastage.stg_player_lifetime_apd FIELDS TERMINATED BY ';'  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
-#use romaniamain;
-#drop table f_player_lifetime_apd;
+/*use romaniamain;
+drop table f_player_lifetime_apd;
 CREATE TABLE `f_player_lifetime_apd` (
   `PlayerID` bigint(20) ,
   `LTSystemAPD` int DEFAULT NULL,
   `LTSportsAPD` int DEFAULT NULL,
   `LTEGamingAPD` int DEFAULT NULL,
   PRIMARY KEY (PlayerId)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;*/
 
 
 insert into romaniamain.f_player_lifetime_apd

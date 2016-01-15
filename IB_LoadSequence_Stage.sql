@@ -1,7 +1,7 @@
 #LoadSequence Stage
 
 ##########Exchange Rates
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\Currency_conversion_rates.csv'
+Load data infile 'D:\\RomData\\dump\\Currency_conversion_rates.csv'
 into table romaniastg.STG_Exchange_Rate
 fields terminated by ',' optionally enclosed by '"' lines terminated by '\r\n';
 
@@ -11,12 +11,17 @@ LastUpdTimestamp,
 CurrencyCode,
 XchangeRate
 from romaniastg.STG_Exchange_Rate
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\DD_Exchange_Rate.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\DD_Exchange_Rate.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 ###IB_PlayerAdvertisersLoad.sql
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\New_signups.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\CURL_Advertisers.csv'
+into table romaniaStg.Advertisers
+fields terminated by ',' optionally enclosed by '"' lines terminated by '\r\n';
+
+
+Load data infile 'D:\\RomData\\dump\\New_signups.csv'
 into table romaniaStg.IMS_newSignup
 fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
 
@@ -29,12 +34,12 @@ from romaniastg.stg_ims_player p
 left outer join (select ns.username,coalesce(ad.email,affiliate) email, ad.username advUsername
 from romaniastg.IMS_newSignup ns
 left outer join romaniastg.advertisers ad on ns.affiliate = ad.username) adv on (adv.username = p.username)
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\CRM\\DimPlayerChannel.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\FL_Backup\\CRM\\DimPlayerChannel.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 
 ###IB_Logins.sql
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\CURL_-_Logins.csv'
+LOAD DATA INFILE 'D:\\RomData\\dump\\CURL_Logins.csv'
 INTO TABLE  romaniastg.rw_logins
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
@@ -62,10 +67,10 @@ LoginDeviceTypeCode,
 LoginVenueCode
 FROM romaniastg.rw_logins
 where ClientType!='CLIENTTYPE'
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\LoginsNew.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\LoginsNew.csv'
 FIELDS TERMINATED BY ';' ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\LoginsNew.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\LoginsNew.csv' 
 INTO TABLE  romaniastg.c_logins
 FIELDS TERMINATED BY ';' ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
@@ -87,7 +92,7 @@ from romaniastg.c_logins lo1 where date(lo1.LoginDate) != date(lo1.logoutdate)
 ) sa 
 join romania.d_date d on d.dat_Day_Date between date(sa.logindate) and date(sa.logoutdate)
 where d.dat_day_date >= '2015-11-26' and d.dat_day_Date < current_date
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\LoginSplitsAcrossDates.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\LoginSplitsAcrossDates.csv'
 #character set utf8
 FIELDS TERMINATED BY ';' ENCLOSED BY 'NULL' LINES TERMINATED BY '\r\n';
 
@@ -103,7 +108,7 @@ ClientType,Code,FunPlayerCode,HwSerial,IP,KioskCode,Serial,
 ServerCode,SessionID,Version,ClientPlatform,LoginDeviceTypeCode,LoginVenueCode
 from romaniastg.c_logins lo1 where lo1.logoutdate is null and date(lo1.LoginDate) >='2015-11-26'
 #and code = 25542
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\LoginNullLogOutDates.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\LoginNullLogOutDates.csv'
 #character set utf8
 FIELDS TERMINATED BY ';' ENCLOSED BY 'NULL' LINES TERMINATED BY '\r\n';
 
@@ -118,20 +123,20 @@ ClientType,Code,FunPlayerCode,HwSerial,IP,KioskCode,Serial,
 ServerCode,SessionID,Version,ClientPlatform,LoginDeviceTypeCode,LoginVenueCode
 from romaniastg.c_logins lo1 where date(lo1.LoginDate) = date(lo1.logoutdate) 
 and date(lo1.LoginDate) >='2015-11-26'
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\RegularLogins.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\RegularLogins.csv'
 #character set utf8
 FIELDS TERMINATED BY ';' ENCLOSED BY 'NULL' LINES TERMINATED BY '\r\n';
 
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\LoginSplitsAcrossDates.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\LoginSplitsAcrossDates.csv' 
 INTO TABLE romaniastg.stg_daily_player_logins
 FIELDS TERMINATED BY ';' ENCLOSED BY 'NULL' LINES TERMINATED BY '\r\n';
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\LoginNullLogOutDates.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\LoginNullLogOutDates.csv' 
 INTO TABLE romaniastg.stg_daily_player_logins
 FIELDS TERMINATED BY ';' ENCLOSED BY 'NULL' LINES TERMINATED BY '\r\n';
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\RegularLogins.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\RegularLogins.csv' 
 INTO TABLE romaniastg.stg_daily_player_logins
 FIELDS TERMINATED BY ';' ENCLOSED BY 'NULL' LINES TERMINATED BY '\r\n';
 
@@ -157,7 +162,7 @@ ClientType
 ,ClientPlatform
 ,LoginDeviceTypeCode
 ,LoginVenueCode
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\mysql_stg_daily_player_logins.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\FL_Backup\\mysql_stg_daily_player_logins.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from romaniastg.stg_daily_player_logins;
 
@@ -171,13 +176,13 @@ select
 , BonusBalance as BonusBalance
 , STR_TO_DATE(SignupDate, '%Y-%m-%d %H:%i:%s') as SignUpDate
 , 1
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_DAILY_PLAYER_BALANCE.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\STG_DAILY_PLAYER_BALANCE.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from romaniastg.STG_IMS_CSV_PLAYER;
 
 
 ###IB_Payments_load.sql
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\usertransactions.csv'  
+LOAD DATA INFILE 'D:\\RomData\\dump\\usertransactions.csv'  
 INTO TABLE romaniastg.CSV_TO_STG FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 select 
@@ -231,21 +236,21 @@ ConvertedAmt,
 ConvertedCurrency ,
 ProcessorAmt,
 ProcessorCurrency 
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_SCIMS_Data.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\STG_SCIMS_Data.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from romaniastg.CSV_TO_STG as stg join romaniamain.dim_player as p on stg.Username = p.Username;
 
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_SCIMS_Data.csv'  
+LOAD DATA INFILE 'D:\\RomData\\dump\\STG_SCIMS_Data.csv'  
 INTO TABLE romaniastg.STG_SCIMS_Data FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 select *
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_SCIMS_Data_MySQL.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\STG_SCIMS_Data_MySQL.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from romaniastg.STG_SCIMS_Data;
 
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\CURL_Player_Payments.csv'  
+LOAD DATA INFILE 'D:\\RomData\\dump\\CURL_Player_Payments.csv'  
 INTO TABLE romaniastg.stg_csv_player_payments FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 
@@ -295,10 +300,10 @@ coalesce(WinPayment,0) as WinPayment,
 Zip as Zip
 from romaniastg.stg_csv_player_payments as spp 
 join romaniamain.dim_client_parameter as cp on spp.ClientparameterCode = cp.ClientParameterCode
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\stg_player_payments.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\stg_player_payments.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\stg_player_payments.csv'  
+LOAD DATA INFILE 'D:\\RomData\\dump\\stg_player_payments.csv'  
 INTO TABLE romaniastg.stg_player_payments FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 
@@ -342,12 +347,12 @@ from romaniastg.stg_player_payments
 where date(TxnDate) = date(date_add(Current_Date, interval -1 day))
 group by PlayerCode,TxnDate
 
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\sd_daily_cashier_summary.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\sd_daily_cashier_summary.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 
 ###IB_Games_load.sql
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\Curl_Games.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\Curl_Games.csv' 
 INTO TABLE romaniastg.STG_GAMES_CSV
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
@@ -406,11 +411,11 @@ select
 ,coalesce(Win,0)
 ,coalesce((Win - BonusWin),0)
 ,coalesce(WindowCode,0)
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_Games_MySQL.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\STG_Games_MySQL.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from romaniastg.STG_GAMES_CSV;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_Games_MySQL.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\STG_Games_MySQL.csv' 
 INTO TABLE romaniastg.STG_GAMES
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
@@ -482,7 +487,7 @@ join  romaniamain.DIM_CLIENT_PARAMETER as cp on stg.ClientParameterCode = cp.Cli
 join  romaniamain.dim_game_list as dgt on stg.Type = dgt.Type
 join  romaniamain.dim_player as p on stg.PlayerId = p.PlayerID
 where date(stg.GameDate) <= date(date_add(Current_Date, interval -1 day))
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\FD_EXD_EG_PLAYER_PRODUCT_INFO_SUMM.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\FD_EXD_EG_PLAYER_PRODUCT_INFO_SUMM.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 
@@ -512,11 +517,11 @@ join romaniamain.DIM_CLIENT_PARAMETER as cp on stg.ClientParameterCode = cp.Clie
 join romaniamain.dim_game_list as dgt on stg.Type = dgt.Type
 join romaniamain.dim_player as p on stg.PlayerId = p.PlayerID
 where date(stg.GameDate) <= date(date_add(Current_Date, interval -1 day))
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\FD_CSC_EG_PLAYER_PRODUCT_INFO_SUMM.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\FD_CSC_EG_PLAYER_PRODUCT_INFO_SUMM.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 ###IB_Settled_Bets_Load.sql
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\Settled_Bets.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\Settled_Bets.csv' 
 INTO TABLE romaniastg.stg_settled_bets_csv
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
@@ -574,11 +579,11 @@ select
 ,Channel
 ,Operator
 from romaniastg.stg_settled_bets_csv
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\stg_settled_bets.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\stg_settled_bets.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\stg_settled_bets.csv' 
-INTO TABLE  stg_settled_bets
+LOAD DATA INFILE 'D:\\RomData\\dump\\stg_settled_bets.csv' 
+INTO TABLE romaniastg.stg_settled_bets
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
@@ -658,17 +663,17 @@ select
 , sb.ViewId
 , sb.Channel
 , sb.Operator
-from stg_settled_bets as sb
+from romaniastg.stg_settled_bets as sb
 join romaniamain.fd_placed_bets as pb 
 on sb.BetId = pb.BetId and sb.SelectionId = pb.SelectionId and sb.MarketId = pb.MarketId
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\fd_settled_bets.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\fd_settled_bets.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 
 
 ###IB_Rejected_Bets_Load.sql
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\Rejected_Bets.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\Rejected_Bets.csv' 
 INTO TABLE romaniastg.stg_rejected_bets_csv
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
@@ -694,10 +699,10 @@ select
 ,Channel
 ,ViewName
 from romaniastg.stg_rejected_bets_csv
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\stg_rejected_bets.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\stg_rejected_bets.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\stg_rejected_bets.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\stg_rejected_bets.csv' 
 INTO TABLE romaniastg.stg_rejected_bets
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
@@ -726,12 +731,12 @@ select
 ,stg.ViewName
 from romaniastg.stg_rejected_bets as stg 
 join romaniamain.DIM_PLAYER as p on stg.UserName = p.UserName
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\fd_rejected_bets.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\fd_rejected_bets.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 
 ###IB_Voided_Bets_Load.sql
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\Voided_Bets.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\Voided_Bets.csv' 
 INTO TABLE romaniastg.stg_voided_bets_csv
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
@@ -756,22 +761,22 @@ select
 ,STR_TO_DATE(VoidedTime, '%Y-%m-%d %H:%i:%s')
 ,date(STR_TO_DATE(VoidedTime, '%Y-%m-%d %H:%i:%s'))
 ,VoiderUsername
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\stg_voided_bets.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\stg_voided_bets.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from romaniastg.stg_voided_bets_csv;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\stg_voided_bets.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\stg_voided_bets.csv' 
 INTO TABLE romaniastg.stg_voided_bets
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 select * 
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\fd_voided_bets.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\fd_voided_bets.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from romaniastg.stg_voided_bets;
 
 
 ###IB_Open_Bets_Load.sql
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\Open_Bets.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\Open_Bets.csv' 
 INTO TABLE romaniastg.stg_open_bets_csv
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
@@ -821,11 +826,11 @@ select
 ,Operator
 ,PotentialReturn
 ,ViewName
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_OPEN_BETS.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\STG_OPEN_BETS.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from romaniastg.stg_open_bets_csv;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_OPEN_BETS.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\STG_OPEN_BETS.csv' 
 INTO TABLE romaniastg.stg_open_bets
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
@@ -878,6 +883,6 @@ select
 from romaniastg.stg_open_bets as stg 
 join romaniamain.DIM_PLAYER as p on stg.PlayerId = p.PlayerSPId
 where BetDate <= date_add(current_Date, interval -1 day)
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\fd_open_bets.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\fd_open_bets.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 

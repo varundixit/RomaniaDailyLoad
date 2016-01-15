@@ -76,7 +76,6 @@ fields terminated by ','
 enclosed by '"'
 lines terminated by '\r\n';
 
-
 drop table `STG_IMS_CSV_PLAYER`;
 CREATE TABLE `STG_IMS_CSV_PLAYER` (
   `AccumulatedBetRefund` decimal(18,6) DEFAULT NULL,

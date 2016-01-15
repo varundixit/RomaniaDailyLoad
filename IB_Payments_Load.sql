@@ -1,4 +1,4 @@
-##date change 2016-01-10
+##date change 2016-01-14
 use romaniastg;
 drop table CSV_TO_STG;
 Create table CSV_TO_STG (
@@ -51,7 +51,7 @@ Create table CSV_TO_STG (
 , ProcessorCurrency varchar(10)
 )  ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\SC_IMS_2016-01-10.csv'  
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\SC_IMS_2016-01-14.csv'  
 INTO TABLE CSV_TO_STG FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 select 
@@ -110,7 +110,6 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from CSV_TO_STG as stg join romaniamain.dim_player as p on stg.Username = p.Username;
-
 
 drop table STG_SCIMS_Data;
 Create table STG_SCIMS_Data(
@@ -171,9 +170,7 @@ INTO TABLE STG_SCIMS_Data FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' L
 
 select *
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\STG_SCIMS_Data_MySQL.csv'
-FIELDS TERMINATED BY ',' 
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from STG_SCIMS_Data;
 
 use romaniastg;
@@ -304,9 +301,8 @@ CREATE TABLE `stg_csv_player_payments` (
   `Zip` varchar(200) COLLATE latin1_bin DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\CURL_Player_Payments2016-01-10.csv'  
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\CURL_Player_Payments2016-01-14.csv'  
 INTO TABLE stg_csv_player_payments FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-
 
 select 
 date(STR_TO_DATE(AcceptDate, '%Y-%m-%d %H:%i:%s')) as TxnDate,
@@ -356,8 +352,7 @@ INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Dep
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
-from 
-stg_csv_player_payments as spp 
+from stg_csv_player_payments as spp 
 join romaniamain.dim_client_parameter as cp on spp.ClientparameterCode = cp.ClientParameterCode;
 
 
@@ -412,7 +407,6 @@ CREATE TABLE `stg_player_payments` (
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\stg_player_payments.csv'  
 INTO TABLE stg_player_payments FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
-
 select
 PlayerCode as PlayerId,
 TxnDate as SummaryDate,
@@ -451,17 +445,10 @@ SUM(case when Type = 'withdraw' and Status = 'declined' and ClientPlatform <> 'm
 count(case when Type = 'withdraw' and Status = 'declined' and ClientPlatform <> 'mobile' then Amount end) as TotalWithdDeclineWebCnt
 
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\sd_daily_cashier_summary.csv'
-FIELDS TERMINATED BY ',' 
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-
-from 
-stg_player_payments
-where TxnDate = '2016-01-10'
-group by 
-PlayerCode,
-TxnDate
-;
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
+from stg_player_payments
+where TxnDate = '2016-01-14'
+group by PlayerCode,TxnDate;
 
 select count(distinct PlayerCode) from stg_player_payments;
 
@@ -503,6 +490,4 @@ CREATE TABLE `sd_daily_cashier_summary` (
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\sd_daily_cashier_summary.csv'  
 INTO TABLE romaniamain.sd_daily_cashier_summary 
-FIELDS TERMINATED BY ','  
-OPTIONALLY ENCLOSED BY '"' 
-LINES TERMINATED BY '\r\n';
+FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';

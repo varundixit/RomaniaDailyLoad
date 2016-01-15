@@ -1,4 +1,4 @@
-##date change 2016-01-10
+##date change 2016-01-14
 use romaniastg;
 drop table stg_voided_bets_csv;
 create table `stg_voided_bets_csv`(
@@ -21,7 +21,7 @@ create table `stg_voided_bets_csv`(
 ,`VoiderUsername` varchar(50) DEFAULT NULL
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\VoidedBets\\Voided_Bets2016-01-10.csv' 
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\VoidedBets\\Voided_Bets2016-01-14.csv' 
 INTO TABLE  stg_voided_bets_csv
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
@@ -87,6 +87,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
 
+/*
 #use romaniamain;
 #drop table `fd_voided_bets`;
 create table `fd_voided_bets`(
@@ -111,18 +112,15 @@ create table `fd_voided_bets`(
 ,`VoidedDate` date DEFAULT NULL
 ,`VoiderUsername` varchar(50) DEFAULT NULL
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+*/
 
-use romaniastg;
+#use romaniastg;
 
 select * 
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\VoidedBets\\fd_voided_bets.csv'
-FIELDS TERMINATED BY ',' 
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-from stg_voided_bets;
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
+from romaniastg.stg_voided_bets;
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\VoidedBets\\fd_voided_bets.csv' 
 INTO TABLE  romaniamain.fd_voided_bets
-FIELDS TERMINATED BY ','
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n';
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';

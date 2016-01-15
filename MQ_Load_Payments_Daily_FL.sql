@@ -73,6 +73,7 @@ INTO TABLE STG_SCIMS_Data FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' L
 
 select Reason, count(*) from STG_SCIMS_Data group by 1;
 
+/*
 #use romaniamain;
 #drop table FACT_DAILY_PLAYER_TRANSACTIONS;
 Create table FACT_DAILY_PLAYER_TRANSACTIONS (
@@ -107,7 +108,7 @@ Create table FACT_DAILY_PLAYER_TRANSACTIONS (
 , PayMethRiskGrp varchar(200)
 , PayMethConfCode bigint
 ) ENGINE=Innodb DEFAULT CHARSET=utf8;
-
+*/
 
 insert into romaniamain.FACT_DAILY_PLAYER_TRANSACTIONS (
 TxnTime, AcceptTime , Username, PlayerId ,SignupDate ,FirstDepositDate ,Email, Name , TxnID, Type , Method, Merchant , Bank , Amount , Status , Result , Reason , ReasonGroup,

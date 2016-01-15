@@ -23,17 +23,12 @@ CREATE TABLE `fd_csc_eg_player_product_info_summ` (
 ) ENGINE=innodb DEFAULT CHARSET=utf8;
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Games\\mysql_fd_csc_eg_player_product_info_summ.csv'
-INTO TABLE fd_csc_eg_player_product_info_summ FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
-;
+INTO TABLE fd_csc_eg_player_product_info_summ FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 select *
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\eg_player_first_last_totals.csv'
-FIELDS TERMINATED BY ',' 
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-from
-romaniamain.eg_player_first_last_totals;
-
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
+from romaniamain.eg_player_first_last_totals;
 
 use romaniamain;
 drop table eg_player_first_last_totals;
@@ -85,8 +80,7 @@ create table `eg_player_first_last_totals`(
 ) ENGINE=innodb DEFAULT CHARSET=utf8;
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\eg_player_first_last_totals.csv'
-INTO TABLE eg_player_first_last_totals FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
-;
+INTO TABLE eg_player_first_last_totals FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 commit;
 
@@ -221,4 +215,4 @@ on duplicate key update
 
 commit;
 
-select count(*) from eg_player_first_last_totals;
+#select count(*) from eg_player_first_last_totals;

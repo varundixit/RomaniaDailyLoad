@@ -1,4 +1,4 @@
-#change dates 2016-01-10
+#change dates 2016-01-14
 
 use romaniamain;
 
@@ -37,9 +37,8 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from fd_placed_bets
-where BetType = 'SGL' and BetDate = '2016-01-10'
-group by 
-1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21;
+where BetType = 'SGL' and BetDate = '2016-01-14'
+group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21;
 
 
 select 
@@ -73,15 +72,12 @@ AVG(BonusStakeAmtBC) as BonusStakeAmtBC,
 AVG(BonusBalanceStake) as BonusBalanceStake,
 AVG(BonusBalanceStakeBC) as BonusBalanceStakeBC
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\PlacedBets\\fd_gv_placed_bets_simple_combi.csv'
-FIELDS TERMINATED BY ',' 
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from fd_placed_bets
-where BetType <> 'SGL' and BetDate = '2016-01-10'
-group by 
-1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21;
+where BetType <> 'SGL' and BetDate = '2016-01-14'
+group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21;
 
-
+/*
 #use romaniamain;
 #drop table fd_gv_placed_bets_simple;
 create table `fd_gv_placed_bets_simple` (
@@ -115,7 +111,7 @@ create table `fd_gv_placed_bets_simple` (
 ,BonusBalanceStake decimal(18,4) DEFAULT NULL
 ,BonusBalanceStakeBC decimal(18,4) DEFAULT NULL
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
-
+*/
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\PlacedBets\\fd_gv_placed_bets_simple_single.csv'
 INTO TABLE romaniamain.fd_gv_placed_bets_simple
@@ -127,8 +123,6 @@ INTO TABLE romaniamain.fd_gv_placed_bets_simple
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
-
-
 
 select SummaryDate, count(distinct PlayerId) from romaniamain.fd_gv_placed_bets_simple group by 1 order by 1 desc;
 
@@ -185,9 +179,8 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from fd_settled_bets
-where BetType = 'SGL' and SettledDate = '2016-01-10'
-group by 
-1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21;
+where BetType = 'SGL' and SettledDate = '2016-01-14'
+group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21;
 
 select 
 PlayerId as PlayerId,
@@ -242,11 +235,10 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from fd_settled_bets
-where BetType <> 'SGL' and SettledDate = '2016-01-10'
-group by 
-1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21;
+where BetType <> 'SGL' and SettledDate = '2016-01-14'
+group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21;
 
-
+/*
 #use romaniamain;
 #drop table fd_cv_settled_bets_simple;
 create table `fd_cv_settled_bets_simple` (
@@ -298,7 +290,7 @@ create table `fd_cv_settled_bets_simple` (
 ,CashOutWin decimal(18,4) DEFAULT NULL
 ,CashOutWinBC decimal(18,4) DEFAULT NULL
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
-
+*/
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\SettledBets\\fd_cv_settled_bets_simple_single.csv'
 INTO TABLE romaniamain.fd_cv_settled_bets_simple
@@ -348,9 +340,10 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from romaniamain.fd_cv_settled_bets_simple
-where SummaryDate = '2016-01-10'
+where SummaryDate = '2016-01-14'
 group by PlayerId,Username,SummaryDate;
 
+/*
 #use romaniamain;
 #drop table sd_cv_sp_daily_player_summary;
 create table `sd_cv_sp_daily_player_summary` (
@@ -384,13 +377,13 @@ create table `sd_cv_sp_daily_player_summary` (
 ,CashOutWin decimal(18,4) DEFAULT NULL
 ,CashOutWinBC decimal(18,4) DEFAULT NULL
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+*/
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\SettledBets\\sd_cv_sp_daily_player_summary.csv'
 INTO TABLE romaniamain.sd_cv_sp_daily_player_summary
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
-
 
 use romaniamain;
 select temp.*
@@ -441,7 +434,7 @@ from
 from romaniamain.sd_cv_sp_daily_player_summary as spdps
 left outer join romaniamain.sd_eg_daily_player_summary as egdps
 on spdps.PlayerId = egdps.PlayerId and spdps.SummaryDate = egdps.SummaryDate
-where spdps.SummaryDate = '2016-01-10' 
+where spdps.SummaryDate = '2016-01-14' 
 UNION
 select
  egdps.PlayerId
@@ -485,10 +478,11 @@ select
 from romaniamain.sd_cv_sp_daily_player_summary as spdps
 right outer join romaniamain.sd_eg_daily_player_summary as egdps
 on spdps.PlayerId = egdps.PlayerId and spdps.SummaryDate = egdps.SummaryDate
-where egdps.SummaryDate = '2016-01-10' 
+where egdps.SummaryDate = '2016-01-14' 
 ) as temp;
 
 
+/*
 #use romaniamain;
 #drop table sd_cv_daily_player_summary;
 create table `sd_cv_daily_player_summary` ( 
@@ -531,6 +525,7 @@ create table `sd_cv_daily_player_summary` (
 ,EGJackpotBet decimal(18,4) DEFAULT NULL
 ,EGJackpotWin decimal(18,4) DEFAULT NULL
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+*/
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\SettledBets\\sd_cv_daily_player_summary.csv'
 INTO TABLE romaniamain.sd_cv_daily_player_summary
@@ -555,10 +550,10 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from romaniamain.fd_gv_placed_bets_simple
-where SummaryDate = '2016-01-10'
+where SummaryDate = '2016-01-14'
 group by PlayerId,Username,SummaryDate;
 
-
+/*
 #use romaniamain;
 #drop table sd_gv_sp_daily_player_summary;
 create table `sd_gv_sp_daily_player_summary` (
@@ -574,6 +569,7 @@ create table `sd_gv_sp_daily_player_summary` (
 ,BonusBalanceStake decimal(18,4) DEFAULT NULL
 ,BonusBalanceStakeBC decimal(18,4) DEFAULT NULL
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+*/
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\PlacedBets\\sd_gv_sp_daily_player_summary.csv'
 INTO TABLE romaniamain.sd_gv_sp_daily_player_summary
@@ -581,13 +577,10 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
 
-
 use romaniamain;
 select temp.*
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\PlacedBets\\sd_gv_daily_player_summary.csv'
-FIELDS TERMINATED BY ',' 
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from
 (select
  spdps.PlayerId
@@ -613,7 +606,7 @@ from
 from romaniamain.sd_gv_sp_daily_player_summary as spdps
 left outer join romaniamain.sd_eg_daily_player_summary as egdps
 on spdps.PlayerId = egdps.PlayerId and spdps.SummaryDate = egdps.SummaryDate
-where spdps.SummaryDate = '2016-01-10'
+where spdps.SummaryDate = '2016-01-14'
 UNION
 select
  egdps.PlayerId
@@ -639,9 +632,10 @@ select
 from romaniamain.sd_gv_sp_daily_player_summary as spdps
 right outer join romaniamain.sd_eg_daily_player_summary as egdps
 on spdps.PlayerId = egdps.PlayerId and spdps.SummaryDate = egdps.SummaryDate
-where egdps.SummaryDate = '2016-01-10'
+where egdps.SummaryDate = '2016-01-14'
 ) as temp;
 
+/*
 #use romaniamain;
 #drop table sd_gv_daily_player_summary;
 create table `sd_gv_daily_player_summary` ( 
@@ -666,6 +660,7 @@ create table `sd_gv_daily_player_summary` (
 ,EGJackpotBet decimal(18,4) DEFAULT NULL
 ,EGJackpotWin decimal(18,4) DEFAULT NULL
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+*/
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\PlacedBets\\sd_gv_daily_player_summary.csv'
 INTO TABLE romaniamain.sd_gv_daily_player_summary

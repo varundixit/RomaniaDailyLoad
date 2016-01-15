@@ -219,6 +219,7 @@ select
 , CMBWinningRatioStake
 
 , ch.AdvChannel
+, ch.AdvUsername
 from
 romaniafl.stg_dim_player as p
 left outer join romaniafl.Dim_Player_Channel ch on p.playerId = ch.playerid

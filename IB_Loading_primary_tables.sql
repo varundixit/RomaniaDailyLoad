@@ -18,7 +18,7 @@ CREATE TABLE romaniastg.STG_GIT_CSV_CUSTOMER (
   CreationDate varchar(40) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\Customer.csv'
+Load data infile 'D:\\RomData\\dump\\Customer.csv'
 into table romaniastg.STG_GIT_CSV_CUSTOMER
 fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
 
@@ -41,7 +41,7 @@ TestYN,
 STR_TO_DATE(CreationDate,'%Y-%m-%d %H:%i'),
 1
 from romaniastg.STG_GIT_CSV_CUSTOMER
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_GIT_CSV_CUSTOMER_OUT.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\STG_GIT_CSV_CUSTOMER_OUT.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 drop table romaniastg.STG_GIT_CUSTOMER;
@@ -65,7 +65,7 @@ CREATE TABLE romaniastg.STG_GIT_CUSTOMER (
   RomDummy int
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_GIT_CSV_CUSTOMER_OUT.csv'
+Load data infile 'D:\\RomData\\dump\\STG_GIT_CSV_CUSTOMER_OUT.csv'
 into table romaniastg.STG_GIT_CUSTOMER
 fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
 
@@ -286,7 +286,7 @@ CREATE TABLE romaniastg.STG_IMS_CSV_PLAYER (
   ZIP varchar(100) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\Curl_Player.csv'
+Load data infile 'D:\\RomData\\dump\\Curl_Player.csv'
 into table romaniastg.STG_IMS_CSV_PLAYER
 fields terminated by ',' optionally enclosed by '"' lines terminated by '\r\n';
 
@@ -468,8 +468,8 @@ select
 , WorkPhone
 , ZIP
 , 1
-from STG_IMS_CSV_PLAYER
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_IMS_CSV_PLAYER_OUT.csv'
+from romaniastg.STG_IMS_CSV_PLAYER
+INTO OUTFILE 'D:\\RomData\\dump\\STG_IMS_CSV_PLAYER_OUT.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 drop table romaniastg.STG_IMS_PLAYER;
@@ -653,7 +653,7 @@ CREATE TABLE romaniastg.STG_IMS_PLAYER (
   RomDummy int
  ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
  
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_IMS_CSV_PLAYER_OUT.csv'
+Load data infile 'D:\\RomData\\dump\\STG_IMS_CSV_PLAYER_OUT.csv'
 into table romaniastg.STG_IMS_PLAYER
 fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
 
@@ -888,10 +888,10 @@ GIT.CreationDateSP
 FROM romaniastg.STG_IMS_PLAYER as IMS
 RIGHT outer JOIN romaniastg.STG_GIT_CUSTOMER as GIT ON ims.Username = git.Username
 ) as temp
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_PLAYER.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\STG_PLAYER.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\STG_PLAYER.csv'
+Load data infile 'D:\\RomData\\dump\\STG_PLAYER.csv'
 into table romaniamain.DIM_PLAYER
 fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
 
@@ -951,7 +951,7 @@ CREATE TABLE romaniastg.stg_placed_bets_csv (
   Operator varchar(20) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\Placed_Bets.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\Placed_Bets.csv' 
 INTO TABLE romaniastg.stg_placed_bets_csv
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
@@ -1006,12 +1006,12 @@ select
 ,ViewId
 ,Channel
 ,Operator
-from stg_placed_bets_csv
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\stg_placed_bets.csv'
+from romaniastg.stg_placed_bets_csv
+INTO OUTFILE 'D:\\RomData\\dump\\stg_placed_bets.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
-drop table stg_placed_bets;
-CREATE TABLE stg_placed_bets (
+drop table romaniastg.stg_placed_bets;
+CREATE TABLE romaniastg.stg_placed_bets (
   BetslipId bigint(20) DEFAULT NULL,
   BetslipStatus varchar(20) DEFAULT NULL,
   BetId bigint(20) DEFAULT NULL,
@@ -1064,7 +1064,7 @@ CREATE TABLE stg_placed_bets (
   Operator varchar(20) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\stg_placed_bets.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\stg_placed_bets.csv' 
 INTO TABLE romaniastg.stg_placed_bets
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
@@ -1121,15 +1121,15 @@ select
 ,ViewId
 ,Channel
 ,Operator
-from stg_placed_bets as stg 
+from romaniastg.stg_placed_bets as stg 
 join romaniamain.DIM_PLAYER as p on stg.PlayerId = p.PlayerSPId
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\stg_placed_bets.csv'
+INTO OUTFILE 'D:\\RomData\\dump\\stg_placed_bets.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 
 ######!!!!!!!!!!!!!! below line has to be run only if above all load completes successfully #####################
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\stg_placed_bets.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\stg_placed_bets.csv' 
 INTO TABLE  romaniamain.fd_placed_bets
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
@@ -1147,7 +1147,7 @@ create table romaniamain.DIM_CLIENT_PARAMETER (
 , UsedInAdRevenue int
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Games\\DIM_CLIENT_PARAMETER.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\DIM_CLIENT_PARAMETER.csv' 
 INTO TABLE  romaniamain.DIM_CLIENT_PARAMETER
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
@@ -1182,7 +1182,7 @@ CREATE TABLE romaniamain.dim_game_list (
 ,USEBONUS int
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Games\\dim_game_list.csv' 
+LOAD DATA INFILE 'D:\\RomData\\dump\\dim_game_list.csv' 
 INTO TABLE  romaniamain.dim_game_list
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
@@ -1263,7 +1263,7 @@ WEBSITE	varchar(50)	DEFAULT NULL,
 ZIP	integer	DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\CURL_Advertisers.csv'
+Load data infile 'D:\\RomData\\dump\\CURL_Advertisers.csv'
 into table romaniaStg.Advertisers
 fields terminated by ','
 optionally enclosed by '"'

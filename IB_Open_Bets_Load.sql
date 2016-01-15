@@ -1,4 +1,4 @@
-## date change 2016-01-10
+## date change 2016-01-14
 use romaniastg;
 drop table stg_open_bets_csv;
 CREATE TABLE `stg_open_bets_csv` (
@@ -50,9 +50,7 @@ CREATE TABLE `stg_open_bets_csv` (
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\OpenBets\\Open_Bets26Onwards.csv' 
 INTO TABLE  stg_open_bets_csv
-FIELDS TERMINATED BY ','
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n';
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 select
  BetSlipId
@@ -101,11 +99,8 @@ select
 ,PotentialReturn
 ,ViewName
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\OpenBets\\STG_OPEN_BETS.csv'
-FIELDS TERMINATED BY ',' 
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-from 
-stg_open_bets_csv;
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
+from stg_open_bets_csv;
 
 drop table stg_open_bets;
 CREATE TABLE `stg_open_bets` (
@@ -159,9 +154,7 @@ CREATE TABLE `stg_open_bets` (
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\OpenBets\\STG_OPEN_BETS.csv' 
 INTO TABLE  stg_open_bets
-FIELDS TERMINATED BY ','
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n';
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 #select BetDate, count(*) from stg_open_bets group by BetDate order by 1 desc;
 
@@ -212,12 +205,10 @@ select
 ,PotentialReturn
 ,ViewName
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\OpenBets\\fd_open_bets.csv'
-FIELDS TERMINATED BY ',' 
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from stg_open_bets as stg 
 join romaniamain.DIM_PLAYER as p on stg.PlayerId = p.PlayerSPId
-where BetDate <= '2016-01-10';
+where BetDate <= '2016-01-14';
 
 
 use romaniamain;
@@ -270,7 +261,6 @@ CREATE TABLE `fd_open_bets` (
   `ViewName` varchar(100) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-use romaniastg;
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\OpenBets\\fd_open_bets.csv' 
 INTO TABLE romaniamain.fd_open_bets
 FIELDS TERMINATED BY ','

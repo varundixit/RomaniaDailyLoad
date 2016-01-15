@@ -1,4 +1,4 @@
-#date change 10-01-2016
+#date change 14-01-2016
 use romaniastg;
 
 Drop Table romaniastg.rw_logins;
@@ -26,7 +26,7 @@ LoginDeviceTypeCode varchar(200) DEFAULT NULL,
 LoginVenueCode varchar(200) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Logins\\CURL_-_Logins_10-01-2016.csv'
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Logins\\CURL_-_Logins_14-01-2016.csv'
 INTO TABLE  romaniastg.rw_logins
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"'
@@ -152,7 +152,7 @@ coalesce(lo1.endbalance,lo1.startbalance) endbalance,
 coalesce(lo1.endbonusbalance,lo1.startbonusbalance) endbonusbalance,
 ClientType,Code,FunPlayerCode,HwSerial,IP,KioskCode,Serial,
 ServerCode,SessionID,Version,ClientPlatform,LoginDeviceTypeCode,LoginVenueCode
-from romania.c_logins lo1 where lo1.logoutdate is null and date(lo1.LoginDate) >='2015-11-26'
+from romaniastg.c_logins lo1 where lo1.logoutdate is null and date(lo1.LoginDate) >='2015-11-26'
 #and code = 25542
 INTO OUTFILE 'C:\\Users\\Public\\Downloads\\romaniastg\\LoginNullLogOutDates.csv'
 #character set utf8
@@ -169,7 +169,7 @@ coalesce(lo1.endbalance,lo1.startbalance) endbalance,
 coalesce(lo1.endbonusbalance,lo1.startbonusbalance) endbonusbalance,
 ClientType,Code,FunPlayerCode,HwSerial,IP,KioskCode,Serial,
 ServerCode,SessionID,Version,ClientPlatform,LoginDeviceTypeCode,LoginVenueCode
-from romania.c_logins lo1 where date(lo1.LoginDate) = date(lo1.logoutdate) 
+from romaniastg.c_logins lo1 where date(lo1.LoginDate) = date(lo1.logoutdate) 
 and date(lo1.LoginDate) >='2015-11-26'
 INTO OUTFILE 'C:\\Users\\Public\\Downloads\\romaniastg\\RegularLogins.csv'
 #character set utf8
@@ -179,19 +179,19 @@ LINES TERMINATED BY '\r\n';
 
 
 LOAD DATA INFILE 'C:\\Users\\Public\\Downloads\\romaniastg\\LoginSplitsAcrossDates.csv' 
-INTO TABLE stg_daily_player_logins
+INTO TABLE romaniastg.stg_daily_player_logins
 FIELDS TERMINATED BY ';' 
 ENCLOSED BY 'NULL'
 LINES TERMINATED BY '\r\n';
 
 LOAD DATA INFILE 'C:\\Users\\Public\\Downloads\\romaniastg\\LoginNullLogOutDates.csv' 
-INTO TABLE stg_daily_player_logins
+INTO TABLE romaniastg.stg_daily_player_logins
 FIELDS TERMINATED BY ';' 
 ENCLOSED BY 'NULL'
 LINES TERMINATED BY '\r\n';
 
 LOAD DATA INFILE 'C:\\Users\\Public\\Downloads\\romaniastg\\RegularLogins.csv' 
-INTO TABLE stg_daily_player_logins
+INTO TABLE romaniastg.stg_daily_player_logins
 FIELDS TERMINATED BY ';' 
 ENCLOSED BY 'NULL'
 LINES TERMINATED BY '\r\n';

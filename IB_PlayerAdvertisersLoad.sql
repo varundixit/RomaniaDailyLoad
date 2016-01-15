@@ -1,3 +1,5 @@
+###date change 2016-01-14
+
 /*drop table romaniaStg.IMS_newSignup;
 CREATE TABLE romaniaStg.IMS_newSignup(
 Registration_DateTime datetime DEFAULT NULL,
@@ -12,15 +14,13 @@ Coupon varchar(100) DEFAULT NULL,
 ProfileID bigint(20) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;*/
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\DailyDump\\New_signups.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\New_signups_2016-01-14.csv'
 into table romaniaStg.IMS_newSignup
 fields terminated by ','
 enclosed by '"'
 lines terminated by '\r\n';
 
-
-/*
-#if advertisers are more than 1187
+/*#if advertisers are more than 1194
 drop table romaniaStg.Advertisers;
 Create table romaniaStg.Advertisers(
 ADDRESS	varchar(100)	DEFAULT NULL,
@@ -95,12 +95,10 @@ WEBSITE	varchar(50)	DEFAULT NULL,
 ZIP	integer	DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\CURL_Advertisers.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\CURL_Advertisers_2016-01-14.csv'
 into table romaniaStg.Advertisers
-fields terminated by ','
-optionally enclosed by '"'
-lines terminated by '\r\n';*/
-
+fields terminated by ',' optionally enclosed by '"' lines terminated by '\r\n';
+*/
 
 select p.PlayerID,p.username,adv.email advEmail,advUsername,
 case when lower(adv.email) = 'agentii@efortuna.ro' then 'RETAIL'
@@ -115,3 +113,18 @@ INTO OUTFILE 'C:\\Users\\Public\\Downloads\\DimPlayerChannel.csv'
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
+
+Drop table romaniafl.Dim_Player_Channel;
+Create table romaniafl.Dim_Player_Channel(
+PlayerId integer,
+Username varchar(50),
+AdvEmail varchar(100),
+AdvUsername  varchar(200),
+AdvChannel varchar(50)
+) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+
+Load data infile 'C:\\Users\\Public\\Downloads\\DimPlayerChannel.csv'
+into table romaniafl.Dim_Player_Channel
+fields terminated by ','
+optionally enclosed by '"'
+lines terminated by '\r\n';

@@ -24,20 +24,16 @@ CREATE TABLE `stg_sp_gv_player_first_last` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\mysql_fd_gv_placed_bets_simple_sgl.csv'
-INTO TABLE romaniastage.stg_sp_gv_player_first_last FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
-;
+INTO TABLE romaniastage.stg_sp_gv_player_first_last FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\mysql_fd_gv_placed_bets_simple_combi.csv'
-INTO TABLE romaniastage.stg_sp_gv_player_first_last FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
-;
+INTO TABLE romaniastage.stg_sp_gv_player_first_last FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 commit;
 
 select *
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\sp_gv_player_first_last.csv'
-FIELDS TERMINATED BY ',' 
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from romaniamain.sp_gv_player_first_last;
 
 use romaniamain;
@@ -350,4 +346,5 @@ on duplicate key update
 
 commit;
 
-select count(*) from sp_gv_player_first_last;
+
+#select count(*) from sp_gv_player_first_last;

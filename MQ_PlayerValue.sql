@@ -95,3 +95,5 @@ INTO TABLE romaniamain.PlayerValue
 FIELDS TERMINATED BY ';' 
 ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
+
+commit;

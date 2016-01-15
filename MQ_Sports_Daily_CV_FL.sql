@@ -179,8 +179,7 @@ CREATE TABLE `sp_cv_player_first_last_totals` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\sp_cv_player_first_last_totals.csv'
-INTO TABLE sp_cv_player_first_last_totals FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
-;
+INTO TABLE sp_cv_player_first_last_totals FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 insert into romaniamain.sp_cv_player_first_last_totals
 (
@@ -568,5 +567,5 @@ on duplicate key update
 ;
 commit;
 
-select count(*) from romaniamain.sp_cv_player_first_last_totals;
+#select count(*) from romaniamain.sp_cv_player_first_last_totals;
 

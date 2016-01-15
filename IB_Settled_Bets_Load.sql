@@ -1,4 +1,4 @@
-## date change 2016-01-10
+## date change 2016-01-14
 use romaniastg;
 drop table `stg_settled_bets_csv`;
 CREATE TABLE `stg_settled_bets_csv` (
@@ -53,8 +53,8 @@ CREATE TABLE `stg_settled_bets_csv` (
   `Operator` varchar(20)  DEFAULT NULL
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\SettledBets\\Settled_Bets2016-01-10.csv' 
-INTO TABLE romaniastg.stg_settled_bets_csv
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\SettledBets\\Settled_Bets2016-01-14.csv' 
+INTO TABLE  stg_settled_bets_csv
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
@@ -110,10 +110,11 @@ select
 ,ViewId
 ,Channel
 ,Operator
-from romaniastg.stg_settled_bets_csv
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\SettledBets\\stg_settled_bets.csv'
-FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-
+FIELDS TERMINATED BY ',' 
+OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+from stg_settled_bets_csv;
 
 drop table `stg_settled_bets`;
 CREATE TABLE `stg_settled_bets` (
@@ -259,7 +260,7 @@ join romaniamain.fd_placed_bets as pb
 on sb.BetId = pb.BetId and sb.SelectionId = pb.SelectionId and sb.MarketId = pb.MarketId
 ;
 
-
+/*
 #use romaniamain;
 #drop table `fd_settled_bets`;
 CREATE TABLE `fd_settled_bets` (
@@ -337,12 +338,12 @@ CREATE TABLE `fd_settled_bets` (
   `Channel` varchar(20)  DEFAULT NULL,
   `Operator` varchar(20)  DEFAULT NULL
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+*/
 
-use romaniastg;
+
+#use romaniastg;
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\SettledBets\\fd_settled_bets.csv' 
 INTO TABLE  romaniamain.fd_settled_bets
-FIELDS TERMINATED BY ','
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n';
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 select SettledDate, count(*) from romaniamain.fd_settled_bets group by 1 order by 1 desc;

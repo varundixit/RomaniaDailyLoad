@@ -16,6 +16,7 @@ f. Transactions information:filename:"Transactions_information.csv" [Incr]
 g. UserTransactions: 		filename:"usertransactions.csv" [Time period: "Specific Period" Start date:"today-1" End date:"today-1"]
 h. New Signups: 			filename:"New_signups.csv" [Incr]
 i. Currency Conversion: 	filename:"Currency_conversion_rates.csv" [Incr]
+j. Advertisers Report:		filename:"CURL_Advertisers.csv"
 
 3. Geneity:
 a. Customer: 				filename:"Customer.csv" [Complete 1 Aug]
