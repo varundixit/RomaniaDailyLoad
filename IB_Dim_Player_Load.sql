@@ -1,3 +1,4 @@
+##Full Run
 use romaniastg;
 drop table `STG_GIT_CSV_CUSTOMER`;
 CREATE TABLE `STG_GIT_CSV_CUSTOMER` (
@@ -21,9 +22,7 @@ CREATE TABLE `STG_GIT_CSV_CUSTOMER` (
 
 Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\Customer.csv'
 into table STG_GIT_CSV_CUSTOMER
-fields terminated by ','
-enclosed by '"'
-lines terminated by '\r\n';
+fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
 
 select
 PlayerSPId,
@@ -72,9 +71,7 @@ CREATE TABLE STG_GIT_CUSTOMER (
 
 Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\STG_GIT_CSV_CUSTOMER_OUT.csv'
 into table STG_GIT_CUSTOMER
-fields terminated by ','
-enclosed by '"'
-lines terminated by '\r\n';
+fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
 
 drop table `STG_IMS_CSV_PLAYER`;
 CREATE TABLE `STG_IMS_CSV_PLAYER` (
@@ -295,9 +292,7 @@ CREATE TABLE `STG_IMS_CSV_PLAYER` (
 
 Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\Curl_Player.csv'
 into table STG_IMS_CSV_PLAYER
-fields terminated by ','
-optionally enclosed by '"'
-lines terminated by '\r\n';
+fields terminated by ',' optionally enclosed by '"' lines terminated by '\r\n';
 
 select
   AccumulatedBetRefund
@@ -478,9 +473,7 @@ select
 , ZIP
 , 1
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\STG_IMS_CSV_PLAYER_OUT.csv'
-FIELDS TERMINATED BY ',' 
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from STG_IMS_CSV_PLAYER;
 
 drop table STG_IMS_PLAYER;
@@ -666,9 +659,7 @@ CREATE TABLE STG_IMS_PLAYER (
  
 Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\STG_IMS_CSV_PLAYER_OUT.csv'
 into table STG_IMS_PLAYER
-fields terminated by ','
-enclosed by '"'
-lines terminated by '\r\n';
+fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
 
 use romaniamain;
 drop table DIM_PLAYER;
@@ -868,9 +859,7 @@ CREATE TABLE DIM_PLAYER (
 use romaniastg;
 select temp.*
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\STG_PLAYER.csv'
-FIELDS TERMINATED BY ',' 
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from
 (SELECT 
 IMS.*,
@@ -919,7 +908,7 @@ select count(1) from romaniamain.DIM_PLAYER where PlayerID is null;
 
 
 ####### Exchange Rate Load
-
+/*
 drop table STG_Exchange_Rate;
 CREATE TABLE `STG_Exchange_Rate` (
   `EffectiveTimestamp` datetime DEFAULT NULL,
@@ -961,7 +950,7 @@ into table romaniamain.DD_Exchange_Rate
 fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\r\n';
-
+*/
 
 /*
 use romaniamain;

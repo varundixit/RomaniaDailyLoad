@@ -1,3 +1,4 @@
+##Full Run
 use romaniastage;
 drop table stg_daily_logins;
 CREATE TABLE `stg_daily_logins` (
@@ -31,7 +32,7 @@ INTO TABLE  romaniastage.stg_daily_logins
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
-IGNORE 1 LINES
+#IGNORE 1 LINES
 (@vClientType, @vLoginId, @vEndBalance, @vEndBonusBalance, @vFunPlayerCode, @vHwSerial, @vIP, @vKioskCode, @vLoginDate, @vLogoutDate, @vPlayerCode, @vPlayerType, @vSerialCode, @vServerCode, @vSessionId, @vStartbalance, @vStartbonusbalance, @vVersion, @vClientPlatform, @vLoginDeviceTypeCode, @vLoginVenueCode)
 SET
 ClientType = nullif(@vClientType, ''),
@@ -58,13 +59,13 @@ LoginVenueCode = nullif(@vLoginVenueCode, '');
 
 commit;
 
-select count(*) from romaniastage.stg_daily_logins where LogoutDate is null;
+#select count(*) from romaniastage.stg_daily_logins where LogoutDate is null;
 
 
 ######################################################### Open Logins ################################################################
 
-#use romaniamain;
-#drop table fd_daily_logins_open;
+use romaniamain;
+drop table fd_daily_logins_open;
 CREATE TABLE `fd_daily_logins_open` (
   `Product` varchar(200) DEFAULT NULL,
   `SummaryDate` date,
@@ -89,6 +90,7 @@ CREATE TABLE `fd_daily_logins_open` (
   `LoginDeviceTypeCode` int(9) DEFAULT NULL,
   `LoginVenueCode` int(9) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 insert into  romaniamain.fd_daily_logins_open
 (
@@ -146,8 +148,8 @@ commit;
 
 ######################################################### Completed Logins ################################################################
 
-#use romaniamain;
-#drop table fd_daily_logins_completed;
+use romaniamain;
+drop table fd_daily_logins_completed;
 CREATE TABLE `fd_daily_logins_completed` (
   `Product` varchar(200) DEFAULT NULL,
   `SummaryDate` date,
@@ -172,6 +174,7 @@ CREATE TABLE `fd_daily_logins_completed` (
   `LoginDeviceTypeCode` int(9) DEFAULT NULL,
   `LoginVenueCode` int(9) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 insert into  romaniamain.fd_daily_logins_completed
 (
@@ -227,7 +230,7 @@ romaniastage.stg_daily_logins where LogoutDate is not null;
 commit;
 
 ############################################################ Player First Last ##################################################################
-select * from romaniamain.fd_daily_logins_completed;
+#select * from romaniamain.fd_daily_logins_completed;
 
 use romaniamain;
 drop table daily_player_login_first_last;

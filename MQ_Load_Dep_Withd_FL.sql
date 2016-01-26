@@ -1,3 +1,4 @@
+##Full run
 use romaniamain;
 drop table User_Dep_With_First_Last;
 CREATE TABLE `User_Dep_With_First_Last` (

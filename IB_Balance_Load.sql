@@ -1,4 +1,5 @@
-#date change 2016-01-14
+#date change 2016-01-25
+##Selective run
 
 use romaniastg;
 drop table `STG_IMS_CSV_PLAYER`;
@@ -226,7 +227,7 @@ lines terminated by '\r\n';
 
 select
   Code as Playerid
-, STR_TO_DATE('2016-01-14', '%Y-%m-%d %H:%i:%s') AS SummaryDate
+, STR_TO_DATE('2016-01-25', '%Y-%m-%d %H:%i:%s') AS SummaryDate
 , AdvertiserCode
 , STR_TO_DATE(GlobalFirstDepositDate, '%Y-%m-%d %H:%i:%s') as FirstDepositDate
 , Balance as Balance
@@ -234,9 +235,7 @@ select
 , STR_TO_DATE(SignupDate, '%Y-%m-%d %H:%i:%s') as SignUpDate
 , 1
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\STG_DAILY_PLAYER_BALANCE.csv'
-FIELDS TERMINATED BY ',' 
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from STG_IMS_CSV_PLAYER;
 
 
@@ -255,9 +254,7 @@ CREATE TABLE `FD_DAILY_PLAYER_BALANCE` (
 
 Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\STG_DAILY_PLAYER_BALANCE.csv'
 into table romaniamain.FD_DAILY_PLAYER_BALANCE
-fields terminated by ','
-enclosed by '"'
-lines terminated by '\r\n';
+fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
 
 select 
 SummaryDate, 

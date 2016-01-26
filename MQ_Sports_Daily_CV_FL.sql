@@ -1,3 +1,6 @@
+##!!!Check if FLBackup is emptied of yesterday's run
+##Full run
+
 use romaniastage;
 Drop table stg_sp_cv_player_first_last;
 CREATE TABLE `stg_sp_cv_player_first_last` ( 

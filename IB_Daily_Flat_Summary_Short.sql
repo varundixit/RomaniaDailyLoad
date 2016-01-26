@@ -220,6 +220,22 @@ select
 
 , ch.AdvChannel
 , ch.AdvUsername
+, ch.AgeVerificationResult
+, ch.InternalAccount
+, ch.Frozen
+, ch.SendPromotionalEmail
+, ch.SendPromotionalSms
+, ch.DoNotCallPlayer
+, ch.BonusSeeker
+, ch.PlayerIsAdvertiser
+, ch.RegistrationChecked
+, ch.FraudChecked
+, ch.AllowedToTransferMoneyToPlayers
+, ch.AllowedToReceiveMoneyFromPlayers
+, ch.IpProxyPlayerFromNonRestrictedCountries
+, ch.Suspended
+, ch.TaggedBy 
+, ch.AdvCode
 from
 romaniafl.stg_dim_player as p
 left outer join romaniafl.Dim_Player_Channel ch on p.playerId = ch.playerid

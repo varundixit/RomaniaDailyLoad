@@ -1,3 +1,6 @@
+###Clean FL_Backup
+#Full run
+
 use romaniastage;
 drop table `stg_dim_player`;
 CREATE TABLE `stg_dim_player` (
@@ -71,7 +74,7 @@ Create table STG_SCIMS_Data(
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\STG_SCIMS_Data_MySQL.csv'  
 INTO TABLE STG_SCIMS_Data FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
-select Reason, count(*) from STG_SCIMS_Data group by 1;
+#select Reason, count(*) from STG_SCIMS_Data group by 1;
 
 /*
 #use romaniamain;
@@ -415,7 +418,7 @@ on duplicate key update
 ;
 commit;
 
-select SummaryDate, count(*) from Daily_User_First_Last group by 1 order by 1 desc;
+#select SummaryDate, count(*) from Daily_User_First_Last group by 1 order by 1 desc;
 
 #select count(*) from (
 
@@ -440,5 +443,5 @@ join User_Dep_Curr_Status as lt on dfl.Username = lt.Username;
 #) as temp;
 
 
-select * from User_Dep_Curr_Status;
+#select * from User_Dep_Curr_Status;
 

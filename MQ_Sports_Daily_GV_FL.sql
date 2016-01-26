@@ -1,3 +1,4 @@
+##Full Run
 use romaniastage;
 Drop table stg_sp_gv_player_first_last;
 CREATE TABLE `stg_sp_gv_player_first_last` ( 

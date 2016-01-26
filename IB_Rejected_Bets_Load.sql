@@ -1,4 +1,5 @@
-##date change 2016-01-14
+##date change 2016-01-25
+##Full Run
 use romaniastg;
 drop table stg_rejected_bets_csv;
 create table `stg_rejected_bets_csv`(
@@ -23,11 +24,9 @@ create table `stg_rejected_bets_csv`(
 ,`ViewName` varchar(200) DEFAULT NULL
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\RejectedBets\\Rejected_Bets2016-01-14.csv' 
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\RejectedBets\\Rejected_Bets2016-01-25.csv' 
 INTO TABLE  stg_rejected_bets_csv
-FIELDS TERMINATED BY ','
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n';
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 select 
  BetslipId
@@ -153,4 +152,4 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
 
-select BetDate, count(*) from romaniamain.fd_rejected_bets group by 1 order by 1 desc;
+#select BetDate, count(*) from romaniamain.fd_rejected_bets group by 1 order by 1 desc;

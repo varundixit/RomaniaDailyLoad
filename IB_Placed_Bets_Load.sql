@@ -1,4 +1,5 @@
-##date change 2016-01-14
+##date change 2016-01-25
+## Full Run
 use romaniastg;
 drop table stg_placed_bets_csv;
 CREATE TABLE `stg_placed_bets_csv` (
@@ -53,12 +54,11 @@ CREATE TABLE `stg_placed_bets_csv` (
   `Operator` varchar(20) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\PlacedBets\\Placed_Bets2016-01-14.csv' 
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\PlacedBets\\Placed_Bets2016-01-25.csv' 
 INTO TABLE  stg_placed_bets_csv
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
-
 
 select
  BetslipId

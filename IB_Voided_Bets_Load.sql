@@ -1,4 +1,5 @@
-##date change 2016-01-14
+##date change 2016-01-25
+##Full Run
 use romaniastg;
 drop table stg_voided_bets_csv;
 create table `stg_voided_bets_csv`(
@@ -21,12 +22,11 @@ create table `stg_voided_bets_csv`(
 ,`VoiderUsername` varchar(50) DEFAULT NULL
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\VoidedBets\\Voided_Bets2016-01-14.csv' 
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\VoidedBets\\Voided_Bets2016-01-25.csv' 
 INTO TABLE  stg_voided_bets_csv
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
-
 
 select 
  CustName

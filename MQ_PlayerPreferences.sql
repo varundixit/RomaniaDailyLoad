@@ -1,3 +1,4 @@
+##Full Run
 drop table romaniastage.stg_sports_prod_pref;
 create table romaniastage.stg_sports_prod_pref(
 PlayerId integer default null,

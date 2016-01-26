@@ -1,4 +1,6 @@
-## date change 2016-01-14
+## date change 2016-01-25
+##Full Run
+
 use romaniastg;
 drop table `stg_settled_bets_csv`;
 CREATE TABLE `stg_settled_bets_csv` (
@@ -53,7 +55,7 @@ CREATE TABLE `stg_settled_bets_csv` (
   `Operator` varchar(20)  DEFAULT NULL
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\SettledBets\\Settled_Bets2016-01-14.csv' 
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\SettledBets\\Settled_Bets2016-01-25.csv' 
 INTO TABLE  stg_settled_bets_csv
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
@@ -346,4 +348,4 @@ LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\Sett
 INTO TABLE  romaniamain.fd_settled_bets
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
-select SettledDate, count(*) from romaniamain.fd_settled_bets group by 1 order by 1 desc;
+#select SettledDate, count(*) from romaniamain.fd_settled_bets group by 1 order by 1 desc;

@@ -1,3 +1,4 @@
+##Full Run
 use romaniamain;
 select PlayerId, SportName,ClassName,SelectionName, count(*) as BetCount from romaniamain.fd_placed_bets group by 1,2,3,4 order by PlayerId,  count(*) desc
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\PlayerPrefSports.csv'

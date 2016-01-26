@@ -1,3 +1,4 @@
+##Full Run
 Drop table romaniamain.eg_LT_player_points;
 Create table romaniamain.eg_LT_player_points(
 PlayerId integer,

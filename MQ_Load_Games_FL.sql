@@ -1,3 +1,4 @@
+##Full run
 use romaniastage;
 drop table fd_csc_eg_player_product_info_summ;
 CREATE TABLE `fd_csc_eg_player_product_info_summ` (

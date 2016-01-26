@@ -1,4 +1,5 @@
-#date change 14-01-2016
+#date change 2016-01-25
+###Full Run
 use romaniastg;
 
 Drop Table romaniastg.rw_logins;
@@ -26,7 +27,7 @@ LoginDeviceTypeCode varchar(200) DEFAULT NULL,
 LoginVenueCode varchar(200) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Logins\\CURL_-_Logins_14-01-2016.csv'
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Logins\\CURL_Logins_2016-01-25.csv'
 INTO TABLE  romaniastg.rw_logins
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"'
@@ -173,28 +174,20 @@ from romaniastg.c_logins lo1 where date(lo1.LoginDate) = date(lo1.logoutdate)
 and date(lo1.LoginDate) >='2015-11-26'
 INTO OUTFILE 'C:\\Users\\Public\\Downloads\\romaniastg\\RegularLogins.csv'
 #character set utf8
-FIELDS TERMINATED BY ';' 
-ENCLOSED BY 'NULL'
-LINES TERMINATED BY '\r\n';
+FIELDS TERMINATED BY ';' ENCLOSED BY 'NULL' LINES TERMINATED BY '\r\n';
 
 
 LOAD DATA INFILE 'C:\\Users\\Public\\Downloads\\romaniastg\\LoginSplitsAcrossDates.csv' 
 INTO TABLE romaniastg.stg_daily_player_logins
-FIELDS TERMINATED BY ';' 
-ENCLOSED BY 'NULL'
-LINES TERMINATED BY '\r\n';
+FIELDS TERMINATED BY ';' ENCLOSED BY 'NULL' LINES TERMINATED BY '\r\n';
 
 LOAD DATA INFILE 'C:\\Users\\Public\\Downloads\\romaniastg\\LoginNullLogOutDates.csv' 
 INTO TABLE romaniastg.stg_daily_player_logins
-FIELDS TERMINATED BY ';' 
-ENCLOSED BY 'NULL'
-LINES TERMINATED BY '\r\n';
+FIELDS TERMINATED BY ';' ENCLOSED BY 'NULL' LINES TERMINATED BY '\r\n';
 
 LOAD DATA INFILE 'C:\\Users\\Public\\Downloads\\romaniastg\\RegularLogins.csv' 
 INTO TABLE romaniastg.stg_daily_player_logins
-FIELDS TERMINATED BY ';' 
-ENCLOSED BY 'NULL'
-LINES TERMINATED BY '\r\n';
+FIELDS TERMINATED BY ';' ENCLOSED BY 'NULL' LINES TERMINATED BY '\r\n';
 
 select   
 ClientType
