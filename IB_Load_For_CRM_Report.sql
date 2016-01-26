@@ -348,8 +348,9 @@ drop table `stg_eg_channel_pref`;
    `Channel` varchar(200) DEFAULT NULL
  ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-drop table `playervalue`; 
- CREATE TABLE `playervalue` (
+/*drop table `playervalue`; 
+CREATE TABLE `playervalue` (
+	`SummaryDate` date DEFAULT NULL,
    `PlayerId` int(11) DEFAULT NULL,
    `LTSystemAPD` int(11) DEFAULT NULL,
    `TotalStake` decimal(18,6) DEFAULT NULL,
@@ -363,7 +364,7 @@ drop table `playervalue`;
    `Margins` decimal(18,6) DEFAULT NULL,
    `Frequeny` decimal(18,6) DEFAULT NULL,
    `PlayerValue` decimal(18,6) DEFAULT NULL
- ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+ ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;*/
 
 drop TABLE `f_player_lifetime_apd`; 
  CREATE TABLE `f_player_lifetime_apd` (

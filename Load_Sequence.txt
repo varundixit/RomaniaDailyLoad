@@ -1,7 +1,7 @@
 InfoBright Load
 
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Dim_Player_Load.sql
-C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_PlayerAdvertisersLoad.sql
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_PlayerAdvertisersLoad.sql (date change)
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Logins.sql (date change)
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Balance_Load.sql (date change)
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Payments_Load.sql (date change)

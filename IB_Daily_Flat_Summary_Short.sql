@@ -251,7 +251,7 @@ left outer join romaniafl.SportsPreferedProduct as spp on p.PlayerID = spp.Playe
 left outer join romaniafl.EGPreferedProduct as egpp on p.PlayerID = egpp.PlayerId
 left outer join romaniafl.stg_sports_channel_pref as spch on p.PlayerID = spch.playerid 
 left outer join romaniafl.stg_eg_channel_pref as egch on p.PlayerID = egch.playerid 
-left outer join romaniafl.PlayerValue as pv on p.PlayerId = pv.PlayerID 
+left outer join romaniafl.PlayerValue as pv on p.PlayerId = pv.PlayerID and pv.SummaryDate = date(CURRENT_DATE)
 left outer join romaniafl.f_player_lifetime_apd apd on p.playerId = apd.playerId
 left outer join romaniafl.sp_cv_player_volatility as vo on p.PLayerId = vo.playerId
 left outer join romaniafl.eg_LT_player_points as egp on p.PlayerId = egp.PlayerId;
