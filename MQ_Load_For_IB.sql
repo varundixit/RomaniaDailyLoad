@@ -46,7 +46,7 @@ select * from romaniamain.stg_eg_channel_pref
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\CRM\\stg_eg_channel_pref.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
-select date(CURRENT_DATE),*
+select date(CURRENT_DATE),pv.* from romaniamain.PlayerValue pv
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\FL_Backup\\CRM\\PlayerValue.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
