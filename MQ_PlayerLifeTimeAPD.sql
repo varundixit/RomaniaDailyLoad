@@ -1,3 +1,4 @@
+##FullRun
 use romaniastage;
 drop table stg_player_lifetime_apd;
 CREATE TABLE `stg_player_lifetime_apd` (
