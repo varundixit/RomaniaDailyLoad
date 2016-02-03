@@ -1,7 +1,9 @@
-#date change 2016-01-25
+#date change 2016-02-02
 ##Selective run
 
 use romaniastg;
+
+/*
 drop table `STG_IMS_CSV_PLAYER`;
 CREATE TABLE `STG_IMS_CSV_PLAYER` (
   `AccumulatedBetRefund` decimal(18,6) DEFAULT NULL,
@@ -223,23 +225,25 @@ Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL
 into table STG_IMS_CSV_PLAYER
 fields terminated by ','
 optionally enclosed by '"'
-lines terminated by '\r\n';
+lines terminated by '\r\n'; 
+
+*/
 
 select
   Code as Playerid
-, STR_TO_DATE('2016-01-25', '%Y-%m-%d %H:%i:%s') AS SummaryDate
+, STR_TO_DATE('2016-02-02', '%Y-%m-%d %H:%i:%s') AS SummaryDate
 , AdvertiserCode
 , STR_TO_DATE(GlobalFirstDepositDate, '%Y-%m-%d %H:%i:%s') as FirstDepositDate
 , Balance as Balance
 , BonusBalance as BonusBalance
 , STR_TO_DATE(SignupDate, '%Y-%m-%d %H:%i:%s') as SignUpDate
 , 1
+from romaniastg.STG_IMS_CSV_PLAYER
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\STG_DAILY_PLAYER_BALANCE.csv'
-FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
-from STG_IMS_CSV_PLAYER;
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 
-#use romaniamain;
+/*use romaniamain;
 #drop table `FD_DAILY_PLAYER_BALANCE`;
 CREATE TABLE `FD_DAILY_PLAYER_BALANCE` (
   `PlayerId` bigint(20) DEFAULT NULL,
@@ -251,6 +255,8 @@ CREATE TABLE `FD_DAILY_PLAYER_BALANCE` (
   `SignUpDate` date DEFAULT NULL,
   `RomDummy` int
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+
+*/
 
 Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\STG_DAILY_PLAYER_BALANCE.csv'
 into table romaniamain.FD_DAILY_PLAYER_BALANCE

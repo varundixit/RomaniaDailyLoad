@@ -1,4 +1,5 @@
-## date change 2016-01-25
+## date change 2016-02-02
+###place file "Settled_Bets2016-02-02.csv"
 ##Full Run
 
 use romaniastg;
@@ -55,7 +56,7 @@ CREATE TABLE `stg_settled_bets_csv` (
   `Operator` varchar(20)  DEFAULT NULL
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\SettledBets\\Settled_Bets2016-01-25.csv' 
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\SettledBets\\Settled_Bets2016-02-02.csv' 
 INTO TABLE  stg_settled_bets_csv
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'

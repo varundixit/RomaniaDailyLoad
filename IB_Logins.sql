@@ -1,4 +1,5 @@
-#date change 2016-01-25
+#date change 2016-02-02
+##place file "CURL_Logins_2016-02-02.csv" remove headers
 ###Full Run
 use romaniastg;
 
@@ -27,7 +28,7 @@ LoginDeviceTypeCode varchar(200) DEFAULT NULL,
 LoginVenueCode varchar(200) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Logins\\CURL_Logins_2016-01-25.csv'
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Logins\\CURL_Logins_2016-02-02.csv'
 INTO TABLE  romaniastg.rw_logins
 FIELDS TERMINATED BY ',' 
 OPTIONALLY ENCLOSED BY '"'

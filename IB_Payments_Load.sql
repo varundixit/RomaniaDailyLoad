@@ -1,4 +1,6 @@
-##date change 2016-01-25
+##date change 2016-02-02
+###place files "SC_IMS_2016-02-02.csv", "CURL_Player_Payments2016-02-02.csv" and "Transactions_information_2016-02-02.csv"
+## update file name in Powershell. Run Powershell script, remove headers
 ##full run
 
 use romaniastg;
@@ -53,7 +55,7 @@ Create table CSV_TO_STG (
 , ProcessorCurrency varchar(10)
 )  ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\SC_IMS_2016-01-25.csv'  
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\SC_IMS_2016-02-02.csv'  
 INTO TABLE CSV_TO_STG FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 select 
@@ -303,7 +305,7 @@ CREATE TABLE `stg_csv_player_payments` (
   `Zip` varchar(200) COLLATE latin1_bin DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\CURL_Player_Payments2016-01-25.csv'  
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\CURL_Player_Payments2016-02-02.csv'  
 INTO TABLE stg_csv_player_payments FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 select 
@@ -449,7 +451,7 @@ count(case when Type = 'withdraw' and Status = 'declined' and ClientPlatform <> 
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\sd_daily_cashier_summary.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from stg_player_payments
-where TxnDate = '2016-01-25'
+where TxnDate = '2016-02-02'
 group by PlayerCode,TxnDate;
 
 #select count(distinct PlayerCode) from stg_player_payments;
@@ -494,3 +496,105 @@ CREATE TABLE `sd_daily_cashier_summary` (
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\sd_daily_cashier_summary.csv'  
 INTO TABLE romaniamain.sd_daily_cashier_summary 
 FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+
+
+################Load Player Transactions
+
+drop table romaniastg.stg_transaction_info;
+Create table romaniastg.stg_transaction_info(
+Code int(10),
+Username varchar(100),
+Casino varchar(50),
+Merchant varchar(50),
+Clienttype varchar(50),
+Ppcode int(10),
+Type varchar(50),
+Status varchar(50),
+Requestdate datetime,
+Currencycode varchar(10),
+Amount decimal(18,6),
+Bc_amount decimal(18,6),
+Balance decimal(18,6),
+Bc_balance decimal(18,6),
+Method varchar(100),
+Paypaltranid varchar(500),
+Submethod varchar(50),
+Reason varchar(4000)
+) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\Transactions_information_2016-02-02.csv' 
+INTO TABLE romaniastg.stg_transaction_info
+FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+
+select txn.Code,p.PlayerId,txn.Username,Casino,Merchant,Clienttype,Ppcode,Type,Status ,Requestdate,
+date(Requestdate),month(Requestdate),year(Requestdate),txn.Currencycode ,Amount,
+Bc_amount ,txn.Balance ,Bc_balance ,Method ,Paypaltranid ,Submethod ,
+case when Status = 'approved' then 'NotDeclined'
+	 when Status = 'declined' and lower(Reason) like '%invalid%' and lower(Reason) like '%card%' then 'InvalidCardDetails'
+ when Status = 'declined' and lower(Reason) like '%ndeclined%' and lower(Reason) like '%prctime%' then 'NDeclinedPrcTime'
+ when Status = 'declined' and lower(Reason) like '%pick-up%' and lower(Reason) like '%card%' then 'PickUpCardError'
+ when Status = 'declined' and lower(Reason) like '%restricted%' and lower(Reason) like '%card%' then 'RestrictedCard'
+ when Status = 'declined' and lower(Reason) like '%approve%' and lower(Reason) like '%referral%' then 'ApproveRegerralError'
+ when Status = 'declined' and lower(Reason) like '%timeout/retry%' then 'TimeoutRetry'
+ when Status = 'declined' and lower(Reason) like '%invalid%' and lower(Reason) like '%cvv2%' then 'InvalidCVV2'
+ when Status = 'declined' and lower(Reason) like '%invalid%' and lower(Reason) like '%token%' then 'InvalidToken'
+ when Status = 'declined' and lower(Reason) like '%no%' and lower(Reason) like '%issuer%' then 'NoSuchIssuer'
+ when Status = 'declined' and lower(Reason) like '%restricted%' and lower(Reason) like '%card%' then 'RestrictedCard'
+ when Status = 'declined' and lower(Reason) like '%invalid%' and lower(Reason) like '%transaction%' and lower(Reason) like '%exceeded%' then 'InvalidTransaction'
+ when Status = 'declined' and lower(Reason) like '%pin%' and lower(Reason) like '%tries%' and lower(Reason) like '%exceeded%' then 'MaximumPinTriesExceeded'
+ when Status = 'declined' and lower(Reason) like '%sc_fs_declined_trans%' then 'SC_FS_Declined'
+ when Status = 'declined' and lower(Reason) like '%maximum%retry%clear%reach%' then 'MaximumClearanceRetryReached'
+ when Status = 'declined' and lower(Reason) like '%issuer%' and lower(Reason) like '%switch%' and lower(Reason) like '%inoperative%' then 'IssuerORSwitchInoperative'
+ when Status = 'declined' and lower(Reason) like '%transaction%' and lower(Reason) like '%not%' and lower(Reason) like '%permitted%' then 'TxnNotPermittedToCardHolder'
+ when Status = 'declined' and lower(Reason) like '%acquirer%' and lower(Reason) like '%validation%' then 'AcquirerValidationError'
+ when Status = 'declined' and lower(Reason) like '%do%' and lower(Reason) like '%not%' and lower(Reason) like '%honor%' then 'DoNotHonor'
+ when Status = 'declined' and lower(Reason) like '%exceed%' and lower(Reason) like '%withdrawal%' and lower(Reason) like '%frequency%' then 'ExceedsWithdrawalFrequency'
+ when Status = 'declined' and lower(Reason) like '%exceed%' and lower(Reason) like '%withdrawal%' and lower(Reason) like '%limit%' then 'ExceedsWithdrawalLimit'
+ when Status = 'declined' and lower(Reason) like '%expired%' and lower(Reason) like '%card%' and lower(Reason) like '%unavail%' then 'ExpiredCardORUserUnavailable'
+ when Status = 'declined' and lower(Reason) like '%insufficient%' and lower(Reason) like '%funds%' then 'InsufficientFunds'
+ when Status = 'declined' and lower(Reason) like '%invalid%' and lower(Reason) like '%to%' and lower(Reason) like '%account%' then 'InvalidToAccount'
+ when Status = 'declined' and lower(Reason) like '%invalid%' and lower(Reason) like '%to%' and lower(Reason) like '%account%' then 'InvalidToAccount'
+ when Status = 'declined' and lower(Reason) like '%generic_error%' and lower(Reason) like '%user%' and lower(Reason) like '%cancelation%' then 'UserCancelled'
+ when Status = 'declined' and lower(Reason) like '%567%' then 'SC_FS_Declined'
+ else 'NA' end as DeclinedReason
+from romaniastg.stg_transaction_info as txn 
+join romaniamain.dim_player p on txn.username = p.Username
+where date(Requestdate) = '2016-02-02'
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\daily_player_transactions.csv'
+FIELDS TERMINATED BY ',' ENCLOSED BY 'NULL' LINES TERMINATED BY '\n';
+
+#select distinct type from romaniastg.stg_transaction_info;
+
+/*
+drop table romaniamain.daily_player_transactions;
+Create table romaniamain.daily_player_transactions(
+Code int(10),
+PlayerId bigint(20),
+Username varchar(50),
+Casino varchar(50),
+Merchant varchar(50),
+Clienttype varchar(50),
+Ppcode int(10),
+Type varchar(50),
+Status varchar(50),
+Requestdate datetime,
+TxnDate date,
+TxnMonth int,
+TxnYear int,
+Currencycode varchar(10),
+Amount decimal(18,6),
+Bc_amount decimal(18,6),
+Balance decimal(18,6),
+Bc_balance decimal(18,6),
+Method varchar(100),
+Paypaltranid varchar(500),
+Submethod varchar(50),
+DeclinedReason varchar(500)
+) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+*/
+
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\daily_player_transactions.csv' 
+INTO TABLE romaniamain.daily_player_transactions
+FIELDS TERMINATED BY ',' ENCLOSED BY 'NULL' LINES TERMINATED BY '\r\n';
+
+#select distinct type from romaniamain.daily_player_transactions;

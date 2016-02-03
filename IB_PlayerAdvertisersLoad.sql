@@ -1,5 +1,50 @@
-###date change 2016-01-25
+###date change 2016-02-02
+### place files "New_signups_2016-02-02.csv", "AdvertisersReport_2016-02-02.csv", "Players_search_by_parameters_2016-02-02.csv" and "Currency_conversion_rates_2016-02-02.csv"
 ###Full run
+
+#####exchange load
+drop table romaniastg.STG_Exchange_Rate;
+CREATE TABLE romaniastg.`STG_Exchange_Rate` (
+  `EffectiveTimestamp` varchar(100) DEFAULT NULL,
+  `LastUpdTimestamp` varchar(100) DEFAULT NULL,
+  `CurrencyCode` varchar(100) DEFAULT NULL,
+  `XchangeRate` varchar(100) DEFAULT NULL
+) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\Currency_conversion_rates_2016-02-02.csv'
+into table romaniastg.STG_Exchange_Rate
+fields terminated by ','
+optionally enclosed by '"'
+lines terminated by '\r\n';
+
+select
+date(EffectiveTimestamp),
+EffectiveTimestamp,
+LastUpdTimestamp,
+CurrencyCode,
+XchangeRate
+from romaniastg.STG_Exchange_Rate
+where EffectiveTimestamp <> 'Effective date'
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\DD_Exchange_Rate_2016-02-02.csv'
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+
+#use romaniamain;
+#drop table DD_Exchange_Rate;
+CREATE TABLE `DD_Exchange_Rate` (
+  `SummaryDate` date DEFAULT NULL,
+  `EffectiveTimestamp` datetime DEFAULT NULL,
+  `LastUpdTimestamp` datetime DEFAULT NULL,
+  `CurrencyCode` varchar(20) DEFAULT NULL,
+  `ExchangeRate` double(24,18) DEFAULT NULL
+) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\DD_Exchange_Rate_2016-02-02.csv'
+into table romaniamain.DD_Exchange_Rate
+fields terminated by ','
+optionally enclosed by '"'
+lines terminated by '\r\n';
+
+
 
 /*drop table romaniaStg.IMS_newSignup;
 CREATE TABLE romaniaStg.IMS_newSignup(
@@ -15,7 +60,7 @@ Coupon varchar(100) DEFAULT NULL,
 ProfileID bigint(20) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;*/
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\New_signups_2016-01-25.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\New_signups_2016-02-02.csv'
 into table romaniaStg.IMS_newSignup
 fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
 
@@ -94,7 +139,7 @@ CREATE TABLE `advertisers` (
    `WEBSITE` varchar(50) DEFAULT NULL,
    `ZIP` int(11) DEFAULT NULL
  ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\CURL_Advertisers_2016-01-25.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\CURL_Advertisers_2016-02-02.csv'
 into table romaniaStg.Advertisers
 fields terminated by ',' optionally enclosed by '"' lines terminated by '\r\n';
 
@@ -161,16 +206,16 @@ CREATE TABLE romaniaStg.Advertisers
   wantmail varchar(20) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\AdvertisersReport_2016-01-25.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\AdvertisersReport_2016-02-02.csv'
 into table romaniaStg.Advertisers
 fields terminated by ',' optionally enclosed by '"' lines terminated by '\r\n';
 
 
 */
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\AdvertisersReport_2016-01-25.csv'
-into table romaniaStg.Advertisers
-fields terminated by ',' optionally enclosed by '"' lines terminated by '\r\n';
+#Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\AdvertisersReport_2016-02-02.csv'
+#into table romaniaStg.Advertisers
+#fields terminated by ',' optionally enclosed by '"' lines terminated by '\r\n';
 
 Drop table romaniastg.PlayerParameters;
 Create table romaniastg.PlayerParameters(
@@ -241,7 +286,7 @@ HasCopyOfIdFaxed Varchar(20)
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
 /*Bitzaone*/
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\Players_search_by_parameters_2016-01-25.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\Players_search_by_parameters_2016-02-02.csv'
 into table romaniastg.PlayerParameters
 fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
 

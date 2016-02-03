@@ -1,3 +1,4 @@
+##place files "Customer.csv" and "Curl_Player.csv", remove headers
 ##Full Run
 use romaniastg;
 drop table `STG_GIT_CSV_CUSTOMER`;

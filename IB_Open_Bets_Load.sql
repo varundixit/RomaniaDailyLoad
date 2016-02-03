@@ -1,4 +1,5 @@
-## date change 2016-01-25
+## date change 2016-02-02
+##place file "Open_Bets26Onwards.csv"
 ##Full Run
 use romaniastg;
 drop table stg_open_bets_csv;
@@ -50,7 +51,7 @@ CREATE TABLE `stg_open_bets_csv` (
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\OpenBets\\Open_Bets26Onwards.csv' 
-INTO TABLE  stg_open_bets_csv
+INTO TABLE stg_open_bets_csv
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 select
@@ -208,7 +209,7 @@ INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\OpenBets
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from stg_open_bets as stg 
 join romaniamain.DIM_PLAYER as p on stg.PlayerId = p.PlayerSPId
-where BetDate <= '2016-01-25';
+where BetDate <= '2016-02-02';
 
 
 use romaniamain;

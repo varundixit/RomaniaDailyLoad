@@ -1,4 +1,5 @@
-##date change 2016-01-27
+##date change 2016-02-02
+### place file "Curl_Games2016-02-02.csv"
 ##Full run from games
 use romaniastg;
 
@@ -178,7 +179,7 @@ CREATE TABLE `STG_GAMES_CSV` (
    `WindowCode` int(11) DEFAULT NULL
  ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
  
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Games\\Curl_Games2016-01-27.csv' 
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Games\\Curl_Games2016-02-02.csv' 
 INTO TABLE STG_GAMES_CSV
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
@@ -307,7 +308,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n';
 
-#select count(1) from STG_GAMES where date(GameDate) = '2016-01-27';
+#select count(1) from STG_GAMES where date(GameDate) = '2016-02-02';
 
 use romaniastg;
  select 
@@ -382,7 +383,7 @@ join romaniamain.DIM_CLIENT_PARAMETER as cp on stg.ClientParameterCode = cp.Clie
 join romaniamain.dim_game_list as dgt on stg.Type = dgt.Type
 join romaniamain.dim_player as p on stg.PlayerId = p.PlayerID
 #join romaniamain.dd_exchange_rate as ex on p.CurrencyCode = ex.CurrencyCode
-where date(stg.GameDate) <= '2016-01-27';
+where date(stg.GameDate) <= '2016-02-02';
 
 /*
 #use romaniamain;
@@ -516,7 +517,7 @@ from STG_Games as stg
 join romaniamain.DIM_CLIENT_PARAMETER as cp on stg.ClientParameterCode = cp.ClientParameterCode
 join romaniamain.dim_game_list as dgt on stg.Type = dgt.Type
 join romaniamain.dim_player as p on stg.PlayerId = p.PlayerID
-where date(stg.GameDate) <= '2016-01-27';
+where date(stg.GameDate) <= '2016-02-02';
 
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Games\\FD_CSC_EG_PLAYER_PRODUCT_INFO_SUMM.csv' 
 INTO TABLE romaniamain.FD_CSC_EG_PLAYER_PRODUCT_INFO_SUMM
@@ -543,7 +544,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\r\n'
 from romaniamain.FD_CSC_EG_PLAYER_PRODUCT_INFO_SUMM
-where SummaryDate = '2016-01-27'
+where SummaryDate = '2016-02-02'
 group by PlayerId,SummaryDate,CurrencyCode;
 
 /*
@@ -597,4 +598,4 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"' 
 LINES TERMINATED BY '\r\n' 
 from  romaniamain.fd_csc_eg_player_product_info_summ 
-where SummaryDate = '2016-01-27';
+where SummaryDate = '2016-02-02';
