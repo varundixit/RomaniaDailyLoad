@@ -1,6 +1,7 @@
-###date change 2016-02-02
-### place files "New_signups_2016-02-02.csv", "AdvertisersReport_2016-02-02.csv", "Players_search_by_parameters_2016-02-02.csv" and "Currency_conversion_rates_2016-02-02.csv"
-###Full run
+###date change 2016-02-05
+### place files "New_signups_2016-02-05.csv", "AdvertisersReport_2016-02-05.csv", 
+###             "Players_search_by_parameters_2016-02-05.csv" and "Currency_conversion_rates_2016-02-05.csv"
+### is based on advertiser report
 
 #####exchange load
 drop table romaniastg.STG_Exchange_Rate;
@@ -11,7 +12,7 @@ CREATE TABLE romaniastg.`STG_Exchange_Rate` (
   `XchangeRate` varchar(100) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\Currency_conversion_rates_2016-02-02.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\Currency_conversion_rates_2016-02-05.csv'
 into table romaniastg.STG_Exchange_Rate
 fields terminated by ','
 optionally enclosed by '"'
@@ -25,11 +26,12 @@ CurrencyCode,
 XchangeRate
 from romaniastg.STG_Exchange_Rate
 where EffectiveTimestamp <> 'Effective date'
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\DD_Exchange_Rate_2016-02-02.csv'
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\DD_Exchange_Rate_2016-02-05.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
-#use romaniamain;
-#drop table DD_Exchange_Rate;
+/*
+use romaniamain;
+drop table DD_Exchange_Rate;
 CREATE TABLE `DD_Exchange_Rate` (
   `SummaryDate` date DEFAULT NULL,
   `EffectiveTimestamp` datetime DEFAULT NULL,
@@ -37,14 +39,13 @@ CREATE TABLE `DD_Exchange_Rate` (
   `CurrencyCode` varchar(20) DEFAULT NULL,
   `ExchangeRate` double(24,18) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+*/
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\DD_Exchange_Rate_2016-02-02.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\DD_Exchange_Rate_2016-02-05.csv'
 into table romaniamain.DD_Exchange_Rate
 fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\r\n';
-
-
 
 /*drop table romaniaStg.IMS_newSignup;
 CREATE TABLE romaniaStg.IMS_newSignup(
@@ -60,7 +61,7 @@ Coupon varchar(100) DEFAULT NULL,
 ProfileID bigint(20) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;*/
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\New_signups_2016-02-02.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\New_signups_2016-02-05.csv'
 into table romaniaStg.IMS_newSignup
 fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
 
@@ -139,7 +140,7 @@ CREATE TABLE `advertisers` (
    `WEBSITE` varchar(50) DEFAULT NULL,
    `ZIP` int(11) DEFAULT NULL
  ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\CURL_Advertisers_2016-02-02.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\CURL_Advertisers_2016-02-05.csv'
 into table romaniaStg.Advertisers
 fields terminated by ',' optionally enclosed by '"' lines terminated by '\r\n';
 
@@ -206,16 +207,16 @@ CREATE TABLE romaniaStg.Advertisers
   wantmail varchar(20) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\AdvertisersReport_2016-02-02.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\AdvertisersReport_2016-02-05.csv'
 into table romaniaStg.Advertisers
 fields terminated by ',' optionally enclosed by '"' lines terminated by '\r\n';
 
 
 */
 
-#Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\AdvertisersReport_2016-02-02.csv'
-#into table romaniaStg.Advertisers
-#fields terminated by ',' optionally enclosed by '"' lines terminated by '\r\n';
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\AdvertisersReport_2016-02-05.csv'
+into table romaniaStg.Advertisers
+fields terminated by ',' optionally enclosed by '"' lines terminated by '\r\n';
 
 Drop table romaniastg.PlayerParameters;
 Create table romaniastg.PlayerParameters(
@@ -286,7 +287,7 @@ HasCopyOfIdFaxed Varchar(20)
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
 /*Bitzaone*/
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\Players_search_by_parameters_2016-02-02.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\Players_search_by_parameters_2016-02-05.csv'
 into table romaniastg.PlayerParameters
 fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
 
@@ -294,43 +295,49 @@ select p.PlayerID,p.username,adv.email advEmail,advUsername,advcode,
 case when lower(adv.email) = 'agentii@efortuna.ro' then 'RETAIL'
 when lower(adv.email) like 'iulian.dumitru@efortuna.ro' or lower(adv.email) like 'superpont1x2@gmail.com' then 'DIGITAL'
 when lower(adv.email) like 'defaulte8' then 'Generic'
-else 'AFFILIATE' end advChannel,
+else 'AFFILIATE' end advChannel,p.GlobalFirstDepositDate,p.SIGNUPDATE,
+sig.ClientPlatform,sig.ClientType,
 pp.AgeVerificationResult,pp.InternalAccount,pp.Frozen,pp.SendPromotionalEMail,
 pp.SendPromotionalSms,pp.DoNotCallPlayer,pp.BonusSeeker,pp.PlayerIsAdvertiser,
 pp.RegistrationChecked,pp.FraudChecked,pp.AllowedToTransferMoneyToPlayers,
 pp.AllowedToReceiveMoneyFromPlayers,pp.IPProxyPlayerFromNonRestrictedCountries,
 pp.Suspended,pp.TaggedBy
-from romaniastg.stg_ims_player p
+from romaniamain.dim_player p
 left outer join romaniastg.PlayerParameters pp on p.username = pp.username
 left outer join (select ns.username,coalesce(ad.email,affiliate) email, ad.username advUsername,ad.advertiserid advcode
 from romaniastg.IMS_newSignup ns
 left outer join romaniastg.advertisers ad on ns.affiliate = ad.username) adv on (adv.username = p.username)
+left outer join romaniamain.dim_client_parameter sig on (p.SIGNUPCLIENTPARAMETERCODE = sig.ClientParameterCode)
 INTO OUTFILE 'C:\\Users\\Public\\Downloads\\DimPlayerPropertyAndChannel.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 Drop table romaniafl.Dim_Player_Channel;
 Create table romaniafl.Dim_Player_Channel(
 PlayerId integer,
-Username varchar(50),
-AdvEmail varchar(100),
-AdvUsername  varchar(200),
+Username varchar(50) default null,
+AdvEmail varchar(100) default null,
+AdvUsername  varchar(200) default null,
 AdvCode varchar(50) default null,
-AdvChannel varchar(50),
-AgeVerificationResult Varchar(100),
-InternalAccount Varchar(20),
-Frozen Varchar(20),
-SendPromotionalEmail Varchar(20),
-SendPromotionalSms Varchar(20),
-DoNotCallPlayer Varchar(20),
-BonusSeeker Varchar(20),
-PlayerIsAdvertiser Varchar(20),
-RegistrationChecked Varchar(20),
-FraudChecked Varchar(20),
-AllowedToTransferMoneyToPlayers Varchar(20),
-AllowedToReceiveMoneyFromPlayers Varchar(20),
-IpProxyPlayerFromNonRestrictedCountries Varchar(20),
-Suspended Varchar(20),
-TaggedBy Varchar(1000)
+AdvChannel varchar(50) default null,
+GlobalFirstDepositDate datetime, 
+SignupDate datetime,
+SignupClientPlatform varchar(50) default null,
+SignupClientType varchar(50) default null,
+AgeVerificationResult Varchar(100) default null,
+InternalAccount Varchar(20) default null,
+Frozen Varchar(20) default null,
+SendPromotionalEmail Varchar(20) default null,
+SendPromotionalSms Varchar(20) default null,
+DoNotCallPlayer Varchar(20) default null,
+BonusSeeker Varchar(20) default null,
+PlayerIsAdvertiser Varchar(20) default null,
+RegistrationChecked Varchar(20) default null,
+FraudChecked Varchar(20) default null,
+AllowedToTransferMoneyToPlayers Varchar(20) default null,
+AllowedToReceiveMoneyFromPlayers Varchar(20) default null,
+IpProxyPlayerFromNonRestrictedCountries Varchar(20) default null,
+Suspended Varchar(20) default null,
+TaggedBy Varchar(1000)  default null
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
 Load data infile 'C:\\Users\\Public\\Downloads\\DimPlayerPropertyAndChannel.csv'

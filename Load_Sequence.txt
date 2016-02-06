@@ -1,5 +1,6 @@
 InfoBright Load
 
+###data load
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Dim_Player_Load.sql
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_PlayerAdvertisersLoad.sql (date change)
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Logins.sql (date change)
@@ -11,14 +12,17 @@ C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Settled_Bets
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Rejected_Bets_Load.sql (date change)
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Voided_Bets_Load.sql (date change)
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Open_Bets_Load.sql (date change)
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_SettledSummary.sql (date change)
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Load_BonusSummary.sql (date change)
+
+###Create aggregations
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Temp_DPS.sql (date change)
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Daily_Sumary_Merged.sql (date change)
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Load_MySQL_Sports_Daily_GV_FL.sql (date change)
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_PlayerPreferences.sql
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_SP_CV_Player_Volatility.sql
 
-
-MySQL
+###MySQL Aggregations continued
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\MQ_Load_Payments_Daily_FL.sql
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\MQ_Load_Dep_Withd_FL.sql
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\MQ_Load_Games_FL.sql
@@ -34,4 +38,4 @@ C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\MQ_Load_For_IB.
 
 InfoBright Load
 C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Load_For_CRM_Report.sql
-C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Daily_Flat_Summary_Short.sql(CRM Report)
+C:\Users\CSQ-MARK5-REP-LAYER\Desktop\RomaniaDataDump\Query\Local\IB_Daily_Flat_Summary_Short.sql (CRM Report)

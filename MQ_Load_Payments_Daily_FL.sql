@@ -1,4 +1,4 @@
-###Clean FL_Backup
+###Clean FL_Backup folder
 #Full run
 
 use romaniastage;

@@ -1,34 +1,34 @@
 use romaniamain;
-select * from customer_pnl INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\customer_pnl.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from daily_player_transactions INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\daily_player_transactions.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from dd_exchange_rate INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\dd_exchange_rate.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from dim_calendar INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\dim_calendar.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from dim_client_parameter INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\dim_client_parameter.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from dim_game_list INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\dim_game_list.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from dim_player INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\dim_player.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from fd_bet_level_odds_wins INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\fd_bet_level_odds_wins.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from fd_csc_eg_player_product_info_summ INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\fd_csc_eg_player_product_info_summ.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from fd_cv_settled_bets_simple INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\fd_cv_settled_bets_simple.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from fd_daily_player_balance INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\fd_daily_player_balance.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from fd_exd_eg_player_product_info_summ INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\fd_exd_eg_player_product_info_summ.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from fd_gv_placed_bets_simple INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\fd_gv_placed_bets_simple.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from fd_open_bets INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\fd_open_bets.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from fd_placed_bets INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\fd_placed_bets.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from fd_rejected_bets INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\fd_rejected_bets.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from fd_settled_bets INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\fd_settled_bets.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from fd_voided_bets INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\fd_voided_bets.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from pending_bonus INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\pending_bonus.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from pnl_summary INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\pnl_summary.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from sd_cv_daily_player_summary INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\sd_cv_daily_player_summary.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from sd_cv_sp_daily_player_summary INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\sd_cv_sp_daily_player_summary.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from sd_daily_cashier_summary INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\sd_daily_cashier_summary.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from sd_eg_daily_player_summary INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\sd_eg_daily_player_summary.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from sd_gv_daily_player_summary INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\sd_gv_daily_player_summary.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
-select * from sd_gv_sp_daily_player_summary INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-030216\\sd_gv_sp_daily_player_summary.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from customer_pnl INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\customer_pnl.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from daily_player_transactions INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\daily_player_transactions.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from dd_exchange_rate INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\dd_exchange_rate.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from dim_calendar INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\dim_calendar.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from dim_client_parameter INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\dim_client_parameter.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from dim_game_list INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\dim_game_list.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from dim_player INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\dim_player.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from fd_bet_level_odds_wins INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\fd_bet_level_odds_wins.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from fd_csc_eg_player_product_info_summ INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\fd_csc_eg_player_product_info_summ.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from fd_cv_settled_bets_simple INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\fd_cv_settled_bets_simple.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from fd_daily_player_balance INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\fd_daily_player_balance.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from fd_exd_eg_player_product_info_summ INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\fd_exd_eg_player_product_info_summ.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from fd_gv_placed_bets_simple INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\fd_gv_placed_bets_simple.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from fd_open_bets INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\fd_open_bets.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from fd_placed_bets INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\fd_placed_bets.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from fd_rejected_bets INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\fd_rejected_bets.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from fd_settled_bets INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\fd_settled_bets.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from fd_voided_bets INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\fd_voided_bets.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from pending_bonus INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\pending_bonus.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from pnl_summary INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\pnl_summary.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from sd_cv_daily_player_summary INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\sd_cv_daily_player_summary.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from sd_cv_sp_daily_player_summary INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\sd_cv_sp_daily_player_summary.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from sd_daily_cashier_summary INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\sd_daily_cashier_summary.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from sd_eg_daily_player_summary INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\sd_eg_daily_player_summary.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from sd_gv_daily_player_summary INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\sd_gv_daily_player_summary.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+select * from sd_gv_sp_daily_player_summary INTO OUTFILE 'C:\\Users\\Public\\Documents\\Backup\\Romania\\RomaniaMain_Backup\\Till-040216\\sd_gv_sp_daily_player_summary.csv' FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 
 
-
+/*
 use romaniamain;
 drop table customer_pnl; 
 drop table daily_player_transactions; 
@@ -56,6 +56,7 @@ drop table sd_daily_cashier_summary;
 drop table sd_eg_daily_player_summary; 
 drop table sd_gv_daily_player_summary; 
 drop table sd_gv_sp_daily_player_summary; 
+*/
 
 CREATE TABLE `sd_gv_sp_daily_player_summary` (
    `PlayerId` bigint(20) DEFAULT NULL,
@@ -1012,8 +1013,8 @@ CREATE TABLE `sd_gv_sp_daily_player_summary` (
    `BonusBalanceStakeBC` decimal(18,4) DEFAULT NULL
  ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
  
- use romaniastg;
- drop table advertisers; 
+use romaniastg;
+drop table advertisers; 
 drop table bonus_details; 
 drop table c_logins; 
 drop table calendar; 
@@ -2932,5 +2933,4 @@ drop table stg_voided_bets_csv;
    `VoidedDate` date DEFAULT NULL,
    `VoiderUsername` varchar(50) DEFAULT NULL
  ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
- 
  

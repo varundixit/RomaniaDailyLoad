@@ -1,5 +1,5 @@
-##date change 2016-02-02
-###place files "SC_IMS_2016-02-02.csv", "CURL_Player_Payments2016-02-02.csv" and "Transactions_information_2016-02-02.csv"
+##date change 2016-02-05
+###place files "SC_IMS_2016-02-05.csv", "CURL_Player_Payments2016-02-05.csv" and "Transactions_information_2016-02-05.csv"
 ## update file name in Powershell. Run Powershell script, remove headers
 ##full run
 
@@ -55,7 +55,7 @@ Create table CSV_TO_STG (
 , ProcessorCurrency varchar(10)
 )  ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\SC_IMS_2016-02-02.csv'  
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\SC_IMS_2016-02-05.csv'  
 INTO TABLE CSV_TO_STG FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 select 
@@ -305,7 +305,7 @@ CREATE TABLE `stg_csv_player_payments` (
   `Zip` varchar(200) COLLATE latin1_bin DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\CURL_Player_Payments2016-02-02.csv'  
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\CURL_Player_Payments2016-02-05.csv'  
 INTO TABLE stg_csv_player_payments FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 select 
@@ -451,7 +451,7 @@ count(case when Type = 'withdraw' and Status = 'declined' and ClientPlatform <> 
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\sd_daily_cashier_summary.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from stg_player_payments
-where TxnDate = '2016-02-02'
+where TxnDate = '2016-02-05'
 group by PlayerCode,TxnDate;
 
 #select count(distinct PlayerCode) from stg_player_payments;
@@ -522,7 +522,7 @@ Submethod varchar(50),
 Reason varchar(4000)
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\Transactions_information_2016-02-02.csv' 
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\Transactions_information_2016-02-05.csv' 
 INTO TABLE romaniastg.stg_transaction_info
 FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
@@ -559,7 +559,7 @@ case when Status = 'approved' then 'NotDeclined'
  else 'NA' end as DeclinedReason
 from romaniastg.stg_transaction_info as txn 
 join romaniamain.dim_player p on txn.username = p.Username
-where date(Requestdate) = '2016-02-02'
+where date(Requestdate) = '2016-02-05'
 INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Deposits\\daily_player_transactions.csv'
 FIELDS TERMINATED BY ',' ENCLOSED BY 'NULL' LINES TERMINATED BY '\n';
 

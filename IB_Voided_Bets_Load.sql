@@ -1,5 +1,5 @@
-##date change 2016-02-02
-###place file "Voided_Bets2016-02-02.csv"; Run Powershell; remove headers
+##date change 2016-02-05
+###place file "Voided_Bets2016-02-05.csv"; Run Powershell; remove headers
 ##Full Run
 use romaniastg;
 drop table stg_voided_bets_csv;
@@ -23,7 +23,7 @@ create table `stg_voided_bets_csv`(
 ,`VoiderUsername` varchar(50) DEFAULT NULL
 )ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\VoidedBets\\Voided_Bets2016-02-02.csv' 
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\VoidedBets\\Voided_Bets2016-02-05.csv' 
 INTO TABLE  stg_voided_bets_csv
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'

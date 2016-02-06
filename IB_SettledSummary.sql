@@ -1,5 +1,5 @@
-##date change 2016-02-02
-##place file "Customer_P_L_Viewer_2016-02-02.csv" and "Profit_Loss2016-02-02.csv"
+##date change 2016-02-05
+##place file "Customer_P_L_Viewer_2016-02-05.csv" and "Profit_Loss2016-02-05.csv"
 #Full Run
 
 drop table romaniastg.stg_customer_pnl;
@@ -48,7 +48,7 @@ CREATE TABLE `romaniastg`.`stg_customer_pnl` (
    `void_in_play_prop` varchar(200) DEFAULT NULL
  ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
  
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CustomerPLViewer\\Customer_P_L_Viewer_2016-02-02.csv' 
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CustomerPLViewer\\Customer_P_L_Viewer_2016-02-05.csv' 
 INTO TABLE romaniastg.stg_customer_pnl FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 select 
@@ -97,7 +97,7 @@ void_in_play_prop
 from romaniastg.stg_customer_pnl pnl 
 join romaniamain.dim_player dp on dp.username = pnl.cust_username
 where settled_date <> 'settled_date'
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CustomerPLViewer\\SettledSummary2016-02-02.csv'
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CustomerPLViewer\\SettledSummary2016-02-05.csv'
 FIELDS TERMINATED BY ';' 
 LINES TERMINATED BY '\r\n';
 
@@ -150,7 +150,7 @@ VoidInPlayProp	decimal(18,6)
 
 */
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CustomerPLViewer\\SettledSummary2016-02-02.csv' 
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CustomerPLViewer\\SettledSummary2016-02-05.csv' 
 INTO TABLE romaniamain.customer_pnl FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 /*LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CustomerPLViewer\\SettledSummaryCompleteJan31Parsed.csv' 
@@ -185,16 +185,16 @@ WinningsRedeemed varchar(100) DEFAULT NULL,
 OptInTakings varchar(100) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CustomerPLViewer\\Profit_Loss2016-02-02.csv' 
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CustomerPLViewer\\Profit_Loss2016-02-05.csv' 
 INTO TABLE  romaniastg.rw_pnl_summary
 FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
-select str_to_date('2016-02-02','%Y-%m-%d') as_of,
+select str_to_date('2016-02-05','%Y-%m-%d') as_of,
 CASE WHEN SummaryDate <> '' THEN str_to_date(substring(SummaryDate, 1,16),'%Y-%m-%d %H:%i') ELSE NULL END summarydate,
 Operator, RefLines, CashStake, CashPnL, TokenStake, TokenPnL, CashOutStake, CashOutReturns,WinningsRedeemed,OptInTakings
 from romaniastg.rw_pnl_summary
 where SummaryDate<> 'Date'
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CustomerPLViewer\\STGProfit_Loss_2016-02-02.csv'
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CustomerPLViewer\\STGProfit_Loss_2016-02-05.csv'
 FIELDS TERMINATED BY ';' ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 /*
@@ -214,7 +214,7 @@ WinningsRedeemed decimal(18,6),
 OptInTakings decimal(18,6)
  ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;*/
  
-LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CustomerPLViewer\\STGProfit_Loss_2016-02-02.csv' 
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CustomerPLViewer\\STGProfit_Loss_2016-02-05.csv' 
 INTO TABLE  `romaniamain`.`pnl_summary`
 FIELDS TERMINATED BY ';' ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 

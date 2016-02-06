@@ -342,7 +342,6 @@ on duplicate key update
 , SglLvLastBetTime = IF((src.BetClass = 'Single' and src.LiveYN = 'Y' and src.BetTime >= SglLvLastBetTime) OR (SglLvLastBetTime is null),src.BetTime,SglLvLastBetTime)
 , SglPmLastBetTime = IF((src.BetClass = 'Single' and src.LiveYN = 'N' and src.BetTime >= SglPmLastBetTime) OR (SglPmLastBetTime is null),src.BetTime,SglPmLastBetTime)
 , CmbLastBetTime = IF((src.BetClass = 'Combi' and src.BetTime >= CmbLastBetTime) OR (CmbLastBetTime is null),src.BetTime,CmbLastBetTime)
-
 ;
 
 commit;

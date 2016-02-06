@@ -31,8 +31,6 @@ select
 , CashView.TotalCashReturnAmt
 , ((CashView.SPCCStakeAmt - CashView.SPCCWinAmt) + (CashView.EGTotalStakeAmt - (CashView.EGTotalReturnAmt + CashView.EGJackpotContributionAmt))) as GrossWinAmt
 , (((CashView.SPCCStakeAmt - CashView.SPCCWinAmt)*0.84) + ((CashView.EGTotalStakeAmt - (CashView.EGTotalReturnAmt + CashView.EGJackpotContributionAmt))*0.84)) as NetGrossWinAmt
-, ((TokenPL.BonusWinnings - WinRed.WinRedeemed) + CashView.EGBonusStakeAmt - CashView.EGBonusReturnAmt + coalesce(EGBonus.BonusRedeemed,0)) as TotalBonusCost
-, ((((CashView.SPCCStakeAmt - CashView.SPCCWinAmt)*0.84) - (TokenPL.BonusWinnings - WinRed.WinRedeemed)) + (((CashView.EGTotalStakeAmt - (CashView.EGTotalReturnAmt + CashView.EGJackpotContributionAmt))*0.84) - ((CashView.EGBonusStakeAmt - CashView.EGBonusReturnAmt + coalesce(EGBonus.BonusRedeemed,0))))) as NetGamingRevenue
 , CashView.SPTotalStakeAmt
 , CashView.SPCashStakeAmt
 , CashView.SPBonusStakeAmt
@@ -48,9 +46,6 @@ select
 , CashView.SPCashOutWinAmt
 , (CashView.SPCCStakeAmt - CashView.SPCCWinAmt) as SPGrossWinAmt
 , ((CashView.SPCCStakeAmt - CashView.SPCCWinAmt)*0.84) as SPNetGrossWinAmt
-, (TokenPL.BonusWinnings - WinRed.WinRedeemed) as SPBonusCost
-, (((CashView.SPCCStakeAmt - CashView.SPCCWinAmt)*0.84) - (TokenPL.BonusWinnings - WinRed.WinRedeemed)) as SPNetGamingRevenue
-  ### as Winnings Redeemed is negative, substracting will add the values (which is intended)
 , CashView.EGTotalStakeAmt 
 , CashView.EGCashStakeAmt
 , CashView.EGBonusStakeAmt
@@ -63,8 +58,6 @@ select
 , CashView.EGJackpotReturnAmt
 , (CashView.EGTotalStakeAmt - (CashView.EGTotalReturnAmt + CashView.EGJackpotContributionAmt)) as EGGrossWinAmt
 , ((CashView.EGTotalStakeAmt - (CashView.EGTotalReturnAmt + CashView.EGJackpotContributionAmt))*0.84) as EGNetGrossWinAmt
-, (CashView.EGBonusStakeAmt - CashView.EGBonusReturnAmt + coalesce(EGBonus.BonusRedeemed,0)) as EGamingBonusCost
-, (((CashView.EGTotalStakeAmt - (CashView.EGTotalReturnAmt + CashView.EGJackpotContributionAmt))*0.84) - ((CashView.EGBonusStakeAmt - CashView.EGBonusReturnAmt + coalesce(EGBonus.BonusRedeemed,0)))) as EGNetGamingRevenue
 , GameView.SystemAPD
 , GameView.SportsAPD
 , GameView.EGamingAPD
@@ -74,14 +67,6 @@ select
 , Balance.TotalBalance
 , Balance.TotalBonusBalance
 , TokenPL.BonusWinnings
-, EGBonus.BonusRedeemed
-, WinRed.WinRedeemed SPWinningsRedeemed
-/*, Txn.dist_depositors
-, Txn.depositCnt
-, Txn.depositAmt
-, Txn.dist_withdrawers
-, Txn.WithdrawCnt
-, Txn.WithdrawAmt*/
 from 
 romaniamain.dim_calendar as cal
 left outer join 
@@ -89,7 +74,7 @@ left outer join
 	select cal.calendar_date as SummaryDate,
 	count(distinct PlayerId) as FirstTimeDepositors
 	from romaniamain.dim_calendar as cal
-	left outer join romaniamain.dim_player as p on cal.calendar_date = date(p.GlobalFirstDepositDate)
+	left outer join romaniafl.Dim_Player_Channel as p on cal.calendar_date = date(p.GlobalFirstDepositDate)
 	where cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-04'
 	group by 1
 ) as FTD on cal.calendar_date = FTD.SummaryDate
@@ -98,7 +83,7 @@ left outer join
 	select cal.calendar_date as SummaryDate,
 	count(distinct PlayerId) as UniqueSignUps
 	from romaniamain.dim_calendar as cal
-	left outer join romaniamain.dim_player as p on cal.calendar_date = date(p.SignupDate)
+	left outer join romaniafl.Dim_Player_Channel as p on cal.calendar_date = date(p.SignupDate)
 	where cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-04'
 	group by 1
 ) as SignUp on cal.calendar_date = SignUp.SummaryDate
@@ -124,7 +109,7 @@ left outer join
 	COUNT(distinct case when dcs.TotalWithdDeclineAmt > 0 then dcs.PlayerId end) as TotalUniqueDeclinedWithdrawers,
 	COUNT(distinct case when dcs.TotalWithdApproveAmt > 0 then dcs.PlayerId end) as TotalUniqueApprovedWithdrawers
 	from romaniamain.sd_daily_cashier_summary AS dcs
-	join romaniamain.dim_player as p ON dcs.PlayerId = p.PlayerId
+	join romaniafl.Dim_Player_Channel as p ON dcs.PlayerId = p.PlayerId
 	where p.SignupDate >= '2015-11-26'
 	group by SummaryDate
 ) as Cashier on cal.calendar_date = Cashier.SummaryDate
@@ -136,7 +121,7 @@ left outer join
 	,COUNT(distinct case when (dps.EGBet) > 0 then dps.PlayerId end) as EGamingAPD
 	FROM 
 	romaniamain.sd_gv_daily_player_summary as dps
-	join romaniamain.dim_player as p on dps.PlayerId = p.PlayerId
+	join romaniafl.Dim_Player_Channel as p on dps.PlayerId = p.PlayerId
 	where p.SignupDate >= '2015-11-26'
 	group by SummaryDate
 ) as GameView  on cal.calendar_date = GameView.SummaryDate
@@ -176,7 +161,7 @@ left outer join
 	,SUM(dps.EGJackpotBet - dps.EGJackpotWin) as EGJackpotContributionAmt
 	FROM 
 	romaniamain.sd_cv_daily_player_summary as dps
-	join romaniamain.dim_player as p on dps.PlayerId = p.PlayerId
+	join romaniafl.Dim_Player_Channel as p on dps.PlayerId = p.PlayerId
 	where p.SignupDate >= '2015-11-26'
 	group by SummaryDate
 ) as CashView  on cal.calendar_date = CashView.SummaryDate
@@ -189,7 +174,7 @@ left outer join
 	FROM 
 	romaniamain.dim_calendar as cal
 	left outer join romaniamain.sd_gv_daily_player_summary as dps on dps.SummaryDate <= cal.calendar_date and cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-04' and dps.SummaryDate >= '2015-11-26'
-	left outer join romaniamain.dim_player as p on dps.PlayerId = p.PlayerId
+	left outer join romaniafl.Dim_Player_Channel as p on dps.PlayerId = p.PlayerId
 	where p.SignupDate >= '2015-11-26'
 	group by cal.calendar_date
 ) as Cumulative on cal.calendar_date = Cumulative.SummaryDate
@@ -203,41 +188,6 @@ left outer join
 	where SignupDate >= '2015-11-26'
 	group by SummaryDate
 ) as Balance on cal.calendar_date = Balance.SummaryDate
-left outer join
-(
-	SELECT date(SettledDate) SummaryDate, sum(BonusWinnings) BonusWinnings FROM romaniamain.customer_pnl pl
-	left outer join romaniafl.Dim_Player_Channel as p on pl.PlayerId = p.PlayerId and p.SignupDate >= '2015-11-26'
-	where  date(SettledDate) <= '2016-02-04'
-	group by date(SettledDate)
-) as TokenPL on cal.calendar_date = TokenPL.SummaryDate
-left outer join
-(
-	SELECT date(Awarded_Date) SummaryDate, sum(redeemed) BonusRedeemed FROM romaniastg.Bonus_Details
-	where  date(Awarded_Date) <= '2016-02-04'
-	group by date(Awarded_Date)
-) as EGBonus on cal.calendar_date = EGBonus.SummaryDate
-/*left outer join
-(
-	select TxnDate SummaryDate,
-	count(distinct case Type when 'deposit' then PlayerId end) dist_depositors,
-	count(case Type when 'deposit' then PlayerId end) depositCnt,
-	sum(case Type when 'deposit' then Amount end) depositAmt ,
-	count(distinct case Type when 'withdraw' then PlayerId end) dist_withdrawers,
-	count(case Type when 'withdraw' then PlayerId end) WithdrawCnt,
-	sum(case Type when 'withdraw' then Amount end) WithdrawAmt 
-	from romaniamain.daily_player_transactions
-	where Status='approved'
-	and date(TxnDate) <= '2016-02-04'
-	group by TxnDate 
-) as Txn on cal.calendar_date = Txn.SummaryDate*/
-left outer join
-(
-	select date(pl.SummaryDate) SummaryDate, coalesce(WinningsRedeemed/xc.ExchangeRate,0) WinRedeemed 
-	from romaniamain.pnl_summary pl 
-	left outer join romaniamain.dd_exchange_rate xc on date(pl.SummaryDate) = date(xc.SummaryDate) and xc.CurrencyCode='RON'
-	where date(pl.SummaryDate) <= '2016-02-04'
-	and pl.AsOf = '2016-02-04'
-) as WinRed on cal.calendar_date = WinRed.SummaryDate
 where 
 cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-04'
 order by 1 ;

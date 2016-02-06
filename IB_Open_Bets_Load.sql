@@ -1,5 +1,5 @@
-## date change 2016-02-02
-##place file "Open_Bets26Onwards.csv"
+## date change 2016-02-05
+##place file "Open_Bets26Onwards.csv" remove header
 ##Full Run
 use romaniastg;
 drop table stg_open_bets_csv;
@@ -209,7 +209,7 @@ INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\OpenBets
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'
 from stg_open_bets as stg 
 join romaniamain.DIM_PLAYER as p on stg.PlayerId = p.PlayerSPId
-where BetDate <= '2016-02-02';
+where BetDate <= '2016-02-05';
 
 
 use romaniamain;

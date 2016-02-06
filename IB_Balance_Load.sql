@@ -1,4 +1,4 @@
-#date change 2016-02-02
+#date change 2016-02-05
 ##Selective run
 
 use romaniastg;
@@ -231,7 +231,7 @@ lines terminated by '\r\n';
 
 select
   Code as Playerid
-, STR_TO_DATE('2016-02-02', '%Y-%m-%d %H:%i:%s') AS SummaryDate
+, STR_TO_DATE('2016-02-05', '%Y-%m-%d %H:%i:%s') AS SummaryDate
 , AdvertiserCode
 , STR_TO_DATE(GlobalFirstDepositDate, '%Y-%m-%d %H:%i:%s') as FirstDepositDate
 , Balance as Balance
