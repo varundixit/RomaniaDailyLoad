@@ -1,4 +1,4 @@
-##date to be changed 2016-02-05
+##date to be changed 2016-02-14
 ##file to be saved as DayLevelSummary.csv
 ##################################################### REPORT DATA ######################################################
 
@@ -77,8 +77,8 @@ from
 	cal1.calendar_date,ClientType, Platform, AdvChannel ,cal2.calendar_date cal2
 	from romaniamain.dim_calendar cal1
 	cross join (select coalesce(SignupClientType,'NA') ClientType,coalesce(SignupClientPlatform,'NA') Platform,AdvChannel from romaniafl.dim_player_channel group by 1,2,3) ch
-	join romaniamain.dim_calendar cal2 on cal2.calendar_date <= cal1.calendar_date and cal2.calendar_date >='2015-11-26'
-	where cal1.calendar_date <= '2016-02-05' and cal1.calendar_date >= '2015-11-26'
+	join romaniamain.dim_calendar cal2 on (cal2.calendar_date >='2015-11-26' and cal2.calendar_date <= '2016-02-14') or cal2.calendar_date = '3000-12-31'
+	where (cal1.calendar_date >= '2015-11-26' and cal1.calendar_date <= '2016-02-14')    
 ) as cal
 left outer join 
 (
@@ -86,11 +86,11 @@ left outer join
 	,coalesce(SignupClientType,'NA') ClientType
 	,coalesce(SignupClientPlatform,'NA') Platform
 	,AdvChannel
-	,date(p.GlobalFirstDepositDate) ftd
-	,count(distinct PlayerId) as FirstTimeDepositors
+	,date(coalesce(p.GlobalFirstDepositDate,'3000-12-31')) ftd
+	,count(distinct case when p.GlobalFirstDepositDate is not null then PlayerId end) as FirstTimeDepositors
 	from romaniamain.dim_calendar as cal
 	left outer join romaniafl.Dim_Player_Channel as p on cal.calendar_date = date(p.GlobalFirstDepositDate)
-	where cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-05'
+	where cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-14'
 	group by 1,2,3,4,5
 ) as FTD on cal.calendar_date = FTD.SummaryDate and cal.ClientType = ftd.ClientType and cal.Platform = ftd.Platform and cal.AdvChannel = ftd.AdvChannel and cal.cal2 = ftd.ftd
 left outer join 
@@ -99,11 +99,11 @@ left outer join
 	,coalesce(SignupClientType,'NA') ClientType
 	,coalesce(SignupClientPlatform,'NA') Platform
 	,AdvChannel
-	,date(p.GlobalFirstDepositDate) ftd	
-	,count(distinct PlayerId) as UniqueSignUps
+	,date(coalesce(p.GlobalFirstDepositDate,'3000-12-31')) ftd	
+	,count(distinct case when p.SignupDate is not null then PlayerId end) as UniqueSignUps
 	from romaniamain.dim_calendar as cal
 	left outer join romaniafl.Dim_Player_Channel as p on cal.calendar_date = date(p.SignupDate)
-	where cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-05'
+	where cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-14'
 	group by 1,2,3,4,5
 ) as SignUp on cal.calendar_date = SignUp.SummaryDate and cal.ClientType = SignUp.ClientType and cal.Platform = SignUp.Platform and cal.AdvChannel = SignUp.AdvChannel and cal.cal2 = SignUp.ftd
 left outer join 
@@ -112,7 +112,7 @@ left outer join
 	,coalesce(SignupClientType,'NA') ClientType
 	,coalesce(SignupClientPlatform,'NA') Platform
 	,AdvChannel
-	,date(p.GlobalFirstDepositDate) ftd
+	,date(coalesce(p.GlobalFirstDepositDate,'3000-12-31')) ftd
 	,SUM(dcs.TotalDepAttemptAmt) as TotalDepAttemptAmt
 	,SUM(dcs.TotalDepAttemptCnt) as TotalDepAttemptCnt
 	,SUM(dcs.TotalDepDeclineAmt) as TotalDepDeclineAmt
@@ -142,7 +142,7 @@ left outer join
 	,coalesce(SignupClientType,'NA') ClientType
 	,coalesce(SignupClientPlatform,'NA') Platform
 	,AdvChannel
-	,date(p.GlobalFirstDepositDate) ftd
+	,date(coalesce(p.GlobalFirstDepositDate,'3000-12-31')) ftd
 	,COUNT(distinct case when (dps.SPStakeAmt+dps.EGBet) > 0 then dps.PlayerId end) as SystemAPD
 	,COUNT(distinct case when (dps.SPStakeAmt) > 0 then dps.PlayerId end) as SportsAPD
 	,COUNT(distinct case when (dps.EGBet) > 0 then dps.PlayerId end) as EGamingAPD
@@ -158,7 +158,7 @@ left outer join
 	,coalesce(SignupClientType,'NA') ClientType
 	,coalesce(SignupClientPlatform,'NA') Platform
 	,AdvChannel
-	,date(p.GlobalFirstDepositDate) ftd
+	,date(coalesce(p.GlobalFirstDepositDate,'3000-12-31')) ftd
 	,SUM(dps.SPTotalStakeAmt+dps.EGBet) as TotalStakeAmt
 	,SUM(dps.SPCashStakeAmt+dps.EGCashBet) as TotalCashStakeAmt
 	,SUM(dps.SPBonusStakeAmt+dps.EGBonusBet) as TotalBonusStakeAmt
@@ -202,13 +202,13 @@ left outer join
 	,coalesce(SignupClientType,'NA') ClientType
 	,coalesce(SignupClientPlatform,'NA') Platform
 	,AdvChannel	
-	,date(p.GlobalFirstDepositDate) ftd
+	,date(coalesce(p.GlobalFirstDepositDate,'3000-12-31')) ftd
 	,COUNT(distinct case when (dps.SPStakeAmt+dps.EGBet) > 0 then dps.PlayerId end) as CumulativeSystemUAP
 	,COUNT(distinct case when (dps.SPStakeAmt) > 0 then dps.PlayerId end) as CumulativeSportsUAP
 	,COUNT(distinct case when (dps.EGBet) > 0 then dps.PlayerId end) as CumulativeEGamingUAP
 	FROM 
 	romaniamain.dim_calendar as cal
-	left outer join romaniamain.sd_gv_daily_player_summary as dps on dps.SummaryDate <= cal.calendar_date and cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-05' and dps.SummaryDate >= '2015-11-26'
+	left outer join romaniamain.sd_gv_daily_player_summary as dps on dps.SummaryDate <= cal.calendar_date and cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-14' and dps.SummaryDate >= '2015-11-26'
 	left outer join romaniafl.Dim_Player_Channel as p on dps.PlayerId = p.PlayerId
 	where p.SignupDate >= '2015-11-26'
 	group by 1,2,3,4,5
@@ -219,7 +219,7 @@ left outer join
 	,coalesce(SignupClientType,'NA') ClientType
 	,coalesce(SignupClientPlatform,'NA') Platform
 	,AdvChannel	
-	,date(p.GlobalFirstDepositDate) ftd
+	,date(coalesce(p.GlobalFirstDepositDate,'3000-12-31')) ftd
 	,SUM(coalesce(Balance,0)) as TotalBalance
 	,SUM(coalesce(BonusBalance,0)) as TotalBonusBalance
 	,count(distinct bl.PlayerId) 
@@ -234,13 +234,12 @@ left outer join
 	,coalesce(SignupClientType,'NA') ClientType
 	,coalesce(SignupClientPlatform,'NA') Platform
 	,AdvChannel	
-	,date(p.GlobalFirstDepositDate) ftd
+	,date(coalesce(p.GlobalFirstDepositDate,'3000-12-31')) ftd
 	,SUM(BonusWinnings) BonusWinnings 
 	FROM romaniamain.customer_pnl pl
 	left outer join romaniafl.Dim_Player_Channel as p on pl.PlayerId = p.PlayerId and p.SignupDate >= '2015-11-26'
-	where  date(SettledDate) <= '2016-02-05'
+	where  date(SettledDate) <= '2016-02-14'
 	group by 1,2,3,4,5
 ) as TokenPL on cal.calendar_date = TokenPL.SummaryDate and cal.ClientType = TokenPL.ClientType and cal.Platform = TokenPL.Platform and cal.AdvChannel = TokenPL.AdvChannel and cal.cal2 = TokenPL.ftd
-where 
-cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-05'
+where (cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-14') 
 order by 1,2 ;
