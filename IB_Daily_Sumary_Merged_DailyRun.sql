@@ -1,4 +1,4 @@
-##date to be changed 2016-02-05
+##date to be changed 2016-02-16
 ##file to be saved as DayLevelSummary.csv
 ##################################################### REPORT DATA ######################################################
 
@@ -90,7 +90,7 @@ left outer join
 	count(distinct PlayerId) as FirstTimeDepositors
 	from romaniamain.dim_calendar as cal
 	left outer join romaniamain.dim_player as p on cal.calendar_date = date(p.GlobalFirstDepositDate)
-	where cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-05'
+	where cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-16'
 	group by 1
 ) as FTD on cal.calendar_date = FTD.SummaryDate
 left outer join 
@@ -99,7 +99,7 @@ left outer join
 	count(distinct PlayerId) as UniqueSignUps
 	from romaniamain.dim_calendar as cal
 	left outer join romaniamain.dim_player as p on cal.calendar_date = date(p.SignupDate)
-	where cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-05'
+	where cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-16'
 	group by 1
 ) as SignUp on cal.calendar_date = SignUp.SummaryDate
 left outer join 
@@ -188,7 +188,7 @@ left outer join
 	,COUNT(distinct case when (dps.EGBet) > 0 then dps.PlayerId end) as CumulativeEGamingUAP
 	FROM 
 	romaniamain.dim_calendar as cal
-	left outer join romaniamain.sd_gv_daily_player_summary as dps on dps.SummaryDate <= cal.calendar_date and cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-05' and dps.SummaryDate >= '2015-11-26'
+	left outer join romaniamain.sd_gv_daily_player_summary as dps on dps.SummaryDate <= cal.calendar_date and cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-16' and dps.SummaryDate >= '2015-11-26'
 	left outer join romaniamain.dim_player as p on dps.PlayerId = p.PlayerId
 	where p.SignupDate >= '2015-11-26'
 	group by cal.calendar_date
@@ -207,13 +207,13 @@ left outer join
 (
 	SELECT date(SettledDate) SummaryDate, sum(BonusWinnings) BonusWinnings FROM romaniamain.customer_pnl pl
 	left outer join romaniafl.Dim_Player_Channel as p on pl.PlayerId = p.PlayerId and p.SignupDate >= '2015-11-26'	
-	where  date(SettledDate) <= '2016-02-05'
+	where  date(SettledDate) <= '2016-02-16'
 	group by date(SettledDate)
 ) as TokenPL on cal.calendar_date = TokenPL.SummaryDate
 left outer join
 (
 	SELECT date(Awarded_Date) SummaryDate, sum(redeemed) BonusRedeemed FROM romaniastg.Bonus_Details
-	where  date(Awarded_Date) <= '2016-02-05'
+	where  date(Awarded_Date) <= '2016-02-16'
 	group by date(Awarded_Date)
 ) as EGBonus on cal.calendar_date = EGBonus.SummaryDate
 /*left outer join
@@ -227,7 +227,7 @@ left outer join
 	sum(case Type when 'withdraw' then Amount end) WithdrawAmt 
 	from romaniamain.daily_player_transactions
 	where Status='approved'
-	and date(TxnDate) <= '2016-02-05'
+	and date(TxnDate) <= '2016-02-16'
 	group by TxnDate 
 ) as Txn on cal.calendar_date = Txn.SummaryDate*/
 left outer join
@@ -235,9 +235,9 @@ left outer join
 	select date(pl.SummaryDate) SummaryDate, coalesce(WinningsRedeemed/xc.ExchangeRate,0) WinRedeemed 
 	from romaniamain.pnl_summary pl 
 	left outer join romaniamain.dd_exchange_rate xc on date(pl.SummaryDate) = date(xc.SummaryDate) and xc.CurrencyCode='RON'
-	where date(pl.SummaryDate) <= '2016-02-05'
-	and pl.AsOf = '2016-02-05'
+	where date(pl.SummaryDate) <= '2016-02-16'
+	and pl.AsOf = '2016-02-16'
 ) as WinRed on cal.calendar_date = WinRed.SummaryDate
 where 
-cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-05'
+cal.calendar_date >= '2015-11-26' and cal.calendar_date <= '2016-02-16'
 order by 1 ;

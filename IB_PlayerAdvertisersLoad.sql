@@ -1,7 +1,47 @@
-###date change 2016-02-05
-### place files "New_signups_2016-02-05.csv", "AdvertisersReport_2016-02-05.csv", 
-###             "Players_search_by_parameters_2016-02-05.csv" and "Currency_conversion_rates_2016-02-05.csv"
+###date change 2016-02-08
+### place files "New_signups_2016-02-08.csv", "AdvertisersReport_2016-02-08.csv", 
+###             "Players_search_by_parameters_2016-02-08.csv" and "Currency_conversion_rates_2016-02-08.csv"
+#### Curl_Players-romaniadatadump folder name
 ### is based on advertiser report
+#### run powershell for this file #Players_search_by_parameters_2016-02-08.csv# accessible /check for customer-bitzaone/
+##### and remove headers 
+
+
+
+#####Load balance
+select
+  Code as Playerid
+, STR_TO_DATE('2016-02-08', '%Y-%m-%d %H:%i:%s') AS SummaryDate
+, AdvertiserCode
+, STR_TO_DATE(GlobalFirstDepositDate, '%Y-%m-%d %H:%i:%s') as FirstDepositDate
+, Balance as Balance
+, BonusBalance as BonusBalance
+, STR_TO_DATE(SignupDate, '%Y-%m-%d %H:%i:%s') as SignUpDate
+, 1
+from romaniastg.STG_IMS_CSV_PLAYER
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\STG_DAILY_PLAYER_BALANCE.csv'
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+
+
+/*use romaniamain;
+#drop table `FD_DAILY_PLAYER_BALANCE`;
+CREATE TABLE `FD_DAILY_PLAYER_BALANCE` (
+  `PlayerId` bigint(20) DEFAULT NULL,
+  `SummaryDate` date DEFAULT NULL,
+  `AdvertiserCode` bigint(20) DEFAULT NULL,
+  `FirstDepositDate` date DEFAULT NULL,
+  `Balance` decimal(18,6) DEFAULT NULL,
+  `BonusBalance` decimal(18,6) DEFAULT NULL,
+  `SignUpDate` date DEFAULT NULL,
+  `RomDummy` int
+) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+*/
+
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\STG_DAILY_PLAYER_BALANCE.csv'
+into table romaniamain.FD_DAILY_PLAYER_BALANCE
+fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
+
+
 
 #####exchange load
 drop table romaniastg.STG_Exchange_Rate;
@@ -12,7 +52,7 @@ CREATE TABLE romaniastg.`STG_Exchange_Rate` (
   `XchangeRate` varchar(100) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\Currency_conversion_rates_2016-02-05.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\Currency_conversion_rates_2016-02-08.csv'
 into table romaniastg.STG_Exchange_Rate
 fields terminated by ','
 optionally enclosed by '"'
@@ -26,7 +66,7 @@ CurrencyCode,
 XchangeRate
 from romaniastg.STG_Exchange_Rate
 where EffectiveTimestamp <> 'Effective date'
-INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\DD_Exchange_Rate_2016-02-05.csv'
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\DD_Exchange_Rate_2016-02-08.csv'
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 /*
@@ -41,11 +81,45 @@ CREATE TABLE `DD_Exchange_Rate` (
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 */
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\DD_Exchange_Rate_2016-02-05.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\DD_Exchange_Rate_2016-02-08.csv'
 into table romaniamain.DD_Exchange_Rate
 fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\r\n';
+
+drop table romaniaStg.StgNewSignup;
+CREATE TABLE romaniaStg.StgNewSignup(
+Registration_DateTime varchar(100) DEFAULT NULL,
+Username varchar(100) DEFAULT NULL,
+Last_Login_Client_Type varchar(50) DEFAULT NULL,
+Affiliate varchar(50) DEFAULT NULL,
+Country varchar(50) DEFAULT NULL,
+Language varchar(50) DEFAULT NULL,
+Age varchar(100) DEFAULT NULL,
+Fun_Player varchar(50) DEFAULT NULL,
+Coupon varchar(100) DEFAULT NULL,
+ProfileID varchar(100) DEFAULT NULL
+) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\New_signups_2016-02-08.csv'
+into table romaniaStg.StgNewSignup
+fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
+
+select
+Registration_DateTime,
+Username,
+Last_Login_Client_Type,
+Affiliate,
+Country,
+Language,
+Age,
+Fun_Player,
+Coupon,
+ProfileID
+from romaniastg.StgNewSignup
+where Country <> 'Country'
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\NewSignups_2016-02-08.csv'
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 /*drop table romaniaStg.IMS_newSignup;
 CREATE TABLE romaniaStg.IMS_newSignup(
@@ -61,92 +135,11 @@ Coupon varchar(100) DEFAULT NULL,
 ProfileID bigint(20) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;*/
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\New_signups_2016-02-05.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\NewSignups_2016-02-08.csv'
 into table romaniaStg.IMS_newSignup
 fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
 
 /*
----------------------------old definitions
-#if advertisers are more than 1199
-CREATE TABLE `advertisers` (
-   `ADDRESS` varchar(100) DEFAULT NULL,
-   `ADVANCEDVIEW` int(11) DEFAULT NULL,
-   `ADVERTISERS_TS` date DEFAULT NULL,
-   `ADVERTISERTYPE` varchar(50) DEFAULT NULL,
-   `ADVSELECTEDFIELDS` varchar(500) DEFAULT NULL,
-   `ADVSYSTEMCODE` int(11) DEFAULT NULL,
-   `AUTOMATICREVENUEWRITEOFF` int(11) DEFAULT NULL,
-   `AVAILABLEBALANCE` int(11) DEFAULT NULL,
-   `BALANCE` int(11) DEFAULT NULL,
-   `BANNERID` varchar(50) DEFAULT NULL,
-   `BIRTHDATE` date DEFAULT NULL,
-   `CASHIERLIMIT` int(11) DEFAULT NULL,
-   `CITY` varchar(50) DEFAULT NULL,
-   `CODE` int(11) DEFAULT NULL,
-   `COMMENTS` varchar(50) DEFAULT NULL,
-   `COMPANY` varchar(50) DEFAULT NULL,
-   `CONTROLEXIT` int(11) DEFAULT NULL,
-   `COUNTRYCODE` varchar(50) DEFAULT NULL,
-   `CURRENCYCODE` varchar(10) DEFAULT NULL,
-   `DEFAULTVIPLEVEL` int(11) DEFAULT NULL,
-   `EMAIL` varchar(50) DEFAULT NULL,
-   `ENABLEDREPORTS` varchar(200) DEFAULT NULL,
-   `EXITURL` varchar(50) DEFAULT NULL,
-   `FAX` varchar(50) DEFAULT NULL,
-   `FIRSTNAME` varchar(50) DEFAULT NULL,
-   `FROZEN` int(11) DEFAULT NULL,
-   `GENDER` varchar(10) DEFAULT NULL,
-   `GROUPCODE` int(11) DEFAULT NULL,
-   `INACTIVE` int(11) DEFAULT NULL,
-   `INTERNALACCOUNT` int(11) DEFAULT NULL,
-   `ISCASHIER` int(11) DEFAULT NULL,
-   `ISSPAMMER` int(11) DEFAULT NULL,
-   `LANGUAGECODE` varchar(10) DEFAULT NULL,
-   `LASTLOGINDATE` date DEFAULT NULL,
-   `LASTNAME` varchar(50) DEFAULT NULL,
-   `LOGINCOUNT` int(11) DEFAULT NULL,
-   `MIGRATION_DATE` date DEFAULT NULL,
-   `MINPAYOUT` int(11) DEFAULT NULL,
-   `MOBILE` varchar(50) DEFAULT NULL,
-   `NOPAYMENTFEES` int(11) DEFAULT NULL,
-   `OCCUPATION` varchar(50) DEFAULT NULL,
-   `PAGETOPMENUITEMS` varchar(50) DEFAULT NULL,
-   `PASSWORD` varchar(50) DEFAULT NULL,
-   `PAYMENTPROGRAM` varchar(50) DEFAULT NULL,
-   `PAYMENTSTAMP` int(11) DEFAULT NULL,
-   `PERCENTTYPECODE` int(11) DEFAULT NULL,
-   `PHONE` int(11) DEFAULT NULL,
-   `PLAYERNAMESINSTATS` int(11) DEFAULT NULL,
-   `PPFIRSTDEPOSIT` int(11) DEFAULT NULL,
-   `PPREVENUE` varchar(50) DEFAULT NULL,
-   `PRIMARYPAYMENTMETHODCODE` int(11) DEFAULT NULL,
-   `PROFILEID` varchar(50) DEFAULT NULL,
-   `REFERERURL` varchar(50) DEFAULT NULL,
-   `REMOTECREATE` int(11) DEFAULT NULL,
-   `REVENUECALCTYPE` varchar(50) DEFAULT NULL,
-   `RISKPROFILE` int(11) DEFAULT NULL,
-   `SALESMAN` int(11) DEFAULT NULL,
-   `SALESMANCODE` varchar(50) DEFAULT NULL,
-   `SALESMANCOEFF` varchar(50) DEFAULT NULL,
-   `SHOWFIELDS` varchar(500) DEFAULT NULL,
-   `SHOWGETTINGSTARTED` int(11) DEFAULT NULL,
-   `SHOWINSTATS` int(11) DEFAULT NULL,
-   `SIGNUPDATE` datetime DEFAULT NULL,
-   `STATE` varchar(50) DEFAULT NULL,
-   `UNCHECKED` int(11) DEFAULT NULL,
-   `UNSUBSCRIBEDATE` date DEFAULT NULL,
-   `USERNAME` varchar(50) DEFAULT NULL,
-   `WANTMAIL` int(11) DEFAULT NULL,
-   `WEBSITE` varchar(50) DEFAULT NULL,
-   `ZIP` int(11) DEFAULT NULL
- ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\CURL_Advertisers_2016-02-05.csv'
-into table romaniaStg.Advertisers
-fields terminated by ',' optionally enclosed by '"' lines terminated by '\r\n';
-
- --------------------
-
----------------------------new definition 
 drop table romaniaStg.Advertisers;
 CREATE TABLE romaniaStg.Advertisers
 (
@@ -207,14 +200,14 @@ CREATE TABLE romaniaStg.Advertisers
   wantmail varchar(20) DEFAULT NULL
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\AdvertisersReport_2016-02-05.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\AdvertisersReport_2016-02-08.csv'
 into table romaniaStg.Advertisers
 fields terminated by ',' optionally enclosed by '"' lines terminated by '\r\n';
 
 
 */
 
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\AdvertisersReport_2016-02-05.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\AdvertisersReport_2016-02-08.csv'
 into table romaniaStg.Advertisers
 fields terminated by ',' optionally enclosed by '"' lines terminated by '\r\n';
 
@@ -287,7 +280,7 @@ HasCopyOfIdFaxed Varchar(20)
 ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
 
 /*Bitzaone*/
-Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\Players_search_by_parameters_2016-02-05.csv'
+Load data infile 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\CURL_Players\\Players_search_by_parameters_2016-02-08.csv'
 into table romaniastg.PlayerParameters
 fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
 

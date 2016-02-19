@@ -344,9 +344,192 @@ CREATE TABLE `fd_settled_bets` (
 */
 
 
-#use romaniastg;
 LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\SettledBets\\fd_settled_bets.csv' 
 INTO TABLE  romaniamain.fd_settled_bets
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
 
 #select SettledDate, count(*) from romaniamain.fd_settled_bets group by 1 order by 1 desc;
+
+drop table `romaniastg`.`stg_fd_settled_bets_ext`;
+CREATE TABLE `romaniastg`.`stg_fd_settled_bets_ext` (
+   `BetslipId` bigint(20) DEFAULT NULL,
+   `BetslipStatus` varchar(10) DEFAULT NULL,
+   `BetId` bigint(20) DEFAULT NULL,
+   `BetType` varchar(20) DEFAULT NULL,
+   `BetTime` datetime DEFAULT NULL,
+   `BetDate` date DEFAULT NULL,
+   `SettleTime` datetime DEFAULT NULL,
+   `SettledDate` date DEFAULT NULL,
+   `BetStatus` varchar(20) DEFAULT NULL,
+   `ReferredYN` varchar(10) DEFAULT NULL,
+   `NumLeg` int(11) DEFAULT NULL,
+   `NumPart` int(11) DEFAULT NULL,
+   `LegSort` int(11) DEFAULT NULL,
+   `SelectionId` bigint(20) DEFAULT NULL,
+   `SelectionName` varchar(1000) DEFAULT NULL,
+   `SelectionSort` varchar(20) DEFAULT NULL,
+   `MarketId` bigint(20) DEFAULT NULL,
+   `MarketName` varchar(1000) DEFAULT NULL,
+   `MarketSort` varchar(20) DEFAULT NULL,
+   `EventId` bigint(20) DEFAULT NULL,
+   `EventName` varchar(1000) DEFAULT NULL,
+   `EventStartTime` datetime DEFAULT NULL,
+   `TypeId` bigint(20) DEFAULT NULL,
+   `TypeName` varchar(1000) DEFAULT NULL,
+   `ClassId` bigint(20) DEFAULT NULL,
+   `ClassName` varchar(1000) DEFAULT NULL,
+   `SportCode` varchar(20) DEFAULT NULL,
+   `SportName` varchar(100) DEFAULT NULL,
+   `DecreasingOdds` decimal(18,6) DEFAULT NULL,
+   `PlayerId` bigint(20) DEFAULT NULL,
+   `UserName` varchar(100) DEFAULT NULL,
+   `CurrencyCode` varchar(20) DEFAULT NULL,
+   `NumLines` int(11) DEFAULT NULL,
+   `NumLinesWin` int(11) DEFAULT NULL,
+   `NumLinesLose` int(11) DEFAULT NULL,
+   `NumLinesVoid` int(11) DEFAULT NULL,
+   `StakePerLine` decimal(18,6) DEFAULT NULL,
+   `StakePerLineBC` decimal(18,6) DEFAULT NULL,
+   `TotalStakeAmt` decimal(18,6) DEFAULT NULL,
+   `TotalStakeAmtBC` decimal(18,6) DEFAULT NULL,
+   `CashStakeAmt` decimal(18,6) DEFAULT NULL,
+   `CashStakeAmtBC` decimal(18,6) DEFAULT NULL,
+   `BonusStakeAmt` decimal(18,6) DEFAULT NULL,
+   `BonusStakeAmtBC` decimal(18,6) DEFAULT NULL,
+   `BonusBalanceStake` decimal(18,6) DEFAULT NULL,
+   `BonusBalanceStakeBC` decimal(18,6) DEFAULT NULL,
+   `BonusId` bigint(20) DEFAULT NULL,
+   `CampaignId` bigint(20) DEFAULT NULL,
+   `TotalReturn` decimal(18,6) DEFAULT NULL,
+   `TotalReturnBC` decimal(18,6) DEFAULT NULL,
+   `CashReturn` decimal(18,6) DEFAULT NULL,
+   `CashReturnBC` decimal(18,6) DEFAULT NULL,
+   `BonusBalanceReturn` decimal(18,6) DEFAULT NULL,
+   `BonusBalancereturnBC` decimal(18,6) DEFAULT NULL,
+   `TotalRefund` decimal(18,6) DEFAULT NULL,
+   `TotalRefundBC` decimal(18,6) DEFAULT NULL,
+   `CashRefund` decimal(18,6) DEFAULT NULL,
+   `CashRefundBC` decimal(18,6) DEFAULT NULL,
+   `BonusBalanceRefund` decimal(18,6) DEFAULT NULL,
+   `BonusBalanceRefundBC` decimal(18,6) DEFAULT NULL,
+   `TokenRefund` decimal(18,6) DEFAULT NULL,
+   `TokenRefundBC` decimal(18,6) DEFAULT NULL,
+   `CashOutStake` decimal(18,6) DEFAULT NULL,
+   `CashOutStakeBC` decimal(18,6) DEFAULT NULL,
+   `CashOutWin` decimal(18,6) DEFAULT NULL,
+   `CashOutWinBC` decimal(18,6) DEFAULT NULL,
+   `LiveYN` varchar(10) DEFAULT NULL,
+   `OddsType` varchar(10) DEFAULT NULL,
+   `Odds` decimal(18,6) DEFAULT NULL,
+   `EitherwaySort` varchar(10) DEFAULT NULL,
+   `ViewId` int(11) DEFAULT NULL,
+   `Channel` varchar(20) DEFAULT NULL,
+   `Operator` varchar(20) DEFAULT NULL
+ ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+ 
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\SettledBets\\fd_settled_bets.csv' 
+INTO TABLE  `romaniastg`.`stg_fd_settled_bets_ext`
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'; 
+
+select sb.* 
+,cast((spl/leg_cnt)*(prt_cnt/pp)*100/sb.TotalStakeAmt as decimal(18,6)) SpLCalc
+from romaniastg.stg_fd_settled_bets_ext sb
+join (select BetId,(TotalStakeAmt/(max(NumPart)+1)) spl, max(NumLeg)+1 leg_cnt,max(NumPart)+1 prt_cnt 
+from romaniastg.stg_fd_settled_bets_ext 
+group by BetId,TotalStakeAmt) bt on sb.BetId= bt.BetId
+join (select BetId,NumLeg,count(NumPart) pp 
+from romaniastg.stg_fd_settled_bets_ext 
+group by BetId,NumLeg) lg on sb.BetId= lg.BetId and sb.NumLeg = lg.NumLeg
+INTO OUTFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\SettledBets\\fd_settled_bets_ext.csv'
+FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+
+/*
+drop table `romaniamain`.`fd_settled_bets_ext`;
+CREATE TABLE `romaniamain`.`fd_settled_bets_ext` (
+   `BetslipId` bigint(20) DEFAULT NULL,
+   `BetslipStatus` varchar(10) DEFAULT NULL,
+   `BetId` bigint(20) DEFAULT NULL,
+   `BetType` varchar(20) DEFAULT NULL,
+   `BetTime` datetime DEFAULT NULL,
+   `BetDate` date DEFAULT NULL,
+   `SettleTime` datetime DEFAULT NULL,
+   `SettledDate` date DEFAULT NULL,
+   `BetStatus` varchar(20) DEFAULT NULL,
+   `ReferredYN` varchar(10) DEFAULT NULL,
+   `NumLeg` int(11) DEFAULT NULL,
+   `NumPart` int(11) DEFAULT NULL,
+   `LegSort` int(11) DEFAULT NULL,
+   `SelectionId` bigint(20) DEFAULT NULL,
+   `SelectionName` varchar(1000) DEFAULT NULL,
+   `SelectionSort` varchar(20) DEFAULT NULL,
+   `MarketId` bigint(20) DEFAULT NULL,
+   `MarketName` varchar(1000) DEFAULT NULL,
+   `MarketSort` varchar(20) DEFAULT NULL,
+   `EventId` bigint(20) DEFAULT NULL,
+   `EventName` varchar(1000) DEFAULT NULL,
+   `EventStartTime` datetime DEFAULT NULL,
+   `TypeId` bigint(20) DEFAULT NULL,
+   `TypeName` varchar(1000) DEFAULT NULL,
+   `ClassId` bigint(20) DEFAULT NULL,
+   `ClassName` varchar(1000) DEFAULT NULL,
+   `SportCode` varchar(20) DEFAULT NULL,
+   `SportName` varchar(100) DEFAULT NULL,
+   `DecreasingOdds` decimal(18,6) DEFAULT NULL,
+   `PlayerId` bigint(20) DEFAULT NULL,
+   `UserName` varchar(100) DEFAULT NULL,
+   `CurrencyCode` varchar(20) DEFAULT NULL,
+   `NumLines` int(11) DEFAULT NULL,
+   `NumLinesWin` int(11) DEFAULT NULL,
+   `NumLinesLose` int(11) DEFAULT NULL,
+   `NumLinesVoid` int(11) DEFAULT NULL,
+   `StakePerLine` decimal(18,6) DEFAULT NULL,
+   `StakePerLineBC` decimal(18,6) DEFAULT NULL,
+   `TotalStakeAmt` decimal(18,6) DEFAULT NULL,
+   `TotalStakeAmtBC` decimal(18,6) DEFAULT NULL,
+   `CashStakeAmt` decimal(18,6) DEFAULT NULL,
+   `CashStakeAmtBC` decimal(18,6) DEFAULT NULL,
+   `BonusStakeAmt` decimal(18,6) DEFAULT NULL,
+   `BonusStakeAmtBC` decimal(18,6) DEFAULT NULL,
+   `BonusBalanceStake` decimal(18,6) DEFAULT NULL,
+   `BonusBalanceStakeBC` decimal(18,6) DEFAULT NULL,
+   `BonusId` bigint(20) DEFAULT NULL,
+   `CampaignId` bigint(20) DEFAULT NULL,
+   `TotalReturn` decimal(18,6) DEFAULT NULL,
+   `TotalReturnBC` decimal(18,6) DEFAULT NULL,
+   `CashReturn` decimal(18,6) DEFAULT NULL,
+   `CashReturnBC` decimal(18,6) DEFAULT NULL,
+   `BonusBalanceReturn` decimal(18,6) DEFAULT NULL,
+   `BonusBalancereturnBC` decimal(18,6) DEFAULT NULL,
+   `TotalRefund` decimal(18,6) DEFAULT NULL,
+   `TotalRefundBC` decimal(18,6) DEFAULT NULL,
+   `CashRefund` decimal(18,6) DEFAULT NULL,
+   `CashRefundBC` decimal(18,6) DEFAULT NULL,
+   `BonusBalanceRefund` decimal(18,6) DEFAULT NULL,
+   `BonusBalanceRefundBC` decimal(18,6) DEFAULT NULL,
+   `TokenRefund` decimal(18,6) DEFAULT NULL,
+   `TokenRefundBC` decimal(18,6) DEFAULT NULL,
+   `CashOutStake` decimal(18,6) DEFAULT NULL,
+   `CashOutStakeBC` decimal(18,6) DEFAULT NULL,
+   `CashOutWin` decimal(18,6) DEFAULT NULL,
+   `CashOutWinBC` decimal(18,6) DEFAULT NULL,
+   `LiveYN` varchar(10) DEFAULT NULL,
+   `OddsType` varchar(10) DEFAULT NULL,
+   `Odds` decimal(18,6) DEFAULT NULL,
+   `EitherwaySort` varchar(10) DEFAULT NULL,
+   `ViewId` int(11) DEFAULT NULL,
+   `Channel` varchar(20) DEFAULT NULL,
+   `Operator` varchar(20) DEFAULT NULL,
+   `StakePerLineMtplr` decimal(18,6) 
+ ) ENGINE=BRIGHTHOUSE DEFAULT CHARSET=utf8;
+*/
+
+LOAD DATA INFILE 'C:\\Users\\CSQ-MARK5-REP-LAYER\\Desktop\\RomaniaDataDump\\SettledBets\\fd_settled_bets_ext.csv' 
+INTO TABLE romaniamain.`fd_settled_bets_ext`
+FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n'; 
+
+
+/*
+select count(BetId), round(sum(co)/100,2) from 
+(select BetId,sum(StakePerLineMtplr) co from romaniamain.fd_settled_bets_ext
+group by 1) ab;
+*/
